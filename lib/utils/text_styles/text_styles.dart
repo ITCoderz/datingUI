@@ -336,9 +336,24 @@ class CustomTextStyles {
     fontSize: 15,
     color: CColors.primaryColor,
   );
+  static TextStyle primary520 = _textStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+    color: CColors.primaryColor,
+  );
+  static TextStyle primary516 = _textStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+    color: CColors.primaryColor,
+  );
   static TextStyle primary415 = _textStyle(
     fontWeight: FontWeight.w400,
     fontSize: 15,
+    color: CColors.primaryColor,
+  );
+  static TextStyle primary722 = _textStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 22,
     color: CColors.primaryColor,
   );
   static TextStyle black618 = _textStyle(
@@ -376,6 +391,11 @@ class CustomTextStyles {
   static TextStyle black628 = _textStyle(
     fontWeight: FontWeight.w600,
     fontSize: 28,
+    color: CColors.blackTextColor,
+  );
+  static TextStyle black620 = _textStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
     color: CColors.blackTextColor,
   );
   static TextStyle black624 = _textStyle(
@@ -530,6 +550,11 @@ class CustomTextStyles {
     fontSize: 16,
     color: CColors.blackTextColor,
   );
+  static TextStyle black314= _textStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 14,
+    color: CColors.blackTextColor,
+  );
   static TextStyle black512poppins = _textStylePopins(
     fontWeight: FontWeight.w500,
     fontSize: 12,
@@ -638,6 +663,11 @@ class CustomTextStyles {
   static TextStyle white620 = _textStyle(
     fontWeight: FontWeight.w600,
     fontSize: 20,
+    color: CColors.whiteColor,
+  );
+  static TextStyle white624 = _textStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
     color: CColors.whiteColor,
   );
   static TextStyle white615 = _textStyle(

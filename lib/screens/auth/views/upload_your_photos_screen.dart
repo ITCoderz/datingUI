@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
-import 'package:dating/reusable_components/dropdown/custom_dropdown.dart';
-import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
 import 'package:dating/screens/auth/controllers/auth_controllers.dart';
 import 'package:dating/screens/auth/views/create_password_screen.dart';
 import 'package:dating/screens/auth/views/login_screen.dart';
@@ -78,10 +76,10 @@ class UploadYourPhotosScreen extends StatelessWidget {
                                 Container(
                                   width: 16,
                                   height: 16,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color:
-                                    CColors.lightYellowColor.withOpacity(0.5),
+                                    CColors.lightYellowColor,
                                   ),
                                 ),
                                 Container(
@@ -718,11 +716,12 @@ class UploadYourPhotosScreen extends StatelessWidget {
 
                     ],),
                   ),
+                  30.ph,
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
                     child: CustomElevatedButton(
                       onPressedFunction: () {
-                        Get.to(()=> CreatePasswordScreen());
+                        Get.to(()=> const CreatePasswordScreen());
                       },
                       height: 60,
                       radius: 13,
@@ -731,7 +730,6 @@ class UploadYourPhotosScreen extends StatelessWidget {
                       width: context.width,
                     ),
                   ),
-                  20.ph,
                   GestureDetector(
                     onTap: (){
                       Get.to(()=> const LoginScreen());
@@ -753,7 +751,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  30.ph,
+                  50.ph,
                 ],
               ),
             ),

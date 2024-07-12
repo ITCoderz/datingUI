@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import 'forgot_password.dart';
+
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -99,7 +101,11 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                  Text("Forgot Password?",style: CustomTextStyles.primary415,)
+                  GestureDetector(
+                      onTap: (){
+                        Get.to(()=> const ForgotPasswordScreen());
+                      },
+                      child: Text("Forgot Password?",style: CustomTextStyles.primary415,))
                 ],),
                 100.ph,
                 CustomElevatedButton(onPressedFunction: () {},

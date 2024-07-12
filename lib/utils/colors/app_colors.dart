@@ -11,6 +11,7 @@ class CColors {
   static const Color bgColor = Color(0xFFFEFEFE);
   static const Color primaryColor = Color(0xffED7368);
   static const Color textFieldBorderColor = Color(0xffF3B397);
+  static const Color pinkLightColor = Color(0xffFFF1F1);
   static const Color secondaryColor = Color(0xffFED705);
   static const Color lightYellowColor = Color(0xffF8D267);
   static const Color greyBorderColor = Color(0xffEEEEEE);

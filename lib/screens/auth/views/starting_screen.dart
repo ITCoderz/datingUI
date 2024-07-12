@@ -6,8 +6,6 @@ import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../utils/colors/app_colors.dart';
 import 'register_screen.dart';
 
 class StartingScreen extends StatelessWidget {
@@ -53,9 +51,9 @@ class StartingScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(0.8),
                 radius: 13.0,
                 child: CustomElevatedButton(onPressedFunction: (){
-                  Get.to(()=> RegisterScreen());
+                  Get.to(()=> const RegisterScreen());
                 },
-                  height: 60,
+                  height: 55,
                   radius: 13,
                   needShadow: false,
                   backgroundColor: Colors.white,

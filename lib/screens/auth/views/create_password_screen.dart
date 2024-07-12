@@ -6,6 +6,7 @@ import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
 import 'package:dating/screens/auth/controllers/auth_controllers.dart';
+import 'package:dating/screens/auth/views/congratulations_screen.dart';
 import 'package:dating/screens/auth/views/login_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
@@ -24,6 +25,47 @@ class CreatePasswordScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomAppBar(
+        height: 120,
+        elevation: 0,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: CustomElevatedButton(onPressedFunction: () {
+                Get.to(()=> const CongratulationsScreen());
+              },
+                height: 60,
+                radius: 13,
+                gradientColor: buildLinearGradient(leftToRight: true),
+                buttonText: "Next",
+                width: context.width,),
+            ),
+            10.ph,
+            GestureDetector(
+              onTap: (){
+                Get.to(()=> const LoginScreen());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account? ',
+                      style: CustomTextStyles.black415,
+                    ),
+                    Text(
+                      'Login',
+                      style: CustomTextStyles.primary515,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -70,19 +112,19 @@ class CreatePasswordScreen extends StatelessWidget {
                                 Container(
                                   width: 16,
                                   height: 16,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color:
-                                    CColors.lightYellowColor.withOpacity(0.5),
+                                    CColors.lightYellowColor,
                                   ),
                                 ),
                                 Container(
                                   width: 16,
                                   height: 16,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color:
-                                    CColors.lightYellowColor.withOpacity(0.5),
+                                    CColors.lightYellowColor,
                                   ),
                                 ),
                               ],
@@ -151,39 +193,8 @@ class CreatePasswordScreen extends StatelessWidget {
                       hintText: 'Confirm Password',
                     ),
                   ),),
-                 150.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomElevatedButton(onPressedFunction: () {},
-                      height: 60,
-                      radius: 13,
-                      gradientColor: buildLinearGradient(leftToRight: true),
-                      buttonText: "Next",
-                      width: context.width,),
-                  ),
-                  20.ph,
-                  GestureDetector(
-                    onTap: (){
-                      Get.to(()=> const LoginScreen());
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Already have an account? ',
-                            style: CustomTextStyles.black415,
-                          ),
-                          Text(
-                            'Login',
-                            style: CustomTextStyles.primary515,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  30.ph,
+
+
                 ],
               ),
             ),
