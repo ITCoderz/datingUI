@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class AppbarWidget extends StatelessWidget {
-  AppbarWidget(
+  const AppbarWidget(
       {super.key,
       this.title,
       this.onTap,
@@ -19,9 +19,9 @@ class AppbarWidget extends StatelessWidget {
       this.addTap,
       });
 
-  String? title;
-  Function()? onTap, addTap;
-  bool backButton, addButton, favButton,drawer;
+  final String? title;
+  final Function()? onTap, addTap;
+  final bool backButton, addButton, favButton,drawer;
 
   @override
   Widget build(BuildContext context) {

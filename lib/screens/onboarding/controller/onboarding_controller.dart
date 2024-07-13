@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dating/screens/auth/views/starting_screen.dart';
-import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:get/get.dart';
 
 class OnboardingController extends GetxController {
@@ -24,6 +23,6 @@ class OnboardingController extends GetxController {
   }
 
   void skip() {
-    Get.offAll(()=> const HomeScreen());
+    Get.offAll(()=> const StartingScreen());
   }
 }

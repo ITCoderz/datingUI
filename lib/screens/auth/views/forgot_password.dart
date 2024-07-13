@@ -1,20 +1,13 @@
 
-
-import 'dart:io';
-
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
 import 'package:dating/screens/auth/controllers/auth_controllers.dart';
-import 'package:dating/screens/auth/views/congratulations_screen.dart';
-import 'package:dating/screens/auth/views/login_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {

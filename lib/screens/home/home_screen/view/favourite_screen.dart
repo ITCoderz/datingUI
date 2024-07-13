@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';

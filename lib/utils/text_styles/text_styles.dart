@@ -319,7 +319,7 @@ class CustomTextStyles {
   static TextStyle blackGrey416 = _textStyle(
     fontWeight: FontWeight.w400,
     fontSize: 16,
-    color: Color(0xff121212),
+    color: const Color(0xff121212),
   );
   static TextStyle black616 = _textStyle(
     fontWeight: FontWeight.w600,

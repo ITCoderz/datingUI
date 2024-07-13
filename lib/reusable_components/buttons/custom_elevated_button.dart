@@ -1,7 +1,6 @@
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../utils/colors/app_colors.dart';
 import '../../utils/text_styles/text_styles.dart';
 
@@ -118,7 +117,7 @@ class GradientContainer extends StatelessWidget {
   });
 
   final Widget child;
-  final radius;
+  final double radius;
   final EdgeInsets padding;
 
   @override

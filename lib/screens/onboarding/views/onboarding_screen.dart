@@ -10,9 +10,9 @@ import 'package:get/get.dart';
 import '../../../generated/assets.dart';
 
 class OnboardingTesting extends StatelessWidget {
-   OnboardingTesting({Key? key}) : super(key: key);
+   OnboardingTesting({super.key});
 
-  List<String>? imagesList1=[
+  final List<String>? imagesList1=[
     Assets.imagesPhoto1,
     Assets.imagesPhoto2,
     Assets.imagesPhoto3,
@@ -20,7 +20,6 @@ class OnboardingTesting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Object? args = ModalRoute.of(context)?.settings.arguments;
 
     return SafeArea(
       child: GetBuilder<OnboardingController>(

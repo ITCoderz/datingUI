@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Container(
+          child: SizedBox(
             height: context.height,
             width: context.width,
             child: SingleChildScrollView(

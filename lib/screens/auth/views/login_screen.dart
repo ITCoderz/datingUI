@@ -3,6 +3,7 @@ import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
 import 'package:dating/screens/auth/controllers/auth_controllers.dart';
 import 'package:dating/screens/auth/views/register_screen.dart';
+import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
@@ -108,7 +109,9 @@ class LoginScreen extends StatelessWidget {
                       child: Text("Forgot Password?",style: CustomTextStyles.primary415,))
                 ],),
                 100.ph,
-                CustomElevatedButton(onPressedFunction: () {},
+                CustomElevatedButton(onPressedFunction: () {
+                  Get.to(()=> const HomeScreen());
+                },
                   height: 60,
                   radius: 13,
                   gradientColor: buildLinearGradient(leftToRight: true),

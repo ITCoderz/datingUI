@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
@@ -225,7 +224,7 @@ class WhiteContainer extends StatelessWidget {
         boxShadow: shadow!? [
           BoxShadow(
             color: Colors.black.withOpacity(0.07),
-            offset: Offset(0,14),
+            offset: const Offset(0,14),
             blurRadius: 36
           )
         ]: null,

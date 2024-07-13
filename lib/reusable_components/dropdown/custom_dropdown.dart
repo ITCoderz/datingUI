@@ -103,7 +103,6 @@ class CustomDropDown extends StatelessWidget {
             .toList(),
         isDense: true,
         menuItemStyleData: const MenuItemStyleData(
-          overlayColor: MaterialStatePropertyAll(CColors.whiteColor),
         ),
         validator: validatorFunction,
         onChanged: onChanged,
