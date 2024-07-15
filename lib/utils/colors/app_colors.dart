@@ -24,8 +24,8 @@ class CColors {
   static const Color fillGreyColor = Color(0xffEFEFEF);
   static const Color lightGreyColor = Color(0xffACACAC);
 
-  static const Color iconEnableColor = Colors.black;
-  static const Color iconDisableColor = Color(0xff8F8D8D);
+  static const Color iconEnableColor = Color(0xffEE7268);
+  static const Color iconDisableColor = Color(0xffF3B397);
 
 
 

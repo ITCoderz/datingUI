@@ -10,13 +10,78 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../reusable_components/bottom_nav_bar/reusable_bottom_navbar.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey filterKey = GlobalKey();
+
+    void showFilterDialog() {
+      RenderBox renderBox = filterKey.currentContext!.findRenderObject() as RenderBox;
+      Offset position = renderBox.localToGlobal(Offset.zero);
+      double x = position.dx;
+      double y = position.dy + renderBox.size.height-75;
+
+      showDialog(
+        // barrierColor: Colors.transparent,
+        context: context,
+        builder: (BuildContext context) {
+          return Stack(
+            children: [
+              Positioned(
+                left: x,
+                top: y,
+                child: Material(
+                  child: Container(
+                    height: 400,
+                    width: 327,
+                  
+                    decoration: const BoxDecoration(
+                      color: Color(0xffF3B65B),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                          ),padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SvgPicture.asset(Assets.iconsFilter,height: 30,),
+                              Text("Filters",style: CustomTextStyles.black620,),
+                              SvgPicture.asset(Assets.iconsArrowUp2,height: 24,)
+                            ],),
+                        ),
+                        Container(
+                          height: 3,
+                          color: CColors.primaryColor,
+                        )
+                        // Add your filter dialog content here
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: const CustomBottomAppBar(selectedIndex: -1,),
         backgroundColor: Colors.white,
         appBar: PreferredSize(
             preferredSize: Size(context.width, 57),
@@ -33,161 +98,167 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               30.ph,
-            Container(
-              height: 35,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: CColors.pinkLightColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    offset: const Offset(0,0),
-                    blurRadius: 4
-                  )
-                ]
-              ),padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                SvgPicture.asset(Assets.iconsFilter,height: 30,),
-                Text("Filters",style: CustomTextStyles.black620,),
-                  SvgPicture.asset(Assets.iconsArrowDown2,height: 10,)
-              ],),
+            GestureDetector(
+              key: filterKey,
+              onTap: showFilterDialog,
+              child: Container(
+                height: 35,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: CColors.pinkLightColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      offset: const Offset(0,0),
+                      blurRadius: 4
+                    )
+                  ]
+                ),padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  SvgPicture.asset(Assets.iconsFilter,height: 30,),
+                  Text("Filters",style: CustomTextStyles.black620,),
+                    SvgPicture.asset(Assets.iconsArrowDown2,height: 10,)
+                ],),
+              ),
             ),
               20.ph,
-              SizedBox(
-                  height: context.height*0.65,
-                  width: context.width,
-                  child: FittedBox(
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 440,
-                              width: context.width,
-                            ),
-                            Container(
-                              height: 90,
-                              width: context.width,
-                              decoration: BoxDecoration(
-                                gradient: buildLinearGradient(),
-                                borderRadius: BorderRadius.circular(13)
+              Expanded(
+                child: SizedBox(
+                    height: context.height*0.65,
+                    width: context.width,
+                    child: FittedBox(
+                      child: Stack(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 440,
+                                width: context.width,
                               ),
-                              padding: const EdgeInsets.only(top: 30),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                const WhiteContainer(icon: Assets.iconsClear,padding: 12,),
-                                  20.pw,
-                                  const WhiteContainer(icon: Assets.iconsOpen,height: 48,width: 48,borderColor: CColors.primaryColor,),
-                                  20.pw,
-                                  const WhiteContainer(icon: Assets.iconsStar,padding: 8,),
-                    
-                    
-                                ],),
-                            ),
-                          ],
-                        ),
-                        Stack(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                Get.to(()=> const ViewProfileScreen());
-                              },
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(13),
-                                  child: Image.asset(Assets.imagesPhoto,height: 470,width: context.width,fit: BoxFit.cover,)),
-                            ),
-                            Positioned(
-                              bottom: 181,
-                              right: 0,
-                              child: SvgPicture.asset(Assets.iconsContainer,height: 108,),
-                            ),
-                            Positioned(
-                              bottom: 181,
-                              right: 5,
-                              child: SizedBox(
-                                height: 108,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(Assets.iconsTopOpen),
-                                    10.ph,
-                                    SvgPicture.asset(Assets.iconsBottomOpen),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            
-                            Positioned(
-                              bottom: 10,
-                              right: 10,
-                              left: 10,
-                              child: Container(
-                                height: 60,
-                                padding: const EdgeInsets.all(10),
+                              Container(
+                                height: 90,
+                                width: context.width,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13),
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      const Color(0xffFFFFFF).withOpacity(0.5),
-                                      const Color(0xffFFFFFF).withOpacity(0.155),
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter
-                                  )
+                                  gradient: buildLinearGradient(),
+                                  borderRadius: BorderRadius.circular(13)
                                 ),
+                                padding: const EdgeInsets.only(top: 30),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                   Column(
-                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                     children: [
-                                       Text("@username",style: CustomTextStyles.primary516,),
-                                       Row(children: [
-                                         SvgPicture.asset(Assets.iconsLocationPin,height: 15,),
-                                         5.pw,
-                                         Text("Location....",style: CustomTextStyles.white412,)
-                                       ],)
-                                     ],
-                                   ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                            height: 15,
-                                            width: 51,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(4.09),
-                                              color: const Color(0xff86EFB3).withOpacity(0.3),
-                                            ),
-                                            child: const Center(
-                                              child: Text("Active",style: TextStyle(
-                                                fontSize: 09,
-                                                fontWeight:
-                                                  FontWeight.w400,
-                                                color: Color(0xff00FF6C)
-                                              ),),
-                                            )),
-                                        Row(children: [
-                                          SvgPicture.asset(Assets.iconsLocationPin,height: 15,),
-                                          5.pw,
-                                          Text("21 year",style: CustomTextStyles.white412,)
-                                        ],)
-                                      ],
-                                    )
-                                  ],
+                                  const WhiteContainer(icon: Assets.iconsClear,padding: 12,),
+                                    20.pw,
+                                    const WhiteContainer(icon: Assets.iconsOpen,height: 48,width: 48,borderColor: CColors.primaryColor,),
+                                    20.pw,
+                                    const WhiteContainer(icon: Assets.iconsStar,padding: 8,),
+                      
+                      
+                                  ],),
+                              ),
+                            ],
+                          ),
+                          Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: (){
+                                  Get.to(()=> const ViewProfileScreen());
+                                },
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(13),
+                                    child: Image.asset(Assets.imagesPhoto,height: 470,width: context.width,fit: BoxFit.cover,)),
+                              ),
+                              Positioned(
+                                bottom: 181,
+                                right: 0,
+                                child: SvgPicture.asset(Assets.iconsContainer,height: 108,),
+                              ),
+                              Positioned(
+                                bottom: 181,
+                                right: 5,
+                                child: SizedBox(
+                                  height: 108,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(Assets.iconsTopOpen),
+                                      10.ph,
+                                      SvgPicture.asset(Assets.iconsBottomOpen),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                    
-                      ],
-                    ),
-                  ))
+                              
+                              Positioned(
+                                bottom: 10,
+                                right: 10,
+                                left: 10,
+                                child: Container(
+                                  height: 60,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(13),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        const Color(0xffFFFFFF).withOpacity(0.5),
+                                        const Color(0xffFFFFFF).withOpacity(0.155),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter
+                                    )
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                     Column(
+                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       children: [
+                                         Text("@username",style: CustomTextStyles.primary516,),
+                                         Row(children: [
+                                           SvgPicture.asset(Assets.iconsLocationPin,height: 15,),
+                                           5.pw,
+                                           Text("Location....",style: CustomTextStyles.white412,)
+                                         ],)
+                                       ],
+                                     ),
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                              height: 15,
+                                              width: 51,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(4.09),
+                                                color: const Color(0xff86EFB3).withOpacity(0.3),
+                                              ),
+                                              child: const Center(
+                                                child: Text("Active",style: TextStyle(
+                                                  fontSize: 09,
+                                                  fontWeight:
+                                                    FontWeight.w400,
+                                                  color: Color(0xff00FF6C)
+                                                ),),
+                                              )),
+                                          Row(children: [
+                                            SvgPicture.asset(Assets.iconsLocationPin,height: 15,),
+                                            5.pw,
+                                            Text("21 year",style: CustomTextStyles.white412,)
+                                          ],)
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                      
+                        ],
+                      ),
+                    )),
+              )
             ],
           ),
         ),

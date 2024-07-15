@@ -5,6 +5,7 @@ class Assets {
   static const String iconsArrowDown2 = 'assets/icons/ArrowDown2.svg';
   static const String iconsArrowLeftCircle = 'assets/icons/ArrowLeftCircle.svg';
   static const String iconsArrowRightCircle = 'assets/icons/ArrowRightCircle.svg';
+  static const String iconsArrowUp2 = 'assets/icons/ArrowUp2.svg';
   static const String iconsBackIcon = 'assets/icons/backIcon.svg';
   static const String iconsBottomOpen = 'assets/icons/bottomOpen.svg';
   static const String iconsChatBubble = 'assets/icons/chat_bubble.svg';
@@ -15,6 +16,7 @@ class Assets {
   static const String iconsHide = 'assets/icons/Hide.svg';
   static const String iconsLocationPin = 'assets/icons/location_pin.svg';
   static const String iconsOpen = 'assets/icons/open.svg';
+  static const String iconsSearch = 'assets/icons/Search.svg';
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsTopOpen = 'assets/icons/topOpen.svg';
   static const String iconsUser = 'assets/icons/user.svg';
