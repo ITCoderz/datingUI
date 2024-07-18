@@ -351,11 +351,12 @@ class WhiteContainer extends StatelessWidget {
       this.padding = 10,
       this.shadow = false,
       this.bgColor = Colors.white,
+      this.iconColor,
       this.borderColor = Colors.white,
       required this.icon});
 
   final double? height, width, padding;
-  final Color? bgColor, borderColor;
+  final Color? bgColor, borderColor,iconColor;
   final String icon;
   final bool? shadow;
 
@@ -377,7 +378,7 @@ class WhiteContainer extends StatelessWidget {
               : null,
           border: Border.all(color: borderColor!)),
       padding: EdgeInsets.all(padding!),
-      child: SvgPicture.asset(icon),
+      child: SvgPicture.asset(icon,color: iconColor,),
     );
   }
 }

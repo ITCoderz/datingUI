@@ -58,25 +58,30 @@ class CustomBottomAppBar extends StatelessWidget {
           bottom:30,
           left: 0,
           right: 0,
-          child: Container(
-          height: 70,
-          width: 70,
-          padding: const EdgeInsets.all(15),
-          decoration:  BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: buildLinearGradient(),
-              border: Border.all(color: Colors.white),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.35),
-                    offset: Offset(0,0),
-                    blurRadius: 10
+          child: GestureDetector(
+            onTap: (){
+              Get.to(()=> HomeScreen());
+            },
+            child: Container(
+            height: 70,
+            width: 70,
+            padding: const EdgeInsets.all(15),
+            decoration:  BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: buildLinearGradient(),
+                border: Border.all(color: Colors.white),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.35),
+                      offset: Offset(0,0),
+                      blurRadius: 10
 
-                )
-              ]
-          ),
-          child: SvgPicture.asset(Assets.iconsSearch,height: 35,),
-        ),)
+                  )
+                ]
+            ),
+            child: SvgPicture.asset(Assets.iconsSearch,height: 35,),
+                    ),
+          ),)
       ],
     );
   }

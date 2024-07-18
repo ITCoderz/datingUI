@@ -1,8 +1,12 @@
 
 import 'package:dating/generated/assets.dart';
+import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
+import 'package:dating/screens/home/chat/message_screen/views/audio_call_screen.dart';
 import 'package:dating/screens/home/chat/message_screen/views/message_screen.dart';
+import 'package:dating/screens/home/chat/message_screen/views/video_call_screen.dart';
 import 'package:dating/screens/home/home_screen/view/home_screen.dart';
+import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
@@ -147,6 +151,16 @@ class ViewProfileScreenMessage extends StatelessWidget {
                               Expanded(child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(Assets.imagesPhoto,))),                          ],),
+                            30.ph,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: CustomElevatedButton(onPressedFunction: (){},
+                                  gradientColor: buildLinearGradient(),
+                                  height: 50,
+                                  needShadow: true,
+                                  buttonText: "Block User"),
+                            ), 30.ph,
+
                           ],
                         ),
                       ),
@@ -154,18 +168,24 @@ class ViewProfileScreenMessage extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: context.height * 0.37,
+                  top: context.height * 0.38,
                   left: 0,
                   right: 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const WhiteContainer(
-                        icon: Assets.iconsClear,
-                        padding: 20,
-                        shadow: true,
-                        height: 58,
-                        width: 58,
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(()=> const VideoCallScreen());
+                        },
+                        child: const WhiteContainer(
+                          icon: Assets.iconsVideo,
+                          padding: 15,
+                          shadow: true,
+                          iconColor: CColors.primaryColor,
+                          height: 58,
+                          width: 58,
+                        ),
                       ),
                       20.pw,
                       GestureDetector(
@@ -173,21 +193,26 @@ class ViewProfileScreenMessage extends StatelessWidget {
                           Get.to(()=> const MessageScreen());
                         },
                         child: const WhiteContainer(
-                          icon: Assets.iconsChatBubble,
-                          shadow: false,
+                          icon: Assets.iconsChatOutlined,
+                          shadow: true,
                           padding: 15,
-                          height: 73,
-                          width: 73,
-                          borderColor: CColors.textFieldBorderColor,
+                          height: 58,
+                          width: 58,
                         ),
                       ),
                       20.pw,
-                      const WhiteContainer(
-                        icon: Assets.iconsStar,
-                        shadow: true,
-                        padding: 15,
-                        height: 58,
-                        width: 58,
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(()=> const AudioCallScreen());
+                        },
+                        child: const WhiteContainer(
+                          icon: Assets.iconsAudioCall,
+                          shadow: true,
+                          padding: 15,
+                          iconColor: CColors.primaryColor,
+                          height: 58,
+                          width: 58,
+                        ),
                       ),
                     ],
                   ),

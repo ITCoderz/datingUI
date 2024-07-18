@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'view_profile_screen.dart';
+import 'view_profile_screen_messages.dart';
 
 class VideoCallScreen extends StatelessWidget {
   const VideoCallScreen({super.key});
@@ -143,7 +143,9 @@ class VideoCallScreen extends StatelessWidget {
                       WhiteRectangle(padding: 15,icon: Assets.iconsVoiceOutlined,onTap: (){},),
                       WhiteRectangle(padding: 15,icon: Assets.iconsVideo,onTap: (){},),
                       WhiteRectangle(padding: 15,icon: Assets.iconsSpeaker,onTap: (){},),
-                      WhiteRectangle(padding: 15,icon: Assets.iconsCallEnd,onTap: (){},),
+                      WhiteRectangle(padding: 15,icon: Assets.iconsCallEnd,onTap: (){
+                        Get.back();
+                      },),
                     ],
                   ),
                 ),

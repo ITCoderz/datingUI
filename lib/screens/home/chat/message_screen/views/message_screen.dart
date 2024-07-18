@@ -4,7 +4,7 @@ import 'package:dating/reusable_components/text_field/simple_text_field_without_
 import 'package:dating/screens/home/chat/message_screen/controller/messages_controller.dart';
 import 'package:dating/screens/home/chat/message_screen/views/video_call_screen.dart';
 import 'package:dating/screens/home/chat/message_screen/views/audio_call_screen.dart';
-import 'package:dating/screens/home/chat/message_screen/views/view_profile_screen.dart';
+import 'package:dating/screens/home/chat/message_screen/views/view_profile_screen_messages.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/constants/constant_lists.dart';

@@ -2,7 +2,7 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
 import 'package:dating/screens/home/chat/message_screen/controller/messages_controller.dart';
-import 'package:dating/screens/home/chat/message_screen/views/view_profile_screen.dart';
+import 'package:dating/screens/home/chat/message_screen/views/view_profile_screen_messages.dart';
 import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
@@ -121,7 +121,7 @@ class AudioCallScreen extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(13),
                         child: Container(
-                          color: Colors.black.withOpacity(0.35),
+                          color: Colors.black.withOpacity(0.85),
                         ),
                       ),
                     ),
@@ -163,7 +163,9 @@ class AudioCallScreen extends StatelessWidget {
                       WhiteRectangle(padding: 15,icon: Assets.iconsVoiceOutlined,onTap: (){},),
                       WhiteRectangle(padding: 15,icon: Assets.iconsVideo,onTap: (){},),
                       WhiteRectangle(padding: 15,icon: Assets.iconsSpeaker,onTap: (){},),
-                      WhiteRectangle(padding: 15,icon: Assets.iconsCallEnd,onTap: (){},),
+                      WhiteRectangle(padding: 15,icon: Assets.iconsCallEnd,onTap: (){
+                        Get.back();
+                      },),
                     ],
                   ),
                 ),

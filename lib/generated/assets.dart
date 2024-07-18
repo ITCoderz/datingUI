@@ -11,6 +11,7 @@ class Assets {
   static const String iconsBottomOpen = 'assets/icons/bottomOpen.svg';
   static const String iconsCallEnd = 'assets/icons/call_end.svg';
   static const String iconsChatBubble = 'assets/icons/chat_bubble.svg';
+  static const String iconsChatOutlined = 'assets/icons/Chat_outlined.svg';
   static const String iconsClear = 'assets/icons/clear.svg';
   static const String iconsContainer = 'assets/icons/container.svg';
   static const String iconsEmptyMessage = 'assets/icons/empty_message.svg';
