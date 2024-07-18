@@ -2,6 +2,8 @@ import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/screens/auth/views/starting_screen.dart';
 import 'package:dating/screens/home/profile/views/profile_screen.dart';
+import 'package:dating/screens/home/settings/privacy_screen.dart';
+import 'package:dating/screens/home/settings/terms_service.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
@@ -73,7 +75,7 @@ class CustomDrawer extends StatelessWidget {
                       prefix: Assets.iconsTermsService,
                       onTapFunction: () {
                         Get.back();
-                        // Get.to(()=> const ProfileScreen());
+                        Get.to(()=> const TermsScreen());
                       },
                     ),
 
@@ -82,7 +84,7 @@ class CustomDrawer extends StatelessWidget {
                       prefix: Assets.iconsPrivacy,
                       onTapFunction: () {
                         Get.back();
-                        // Get.to(()=> const ProfileScreen());
+                        Get.to(()=> const PrivacyScreen());
                       },
                     ),
                     GreyBorderContainer(
