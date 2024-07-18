@@ -15,14 +15,17 @@ class CustomTextField extends StatelessWidget {
   final double? horizontalPadding,
       verticalPadding,
       suffixMinWidth,
+      prefixMinWidth,
       borderRadius;
   final List<TextInputFormatter>? inputFormatters;
   final TextAlign? textAlign;
   final int? maxLength;
   final bool needSuffix;
+  final bool needPrefix;
   final bool? isPassword;
   final bool? isPasswordHide;
   final Widget? suffixWidget;
+  final Widget? prefixWidget;
   final Color? fillColor, borderColor;
   final TextStyle? textStyle;
 
@@ -43,14 +46,17 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.isAutofocus = false,
     this.needSuffix = false,
+    this.needPrefix = false,
     this.horizontalPadding,
     this.fillColor,
     this.borderColor,
     this.verticalPadding,
     this.suffixMinWidth,
+    this.prefixMinWidth,
     this.borderRadius,
     this.inputFormatters,
     this.suffixWidget,
+    this.prefixWidget,
     this.textAlign,
     this.maxLength,
     this.textStyle,
@@ -89,6 +95,12 @@ class CustomTextField extends StatelessWidget {
             maxWidth: suffixMinWidth ?? 40,
             minWidth: suffixMinWidth ?? 40,
           ),
+          prefixIcon:
+            needPrefix ? prefixWidget ?? const SizedBox.shrink() : null,
+        prefixIconConstraints: BoxConstraints(
+          maxWidth: prefixMinWidth ?? 40,
+          minWidth: prefixMinWidth ?? 40,
+        ),
           fillColor: fillColor ?? CColors.whiteColor,
           contentPadding: EdgeInsets.symmetric(
             horizontal: horizontalPadding ?? 15,

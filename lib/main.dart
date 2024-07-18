@@ -1,3 +1,4 @@
+import 'package:dating/screens/home/chat/message_screen/views/chat_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/constants/constants.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: Constants.appTitle,
       theme: ThemeData(useMaterial3: false),
-      home:   OnboardingTesting(),
+      home:   OnboardingScreen(),
     );
   }
 }

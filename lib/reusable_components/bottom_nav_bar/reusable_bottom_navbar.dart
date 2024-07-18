@@ -1,5 +1,6 @@
 
 import 'package:dating/generated/assets.dart';
+import 'package:dating/screens/home/chat/message_screen/views/chat_screen.dart';
 import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/constants/constants.dart';
@@ -20,8 +21,15 @@ class CustomBottomAppBar extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 60),
+        Container(
+          height: 100,
+          width: context.width,
+          color: Colors.transparent,
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
           child: BottomAppBar(
             color: Colors.white,
             elevation: 20,
@@ -32,8 +40,8 @@ class CustomBottomAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 for (int index = 0;
-                    index < ConstantLists.bottomBarList.length;
-                    index++) ...[
+                index < ConstantLists.bottomBarList.length;
+                index++) ...[
                   Expanded(
                     flex: 1,
                     child: BottomNavBarComponent(
@@ -46,25 +54,29 @@ class CustomBottomAppBar extends StatelessWidget {
             ),
           ),
         ),
-        Container(
+        Positioned(
+          bottom:30,
+          left: 0,
+          right: 0,
+          child: Container(
           height: 70,
           width: 70,
           padding: const EdgeInsets.all(15),
           decoration:  BoxDecoration(
               shape: BoxShape.circle,
               gradient: buildLinearGradient(),
-            border: Border.all(color: Colors.white),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.35),
-                offset: Offset(0,0),
-                blurRadius: 10
+              border: Border.all(color: Colors.white),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.35),
+                    offset: Offset(0,0),
+                    blurRadius: 10
 
-              )
-            ]
+                )
+              ]
           ),
           child: SvgPicture.asset(Assets.iconsSearch,height: 35,),
-        ),
+        ),)
       ],
     );
   }
@@ -91,7 +103,7 @@ class BottomNavBarComponent extends StatelessWidget {
           : bottomBarModel.itemIndex == 0
               ? () {
                   Get.offAll(
-                    () => const HomeScreen(),
+                    () => const ChatScreen(),
                     transition: Constants.appTransition,
                   );
                 }

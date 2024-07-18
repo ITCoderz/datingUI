@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 
 import '../../../generated/assets.dart';
 
-class OnboardingTesting extends StatelessWidget {
-   OnboardingTesting({super.key});
+class OnboardingScreen extends StatelessWidget {
+   OnboardingScreen({super.key});
 
   final List<String>? imagesList1=[
     Assets.imagesPhoto1,

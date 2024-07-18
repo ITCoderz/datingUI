@@ -525,6 +525,11 @@ class CustomTextStyles {
     fontSize: 15,
     color: CColors.blackTextColor,
   );
+  static TextStyle black518 = _textStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+    color: CColors.blackTextColor,
+  );
   static TextStyle black515Popins = _textStylePopins(
     fontWeight: FontWeight.w500,
     fontSize: 15,

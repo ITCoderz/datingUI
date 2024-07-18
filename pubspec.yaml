@@ -40,8 +40,10 @@ dependencies:
   dropdown_button2: ^2.3.9
   carousel_slider:
   flutter_svg:
+  flutter_staggered_animations:
   dotted_border:
   image_picker:
+  badges:
 
 dev_dependencies:
   flutter_test:

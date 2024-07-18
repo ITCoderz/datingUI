@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ViewProfileScreen extends StatelessWidget {
-  const ViewProfileScreen({super.key});
+class ViewProfileScreenMessage extends StatelessWidget {
+  const ViewProfileScreenMessage({super.key});
 
   @override
   Widget build(BuildContext context) {

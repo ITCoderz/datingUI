@@ -6,20 +6,31 @@ class Assets {
   static const String iconsArrowLeftCircle = 'assets/icons/ArrowLeftCircle.svg';
   static const String iconsArrowRightCircle = 'assets/icons/ArrowRightCircle.svg';
   static const String iconsArrowUp2 = 'assets/icons/ArrowUp2.svg';
+  static const String iconsAudioCall = 'assets/icons/audio_call.svg';
   static const String iconsBackIcon = 'assets/icons/backIcon.svg';
   static const String iconsBottomOpen = 'assets/icons/bottomOpen.svg';
+  static const String iconsCallEnd = 'assets/icons/call_end.svg';
   static const String iconsChatBubble = 'assets/icons/chat_bubble.svg';
   static const String iconsClear = 'assets/icons/clear.svg';
   static const String iconsContainer = 'assets/icons/container.svg';
+  static const String iconsEmptyMessage = 'assets/icons/empty_message.svg';
   static const String iconsFav = 'assets/icons/fav.svg';
   static const String iconsFilter = 'assets/icons/filter.svg';
   static const String iconsHide = 'assets/icons/Hide.svg';
   static const String iconsLocationPin = 'assets/icons/location_pin.svg';
   static const String iconsOpen = 'assets/icons/open.svg';
   static const String iconsSearch = 'assets/icons/Search.svg';
+  static const String iconsSearchIcon = 'assets/icons/search_icon.svg';
+  static const String iconsSeenAll = 'assets/icons/seen_all.svg';
+  static const String iconsSpeaker = 'assets/icons/speaker.svg';
   static const String iconsStar = 'assets/icons/star.svg';
+  static const String iconsStickers = 'assets/icons/stickers.svg';
+  static const String iconsTablerDots = 'assets/icons/tabler_dots.svg';
   static const String iconsTopOpen = 'assets/icons/topOpen.svg';
   static const String iconsUser = 'assets/icons/user.svg';
+  static const String iconsVideo = 'assets/icons/video.svg';
+  static const String iconsVoice = 'assets/icons/voice.svg';
+  static const String iconsVoiceOutlined = 'assets/icons/voice_outlined.svg';
   static const String imagesCongrats = 'assets/images/congrats.svg';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesNoFav = 'assets/images/noFav.svg';
@@ -27,5 +38,6 @@ class Assets {
   static const String imagesPhoto1 = 'assets/images/photo1.png';
   static const String imagesPhoto2 = 'assets/images/photo2.png';
   static const String imagesPhoto3 = 'assets/images/photo3.png';
+  static const String imagesPhoto4 = 'assets/images/photo4.png';
 
 }
