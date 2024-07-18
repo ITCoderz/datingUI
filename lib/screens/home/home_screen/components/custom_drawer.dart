@@ -78,7 +78,6 @@ class CustomDrawer extends StatelessWidget {
                         Get.to(()=> const TermsScreen());
                       },
                     ),
-
                     GreyBorderContainer(
                       title: "Privacy Policy",
                       prefix: Assets.iconsPrivacy,

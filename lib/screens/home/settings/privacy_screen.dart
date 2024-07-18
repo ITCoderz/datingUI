@@ -39,9 +39,22 @@ class PrivacyScreen extends StatelessWidget {
             20.ph,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",style: CustomTextStyles.black416,
+              child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisl vel nibh sagittis lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuadafames ac turpis egestas.\n\nInteger varius ante sit amet antesollicitudin laoreet a vel tellus. Aliquam rutrum posuere orci, vel ",style: CustomTextStyles.black416,
                 textAlign: TextAlign.justify,),
-            )
+            ),
+            10.ph,
+            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
+            ,10.ph,
+            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
+            ,10.ph,
+            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
+            ,10.ph,
+            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
+            ,10.ph,
+            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
+            ,10.ph,
+            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
+
           ],
         ),
       ),
