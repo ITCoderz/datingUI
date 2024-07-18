@@ -78,7 +78,7 @@ class MessageScreen extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           child: GestureDetector(
                             onTap: (){
-                              Get.to(()=> ViewProfileScreenMessage());
+                              Get.to(()=> const ViewProfileScreenMessage());
                             },
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
@@ -96,13 +96,13 @@ class MessageScreen extends StatelessWidget {
                         const Spacer(),
                         GestureDetector(
                             onTap: (){
-                              Get.to(()=> VideoCallScreen());
+                              Get.to(()=> const VideoCallScreen());
                             },
                             child: SvgPicture.asset(Assets.iconsVideo,height: 24,width: 24,)),
                         10.pw,
                         GestureDetector(
                             onTap: (){
-                              Get.to(()=> AudioCallScreen());
+                              Get.to(()=> const AudioCallScreen());
 
                             },
                             child: SvgPicture.asset(Assets.iconsAudioCall,height: 24,width: 24,)),

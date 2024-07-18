@@ -61,7 +61,7 @@ class CustomBottomAppBar extends StatelessWidget {
           right: 0,
           child: GestureDetector(
             onTap: (){
-              Get.to(()=> HomeScreen());
+              Get.to(()=> const HomeScreen());
             },
             child: Container(
             height: 70,
@@ -74,7 +74,7 @@ class CustomBottomAppBar extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withOpacity(0.35),
-                      offset: Offset(0,0),
+                      offset: const Offset(0,0),
                       blurRadius: 10
 
                   )

@@ -2,7 +2,6 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
-import 'package:dating/screens/auth/controllers/auth_controllers.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/home/profile/views/profile_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';

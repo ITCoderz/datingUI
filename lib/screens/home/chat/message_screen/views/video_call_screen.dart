@@ -72,7 +72,7 @@ class VideoCallScreen extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           child: GestureDetector(
                             onTap: (){
-                              Get.to(()=> ViewProfileScreenMessage());
+                              Get.to(()=> const ViewProfileScreenMessage());
                             },
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
@@ -187,7 +187,7 @@ final Function() onTap;
 
             ),
         padding:  EdgeInsets.all(padding),
-        child: SvgPicture.asset(icon,color: icon==Assets.iconsCallEnd? Color(0xffFF0000): CColors.primaryColor,),
+        child: SvgPicture.asset(icon,color: icon==Assets.iconsCallEnd? const Color(0xffFF0000): CColors.primaryColor,),
       ),
     );
   }

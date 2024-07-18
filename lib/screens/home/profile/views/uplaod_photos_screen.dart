@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
-import 'package:dating/screens/auth/controllers/auth_controllers.dart';
-import 'package:dating/screens/auth/views/create_password_screen.dart';
-import 'package:dating/screens/auth/views/login_screen.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/home/profile/views/password_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
@@ -85,12 +82,12 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                 Container(
                                   width: 16,
                                   height: 16,
-                                  child: SvgPicture.asset(Assets.iconsEditIcon),
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color:
                                     CColors.lightYellowColor,
                                   ),
+                                  child: SvgPicture.asset(Assets.iconsEditIcon),
                                 ),
                                 Container(
                                   width: 16,

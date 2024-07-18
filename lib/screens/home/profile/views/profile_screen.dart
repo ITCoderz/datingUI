@@ -1,8 +1,6 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/bottom_nav_bar/reusable_bottom_navbar.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
-import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
-import 'package:dating/screens/home/chat/message_screen/views/message_screen.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/gaps/gaps.dart';
@@ -65,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Get.to(()=> EditProfileScreen());
+                          Get.to(()=> const EditProfileScreen());
                         },
                         child: Container(
                           height: 80,
@@ -91,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               10.ph,
-              Divider(color: CColors.primaryColor,),
+              const Divider(color: CColors.primaryColor,),
               Text(
                 'About',
                 style: CustomTextStyles.primary520,
