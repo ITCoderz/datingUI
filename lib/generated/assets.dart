@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String iconsAppSetting = 'assets/icons/app_setting.svg';
   static const String iconsArrowDown2 = 'assets/icons/ArrowDown2.svg';
   static const String iconsArrowLeftCircle = 'assets/icons/ArrowLeftCircle.svg';
   static const String iconsArrowRightCircle = 'assets/icons/ArrowRightCircle.svg';
@@ -21,6 +22,7 @@ class Assets {
   static const String iconsHide = 'assets/icons/Hide.svg';
   static const String iconsLocationPin = 'assets/icons/location_pin.svg';
   static const String iconsOpen = 'assets/icons/open.svg';
+  static const String iconsPrivacy = 'assets/icons/privacy.svg';
   static const String iconsSearch = 'assets/icons/Search.svg';
   static const String iconsSearchIcon = 'assets/icons/search_icon.svg';
   static const String iconsSeenAll = 'assets/icons/seen_all.svg';
@@ -28,6 +30,7 @@ class Assets {
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsStickers = 'assets/icons/stickers.svg';
   static const String iconsTablerDots = 'assets/icons/tabler_dots.svg';
+  static const String iconsTermsService = 'assets/icons/terms_service.svg';
   static const String iconsTopOpen = 'assets/icons/topOpen.svg';
   static const String iconsUser = 'assets/icons/user.svg';
   static const String iconsVideo = 'assets/icons/video.svg';

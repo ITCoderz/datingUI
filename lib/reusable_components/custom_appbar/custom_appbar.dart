@@ -12,6 +12,7 @@ class AppbarWidget extends StatelessWidget {
       {super.key,
       this.title,
       this.onTap,
+        this.drawerTap,
       this.backButton = false,
       this.addButton = false,
       this.favButton = false,
@@ -20,11 +21,12 @@ class AppbarWidget extends StatelessWidget {
       });
 
   final String? title;
-  final Function()? onTap, addTap;
+  final Function()? onTap, addTap,drawerTap;
   final bool backButton, addButton, favButton,drawer;
 
   @override
   Widget build(BuildContext context) {
+
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0,
@@ -53,7 +55,7 @@ class AppbarWidget extends StatelessWidget {
                         ? Padding(
                       padding: const EdgeInsets.only(top: 15,left: 10),
                       child: GestureDetector(
-                          onTap: onTap,
+                          onTap: drawerTap,
                           child: const Icon(
                             Icons.menu,
                             size: 24,

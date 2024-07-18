@@ -1,5 +1,6 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
+import 'package:dating/screens/home/home_screen/components/custom_drawer.dart';
 import 'package:dating/screens/home/home_screen/view/view_profile_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
@@ -98,19 +99,27 @@ class HomeScreen extends StatelessWidget {
         },
       );
     }
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         bottomNavigationBar: const CustomBottomAppBar(
           selectedIndex: -1,
         ),
         backgroundColor: Colors.white,
+        drawer: const CustomDrawer(),
+
         appBar: PreferredSize(
             preferredSize: Size(context.width, 57),
             child: AppbarWidget(
               title: "Discover",
               drawer: true,
               favButton: true,
+              drawerTap: (){
+                scaffoldKey.currentState?.openDrawer();
+
+              },
               onTap: () {
                 Get.back();
               },
