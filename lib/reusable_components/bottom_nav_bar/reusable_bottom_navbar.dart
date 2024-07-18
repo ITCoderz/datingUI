@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../models/bottom_navigation_bar_model/bottom_navigation_bar_model.dart';
+import '../../screens/home/profile/views/profile_screen.dart';
 import '../../utils/colors/app_colors.dart';
 import '../../utils/constants/constant_lists.dart';
 
@@ -112,10 +113,10 @@ class BottomNavBarComponent extends StatelessWidget {
                     transition: Constants.appTransition,
                   );
                 }
-              : bottomBarModel.itemIndex == 1
+              : bottomBarModel.itemIndex == 2
                   ? () {
                       Get.offAll(
-                        () => const HomeScreen(),
+                        () => const ProfileScreen(),
                         transition: Constants.appTransition,
                       );
                     }
