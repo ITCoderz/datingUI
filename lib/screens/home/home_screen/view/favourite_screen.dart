@@ -1,5 +1,6 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
+import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -124,7 +125,9 @@ class FavouriteScreen extends StatelessWidget {
                 ),
               )*/
               CustomElevatedButton(
-                onPressedFunction: () {},
+                onPressedFunction: () {
+                  Get.to(()=> HomeScreen());
+                },
                 height: 60,
                 radius: 13,
                 gradientColor: buildLinearGradient(leftToRight: true),

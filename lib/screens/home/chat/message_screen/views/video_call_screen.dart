@@ -101,9 +101,9 @@ class VideoCallScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              20.ph,
+            20.ph,
               SizedBox(
-                height: context.height*0.7,
+                height: context.height*0.68,
                 child: Stack(
                   children: [
                     ClipRRect(

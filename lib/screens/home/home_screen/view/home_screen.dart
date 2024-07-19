@@ -311,8 +311,8 @@ class HomeScreen extends StatelessWidget {
     RenderBox renderBox =
         filterKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
-    double x = position.dx;
-    double y = position.dy + renderBox.size.height - 75;
+    double x = position.dx +15;
+    double y = position.dy + renderBox.size.height - 80;
 
     showDialog(
       // barrierColor: Colors.transparent,
@@ -330,7 +330,7 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     width: 327,
                     decoration: BoxDecoration(
-                      color: const Color(0xffF3B65B).withOpacity(0.20),
+                     // color: const Color(0xffF3B65B).withOpacity(0.20),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
@@ -343,7 +343,7 @@ class HomeScreen extends StatelessWidget {
                       child: GetBuilder<HomeController>(
                         builder: (controller) {
                           return SizedBox(
-                            height: context.height * 0.8,
+                            height: context.height * 0.7,
                             child: SingleChildScrollView(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
