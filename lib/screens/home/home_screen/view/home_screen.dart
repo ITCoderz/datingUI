@@ -1,4 +1,3 @@
-
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
@@ -21,11 +20,12 @@ import 'package:range_slider_flutter/range_slider_flutter.dart';
 import '../../../../reusable_components/bottom_nav_bar/reusable_bottom_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
+
   final GlobalKey filterKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return SafeArea(
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
               30.ph,
               GestureDetector(
                 key: filterKey,
-                onTap: (){
+                onTap: () {
                   showFilterDialog(context);
                 },
                 child: Container(
@@ -115,9 +115,7 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     GestureDetector(
-                                      onTap: () {
-
-                                      },
+                                      onTap: () {},
                                       child: const WhiteContainer(
                                         icon: Assets.iconsClear,
                                         padding: 12,
@@ -125,8 +123,8 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     20.pw,
                                     GestureDetector(
-                                      onTap: (){
-                                        Get.to(()=> const ViewProfileScreen());
+                                      onTap: () {
+                                        Get.to(() => const ViewProfileScreen());
                                       },
                                       child: const WhiteContainer(
                                         icon: Assets.iconsOpen,
@@ -215,16 +213,16 @@ class HomeScreen extends StatelessWidget {
                                   height: 60,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(13),
-                                      gradient: LinearGradient(
-                                          colors: [
-                                            const Color(0xffFFFFFF)
-                                                .withOpacity(0.5),
-                                            const Color(0xffFFFFFF)
-                                                .withOpacity(0.155),
-                                          ],
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter)),
+                                    borderRadius: BorderRadius.circular(13),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        const Color(0xffED7368).withOpacity(1),
+                                        const Color(0xffF3B55B).withOpacity(1),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                    ),
+                                  ),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -235,13 +233,18 @@ class HomeScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             "@username",
-                                            style: CustomTextStyles.primary516,
+                                            style: CustomTextStyles.white516,
                                           ),
                                           Row(
                                             children: [
                                               SvgPicture.asset(
                                                 Assets.iconsLocationPin,
                                                 height: 15,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                  CColors.whiteColor,
+                                                  BlendMode.srcIn,
+                                                ),
                                               ),
                                               5.pw,
                                               Text(
@@ -278,7 +281,6 @@ class HomeScreen extends StatelessWidget {
                                               )),
                                           Row(
                                             children: [
-
                                               Text(
                                                 "21 year",
                                                 style:
@@ -305,367 +307,1304 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-   void showFilterDialog(BuildContext context) {
-     RenderBox renderBox =
-     filterKey.currentContext!.findRenderObject() as RenderBox;
-     Offset position = renderBox.localToGlobal(Offset.zero);
-     double x = position.dx;
-     double y = position.dy + renderBox.size.height - 75;
+  void showFilterDialog(BuildContext context) {
+    RenderBox renderBox =
+        filterKey.currentContext!.findRenderObject() as RenderBox;
+    Offset position = renderBox.localToGlobal(Offset.zero);
+    double x = position.dx;
+    double y = position.dy + renderBox.size.height - 75;
 
-     showDialog(
-       // barrierColor: Colors.transparent,
-       barrierDismissible: true,
-       context: context,
-       builder: (BuildContext context) {
-         return StatefulBuilder(builder: (context, setState) {
-           return Stack(
-             children: [
-               Positioned(
-                 left: x,
-                 top: y,
-                 child: Material(
-                   borderRadius: BorderRadius.circular(6),
-                   child: Container(
-                     height: 400,
-                     width: 327,
-                     decoration: BoxDecoration(
-                       color: const Color(0xffF3B65B).withOpacity(0.20),
-                       boxShadow: [
-                         BoxShadow(
-                           color: Colors.black.withOpacity(0.05),
-                           blurRadius: 4,
-                           offset: const Offset(0, 0),
-                         ),
-                       ],
-                     ),
-                     child: GetBuilder<HomeController>(builder: (controller){
-                       return Column(
-                         crossAxisAlignment: CrossAxisAlignment.center,
-                         children: [
-                           GestureDetector(
-                             onTap: () {
-                               Get.back();
-                             },
-                             child: Container(
-                               height: 35,
-                               decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(6),
-                                   color: Colors.transparent),
-                               padding:
-                               const EdgeInsets.symmetric(horizontal: 5),
-                               child: Row(
-                                 mainAxisAlignment:
-                                 MainAxisAlignment.spaceBetween,
-                                 children: [
-                                   SvgPicture.asset(
-                                     Assets.iconsFilter,
-                                     height: 30,
-                                   ),
-                                   Text(
-                                     "Filters",
-                                     style: CustomTextStyles.black620,
-                                   ),
-                                   SvgPicture.asset(
-                                     Assets.iconsArrowUp2,
-                                     height: 24,
-                                   )
-                                 ],
-                               ),
-                             ),
-                           ),
-                           Container(
-                             height: 1,
-                             color: CColors.textFieldBorderColor,
-                           ),
-                           10.ph,
-                           Row(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             children: [
-                               Padding(
-                                 padding:
-                                 const EdgeInsets.symmetric(horizontal: 10),
-                                 child: Text(
-                                   "Interested in",
-                                   style: CustomTextStyles.black514,
-                                 ),
-                               ),
-                             ],
-                           ),
-                           10.ph,
-                           Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                             child: ClipRRect(
-                               borderRadius: BorderRadius.circular(5),
-                               child: Container(
-                                 height: 30,
-                                 width: context.width,
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(5),
-                                   border: Border.all(
-                                       color: CColors.textFieldBorderColor),
-                                 ),
-                                 child: Obx(() => Row(
-                                   children: [
-                                     Expanded(
-                                         child: CustomElevatedButton(
-                                           buttonText: 'Girls',
-                                           height: 30,
-                                           needShadow: false,
-                                           onPressedFunction: () {
-                                             controller.setSelectedGender(
-                                                 Gender.female);
-                                           },
-                                           textStyle:
-                                           controller.getSelectedGender() ==
-                                               Gender.female
-                                               ? CustomTextStyles.white412
-                                               : CustomTextStyles.black412,
-                                           backgroundColor:
-                                           controller.getSelectedGender() ==
-                                               Gender.female
-                                               ? null
-                                               : Colors.transparent,
-                                           gradientColor:
-                                           controller.getSelectedGender() ==
-                                               Gender.female
-                                               ? buildLinearGradient()
-                                               : null,
-                                           radius: 0,
-                                         )),
-                                     Container(
-                                         height: 30,
-                                         width: 1,
-                                         color:
-                                         CColors.textFieldBorderColor),
-                                     Expanded(
-                                         child: CustomElevatedButton(
-                                           buttonText: 'Boys',
-                                           height: 30,
-                                           needShadow: false,
-                                           onPressedFunction: () {
-                                             controller
-                                                 .setSelectedGender(Gender.male);
-                                           },
-                                           textStyle:
-                                           controller.getSelectedGender() ==
-                                               Gender.male
-                                               ? CustomTextStyles.white412
-                                               : CustomTextStyles.black412,
-                                           backgroundColor:
-                                           controller.getSelectedGender() ==
-                                               Gender.male
-                                               ? null
-                                               : Colors.transparent,
-                                           gradientColor:
-                                           controller.getSelectedGender() ==
-                                               Gender.male
-                                               ? buildLinearGradient()
-                                               : null,
-                                           radius: 0,
-                                         )),
-                                     Container(
-                                         height: 30,
-                                         width: 1,
-                                         color:
-                                         CColors.textFieldBorderColor),
-                                     Expanded(
-                                         child: CustomElevatedButton(
-                                           buttonText: 'Both',
-                                           height: 30,
-                                           needShadow: false,
-                                           onPressedFunction: () {
-                                             controller.setSelectedGender(
-                                                 Gender.both);
-                                           },
-                                           textStyle: controller
-                                               .getSelectedGender() ==
-                                               Gender.both
-                                               ? CustomTextStyles.white412
-                                               : CustomTextStyles.black412,
-                                           backgroundColor: controller
-                                               .getSelectedGender() ==
-                                               Gender.both
-                                               ? null
-                                               : Colors.transparent,
-                                           gradientColor: controller
-                                               .getSelectedGender() ==
-                                               Gender.both
-                                               ? buildLinearGradient()
-                                               : null,
-                                           radius: 0,
-                                         )),
-                                   ],
-                                 )),
-                               ),
-                             ),
-                           ),
-                           10.ph,
-                           Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                             child: SizedBox(
-                               height: 40,
-                               child: CustomDropDown(
-                                   onChanged: (value) {},
-                                   small: true,
-                                   label: '',
-                                   borderColor: CColors.textFieldBorderColor,
-                                   borderRadius: 13,
-                                   hint: 'Location',
-                                   mappingList: const ["Location", "City"],
-                                   value: 'value'),
-                             ),
-                           ),
-                           20.ph,
-                           Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: [
-                                 Text(
-                                   "Distance",
-                                   style: GoogleFonts.roboto(
-                                       color: Colors.black,
-                                       fontSize: 14,
-                                       fontWeight: FontWeight.w500),
-                                 ),
-                                 Text("${controller.selectedMilesRange.round()}km",style: CustomTextStyles.black412,),
-                               ],
-                             ),
-                           ),
-                           Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                             child: SliderTheme(
-                               data: SliderTheme.of(context).copyWith(
-                                 trackHeight: 6.0,
-
-                                 activeTickMarkColor: CColors.primaryColor,
-                                 inactiveTickMarkColor: const Color(0xff121212).withOpacity(0.4),
-                                 trackShape: const RoundedRectSliderTrackShape(),
-                                 activeTrackColor: CColors.primaryColor,
-                                 inactiveTrackColor:  const Color(0xff121212).withOpacity(0.4),
-                                 thumbShape: const GradientThumbShape(
-                                   enabledThumbRadius: 16.0,
-                                 ),
-                                 minThumbSeparation: 5,
-                                 thumbColor: CColors.primaryColor,
-                                 overlayColor: Colors.transparent,
-                                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 0.0),
-                                 valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-                                 valueIndicatorColor: Colors.transparent,
-                                 valueIndicatorTextStyle: const TextStyle(
-                                   color: Colors.transparent,
-                                   fontSize: 20.0,
-                                 ),
-                               ),
-                               child: Slider(
-                                   value: controller.selectedMilesRange,
-                                   onChanged: (value) {
-                                     controller.selectedMilesRangeFunction(value);
-                                   },
-                                   min: 0,
-                                   max: 3000,
-                                   divisions: 60,
-                                   autofocus: true,
-                                   label: controller.selectedMilesRange.round().toString()),
-                             ),
-                           ),
-                           20.ph,
-                           Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: 18),
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: [
-                                 Text(
-                                   "Age",
-                                   style: GoogleFonts.roboto(
-                                       color: Colors.black,
-                                       fontSize: 14,
-                                       fontWeight: FontWeight.w500),
-                                 ),
-                                 Text("${controller.filterlowerValue.round()}-${controller.filterupperValue.round()}",style: CustomTextStyles.black412,),
-                               ],
-                             ),
-                           ),
-                           Container(
-                             height: 50,
-                             padding: const EdgeInsets.only(right: 10),
-                             child: RangeSliderFlutter(
-                               values: [
-                                 controller.filterlowerValue,
-                                 controller.filterupperValue
-                               ],
-                               handler: RangeSliderFlutterHandler(
-                                 decoration: BoxDecoration(
-                                     boxShadow: [
-                                       BoxShadow(
-                                           color: Colors.grey.shade300.withOpacity(0.8),
-                                           blurRadius: 10,
-                                           spreadRadius: 2,
-                                           offset: const Offset(0.5, 0.5))
-                                     ],
-                                     gradient: buildLinearGradient(),
-                                     border: Border.all(color: Colors.white, width: 3),
-                                     shape: BoxShape.circle),
-
-                               ),
-                               rightHandler: RangeSliderFlutterHandler(
-                                   decoration: BoxDecoration(
-                                       boxShadow: [
-                                         BoxShadow(
-                                             color: Colors.grey.shade300.withOpacity(0.8),
-                                             blurRadius: 10,
-                                             spreadRadius: 2,
-                                             offset: const Offset(0.5, 0.5))
-                                       ],
-                                       gradient: buildLinearGradient(),
-                                       border: Border.all(color: Colors.white, width: 3),
-                                       shape: BoxShape.circle),
-                                   child: const Text('')
-                               ),
-                               tooltip: RangeSliderFlutterTooltip(
-                                   alwaysShowTooltip: false, disabled: true),
-                               trackBar: RangeSliderFlutterTrackBar(
-                                   activeTrackBarHeight: 6,
-                                   inactiveTrackBarHeight: 6,
-                                   activeDisabledTrackBarColor: const Color(0xff121212).withOpacity(0.4),
-                                   inactiveDisabledTrackBarColor: const Color(0xff121212).withOpacity(0.4),
-                                   inactiveTrackBar: BoxDecoration(
-                                       color: const Color(0xff121212).withOpacity(0.4),
-                                       borderRadius: BorderRadius.circular(25)),
-                                   activeTrackBar: const BoxDecoration(
-                                     color: CColors.primaryColor,
-                                   )),
-                               rangeSlider: true,
-                               jump: true,
-                               max: 80,
-                               min: 18,
-                               fontSize: 15,
-                               onDragging: (handlerIndex, lowerValue, upperValue) {
-                                 controller.filterlowerValue = lowerValue;
-                                 controller.filterupperValue = upperValue;
-                                 controller.update();
-                               },
-                             ),
-                           ),
-                           20.ph,
-                           CustomElevatedButton(onPressedFunction: (){
-                             Get.back();
-                           },
-                             gradientColor: buildLinearGradient(),
-                             buttonText: "Search",height: 40,width: 200,)
-                           ,20.ph,
-                         ],
-                       );
-                     },),
-                   ),
-                 ),
-               ),
-             ],
-           );
-         });
-       },
-     );
-   }
+    showDialog(
+      // barrierColor: Colors.transparent,
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return Stack(
+            children: [
+              Positioned(
+                left: x,
+                top: y,
+                child: Material(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Container(
+                    width: 327,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF3B65B).withOpacity(0.20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 4,
+                          offset: const Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      child: GetBuilder<HomeController>(
+                        builder: (controller) {
+                          return SizedBox(
+                            height: context.height * 0.8,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          color: Colors.transparent),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Assets.iconsFilter,
+                                            height: 30,
+                                          ),
+                                          Text(
+                                            "Filters",
+                                            style: CustomTextStyles.black620,
+                                          ),
+                                          SvgPicture.asset(
+                                            Assets.iconsArrowUp2,
+                                            height: 24,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 1,
+                                    color: CColors.textFieldBorderColor,
+                                  ),
+                                  10.ph,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Text(
+                                          "Interested in",
+                                          style: CustomTextStyles.black514,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  10.ph,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        height: 30,
+                                        width: context.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color:
+                                                  CColors.textFieldBorderColor),
+                                        ),
+                                        child: Obx(
+                                          () => Row(
+                                            children: [
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Girls',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller.setSelectedGender(
+                                                      Gender.female);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.female
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.female
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.female
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                              Container(
+                                                height: 30,
+                                                width: 1,
+                                                color: CColors
+                                                    .textFieldBorderColor,
+                                              ),
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Boys',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller.setSelectedGender(
+                                                      Gender.male);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.male
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.male
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.male
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                              Container(
+                                                  height: 30,
+                                                  width: 1,
+                                                  color: CColors
+                                                      .textFieldBorderColor),
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Both',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller.setSelectedGender(
+                                                      Gender.both);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.both
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.both
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedGender() ==
+                                                        Gender.both
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  10.ph,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: SizedBox(
+                                      height: 40,
+                                      child: CustomDropDown(
+                                          onChanged: (value) {},
+                                          small: true,
+                                          label: '',
+                                          borderColor:
+                                              CColors.textFieldBorderColor,
+                                          borderRadius: 13,
+                                          hint: 'Location',
+                                          mappingList: const [
+                                            "Location",
+                                            "City"
+                                          ],
+                                          value: 'value'),
+                                    ),
+                                  ),
+                                  20.ph,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Distance",
+                                          style: GoogleFonts.roboto(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          "${controller.selectedMilesRange.round()}km",
+                                          style: CustomTextStyles.black412,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: SliderTheme(
+                                      data: SliderTheme.of(context).copyWith(
+                                        trackHeight: 6.0,
+                                        activeTickMarkColor:
+                                            CColors.primaryColor,
+                                        inactiveTickMarkColor:
+                                            const Color(0xff121212)
+                                                .withOpacity(0.4),
+                                        trackShape:
+                                            const RoundedRectSliderTrackShape(),
+                                        activeTrackColor: CColors.primaryColor,
+                                        inactiveTrackColor:
+                                            const Color(0xff121212)
+                                                .withOpacity(0.4),
+                                        thumbShape: const GradientThumbShape(
+                                          enabledThumbRadius: 12.0,
+                                        ),
+                                        minThumbSeparation: 5,
+                                        thumbColor: CColors.primaryColor,
+                                        overlayColor: Colors.transparent,
+                                        overlayShape:
+                                            const RoundSliderOverlayShape(
+                                                overlayRadius: 0.0),
+                                        valueIndicatorShape:
+                                            const PaddleSliderValueIndicatorShape(),
+                                        valueIndicatorColor: Colors.transparent,
+                                        valueIndicatorTextStyle:
+                                            const TextStyle(
+                                          color: Colors.transparent,
+                                          fontSize: 20.0,
+                                        ),
+                                      ),
+                                      child: Slider(
+                                        value: controller.selectedMilesRange,
+                                        onChanged: (value) {
+                                          controller.selectedMilesRangeFunction(
+                                              value);
+                                        },
+                                        min: 0,
+                                        max: 3000,
+                                        divisions: 60,
+                                        autofocus: true,
+                                        label: controller.selectedMilesRange
+                                            .round()
+                                            .toString(),
+                                      ),
+                                    ),
+                                  ),
+                                  20.ph,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Age",
+                                          style: GoogleFonts.roboto(
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          "${controller.filterlowerValue.round()}-${controller.filterupperValue.round()}",
+                                          style: CustomTextStyles.black412,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: RangeSliderFlutter(
+                                      values: [
+                                        controller.filterlowerValue,
+                                        controller.filterupperValue
+                                      ],
+                                      handlerHeight: 24,
+                                      handler: RangeSliderFlutterHandler(
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey.shade300
+                                                      .withOpacity(0.8),
+                                                  blurRadius: 10,
+                                                  spreadRadius: 2,
+                                                  offset:
+                                                      const Offset(0.5, 0.5))
+                                            ],
+                                            gradient: buildLinearGradient(),
+                                            border: Border.all(
+                                                color: Colors.white, width: 3),
+                                            shape: BoxShape.circle),
+                                      ),
+                                      rightHandler: RangeSliderFlutterHandler(
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey.shade300
+                                                      .withOpacity(0.8),
+                                                  blurRadius: 10,
+                                                  spreadRadius: 2,
+                                                  offset:
+                                                      const Offset(0.5, 0.5))
+                                            ],
+                                            gradient: buildLinearGradient(),
+                                            border: Border.all(
+                                                color: Colors.white, width: 3),
+                                            shape: BoxShape.circle),
+                                        child: const Text(''),
+                                      ),
+                                      tooltip: RangeSliderFlutterTooltip(
+                                          alwaysShowTooltip: false,
+                                          disabled: true),
+                                      trackBar: RangeSliderFlutterTrackBar(
+                                        activeTrackBarHeight: 6,
+                                        inactiveTrackBarHeight: 6,
+                                        activeDisabledTrackBarColor:
+                                            const Color(0xff121212)
+                                                .withOpacity(0.4),
+                                        inactiveDisabledTrackBarColor:
+                                            const Color(0xff121212)
+                                                .withOpacity(0.4),
+                                        inactiveTrackBar: BoxDecoration(
+                                            color: const Color(0xff121212)
+                                                .withOpacity(0.4),
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                        activeTrackBar: const BoxDecoration(
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ),
+                                      rangeSlider: true,
+                                      jump: true,
+                                      max: 80,
+                                      min: 18,
+                                      fontSize: 15,
+                                      onDragging: (handlerIndex, lowerValue,
+                                          upperValue) {
+                                        controller.filterlowerValue =
+                                            lowerValue;
+                                        controller.filterupperValue =
+                                            upperValue;
+                                        controller.update();
+                                      },
+                                    ),
+                                  ),
+                                  10.ph,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Text(
+                                          "Language",
+                                          style: CustomTextStyles.black514,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  10.ph,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        height: 30,
+                                        width: context.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color:
+                                                  CColors.textFieldBorderColor),
+                                        ),
+                                        child: Obx(
+                                          () => Row(
+                                            children: [
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'French',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller
+                                                      .setSelectedLanguage(
+                                                          Language.french);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.french
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.french
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.french
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                              Container(
+                                                height: 30,
+                                                width: 1,
+                                                color: CColors
+                                                    .textFieldBorderColor,
+                                              ),
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'English',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller
+                                                      .setSelectedLanguage(
+                                                          Language.english);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.english
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.english
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.english
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                              Container(
+                                                  height: 30,
+                                                  width: 1,
+                                                  color: CColors
+                                                      .textFieldBorderColor),
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Spanish',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller
+                                                      .setSelectedLanguage(
+                                                          Language.spanish);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.spanish
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.spanish
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedLanguage() ==
+                                                        Language.spanish
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  20.ph,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Text(
+                                          "Relationship",
+                                          style: CustomTextStyles.black514,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  10.ph,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        height: 30,
+                                        width: context.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color:
+                                                  CColors.textFieldBorderColor),
+                                        ),
+                                        child: Obx(
+                                          () => Row(
+                                            children: [
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Serious',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller
+                                                      .setSelectedRelationship(
+                                                    Relationship.serious,
+                                                  );
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.serious
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.serious
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.serious
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                              Container(
+                                                height: 30,
+                                                width: 1,
+                                                color: CColors
+                                                    .textFieldBorderColor,
+                                              ),
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Fun',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller
+                                                      .setSelectedRelationship(
+                                                          Relationship.fun);
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.fun
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.fun
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.fun
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                              Container(
+                                                  height: 30,
+                                                  width: 1,
+                                                  color: CColors
+                                                      .textFieldBorderColor),
+                                              Expanded(
+                                                  child: CustomElevatedButton(
+                                                buttonText: 'Friends',
+                                                height: 30,
+                                                needShadow: false,
+                                                onPressedFunction: () {
+                                                  controller
+                                                      .setSelectedRelationship(
+                                                    Relationship.friends,
+                                                  );
+                                                },
+                                                textStyle: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.friends
+                                                    ? CustomTextStyles.white412
+                                                    : CustomTextStyles.black412,
+                                                backgroundColor: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.friends
+                                                    ? null
+                                                    : Colors.transparent,
+                                                gradientColor: controller
+                                                            .getSelectedRelationship() ==
+                                                        Relationship.friends
+                                                    ? buildLinearGradient()
+                                                    : null,
+                                                radius: 0,
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  20.ph,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Sports",
+                                                style:
+                                                    CustomTextStyles.black514,
+                                              ),
+                                              10.ph,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: context.width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: CColors
+                                                            .textFieldBorderColor),
+                                                  ),
+                                                  child: Obx(
+                                                    () => Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child:
+                                                              CustomElevatedButton(
+                                                            buttonText: 'Yes',
+                                                            height: 30,
+                                                            needShadow: false,
+                                                            onPressedFunction:
+                                                                () {
+                                                              controller
+                                                                  .setSelectedSports(
+                                                                Questionnaire
+                                                                    .yes,
+                                                              );
+                                                            },
+                                                            textStyle: controller
+                                                                        .getSelectedSports() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? CustomTextStyles
+                                                                    .white412
+                                                                : CustomTextStyles
+                                                                    .black412,
+                                                            backgroundColor: controller
+                                                                        .getSelectedSports() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? null
+                                                                : Colors
+                                                                    .transparent,
+                                                            gradientColor: controller
+                                                                        .getSelectedSports() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? buildLinearGradient()
+                                                                : null,
+                                                            radius: 0,
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            height: 30,
+                                                            width: 1,
+                                                            color: CColors
+                                                                .textFieldBorderColor),
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'No',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedSports(
+                                                              Questionnaire.no,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedSports() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedSports() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedSports() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Alcohol",
+                                                style:
+                                                    CustomTextStyles.black514,
+                                              ),
+                                              10.ph,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: context.width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: CColors
+                                                            .textFieldBorderColor),
+                                                  ),
+                                                  child: Obx(
+                                                    () => Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'Yes',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedAlcohol(
+                                                              Questionnaire.yes,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedAlcohol() ==
+                                                                  Questionnaire
+                                                                      .yes
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedAlcohol() ==
+                                                                  Questionnaire
+                                                                      .yes
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedAlcohol() ==
+                                                                  Questionnaire
+                                                                      .yes
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                        Container(
+                                                            height: 30,
+                                                            width: 1,
+                                                            color: CColors
+                                                                .textFieldBorderColor),
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'No',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedAlcohol(
+                                                              Questionnaire.no,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedAlcohol() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedAlcohol() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedAlcohol() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  20.ph,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Wants children",
+                                                style:
+                                                    CustomTextStyles.black514,
+                                              ),
+                                              10.ph,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: context.width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: CColors
+                                                            .textFieldBorderColor),
+                                                  ),
+                                                  child: Obx(
+                                                    () => Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child:
+                                                              CustomElevatedButton(
+                                                            buttonText: 'Yes',
+                                                            height: 30,
+                                                            needShadow: false,
+                                                            onPressedFunction:
+                                                                () {
+                                                              controller
+                                                                  .setSelectedWantChildren(
+                                                                Questionnaire
+                                                                    .yes,
+                                                              );
+                                                            },
+                                                            textStyle: controller
+                                                                        .getSelectedWantChildren() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? CustomTextStyles
+                                                                    .white412
+                                                                : CustomTextStyles
+                                                                    .black412,
+                                                            backgroundColor: controller
+                                                                        .getSelectedWantChildren() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? null
+                                                                : Colors
+                                                                    .transparent,
+                                                            gradientColor: controller
+                                                                        .getSelectedWantChildren() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? buildLinearGradient()
+                                                                : null,
+                                                            radius: 0,
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            height: 30,
+                                                            width: 1,
+                                                            color: CColors
+                                                                .textFieldBorderColor),
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'No',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedWantChildren(
+                                                              Questionnaire.no,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedWantChildren() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedWantChildren() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedWantChildren() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Has Children",
+                                                style:
+                                                    CustomTextStyles.black514,
+                                              ),
+                                              10.ph,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: context.width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: CColors
+                                                            .textFieldBorderColor),
+                                                  ),
+                                                  child: Obx(
+                                                    () => Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'Yes',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedHasChildren(
+                                                              Questionnaire.yes,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedHasChildren() ==
+                                                                  Questionnaire
+                                                                      .yes
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedHasChildren() ==
+                                                                  Questionnaire
+                                                                      .yes
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedHasChildren() ==
+                                                                  Questionnaire
+                                                                      .yes
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                        Container(
+                                                            height: 30,
+                                                            width: 1,
+                                                            color: CColors
+                                                                .textFieldBorderColor),
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'No',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedHasChildren(
+                                                              Questionnaire.no,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedHasChildren() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedHasChildren() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedHasChildren() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  20.ph,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Smoker",
+                                                style:
+                                                    CustomTextStyles.black514,
+                                              ),
+                                              10.ph,
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: context.width,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                        color: CColors
+                                                            .textFieldBorderColor),
+                                                  ),
+                                                  child: Obx(
+                                                    () => Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child:
+                                                              CustomElevatedButton(
+                                                            buttonText: 'Yes',
+                                                            height: 30,
+                                                            needShadow: false,
+                                                            onPressedFunction:
+                                                                () {
+                                                              controller
+                                                                  .setSelectedSmoker(
+                                                                Questionnaire
+                                                                    .yes,
+                                                              );
+                                                            },
+                                                            textStyle: controller
+                                                                        .getSelectedSmoker() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? CustomTextStyles
+                                                                    .white412
+                                                                : CustomTextStyles
+                                                                    .black412,
+                                                            backgroundColor: controller
+                                                                        .getSelectedSmoker() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? null
+                                                                : Colors
+                                                                    .transparent,
+                                                            gradientColor: controller
+                                                                        .getSelectedSmoker() ==
+                                                                    Questionnaire
+                                                                        .yes
+                                                                ? buildLinearGradient()
+                                                                : null,
+                                                            radius: 0,
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            height: 30,
+                                                            width: 1,
+                                                            color: CColors
+                                                                .textFieldBorderColor),
+                                                        Expanded(
+                                                            child:
+                                                                CustomElevatedButton(
+                                                          buttonText: 'No',
+                                                          height: 30,
+                                                          needShadow: false,
+                                                          onPressedFunction:
+                                                              () {
+                                                            controller
+                                                                .setSelectedSmoker(
+                                                              Questionnaire.no,
+                                                            );
+                                                          },
+                                                          textStyle: controller.getSelectedSmoker() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? CustomTextStyles
+                                                                  .white412
+                                                              : CustomTextStyles
+                                                                  .black412,
+                                                          backgroundColor: controller
+                                                                      .getSelectedSmoker() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? null
+                                                              : Colors
+                                                                  .transparent,
+                                                          gradientColor: controller
+                                                                      .getSelectedSmoker() ==
+                                                                  Questionnaire
+                                                                      .no
+                                                              ? buildLinearGradient()
+                                                              : null,
+                                                          radius: 0,
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const Expanded(
+                                        child: SizedBox(),
+                                      ),
+                                    ],
+                                  ),
+                                  20.ph,
+                                  CustomElevatedButton(
+                                    onPressedFunction: () {
+                                      Get.back();
+                                    },
+                                    gradientColor: buildLinearGradient(),
+                                    buttonText: "Search",
+                                    height: 40,
+                                    width: 200,
+                                  ),
+                                  20.ph,
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+      },
+    );
+  }
 }
 
 class WhiteContainer extends StatelessWidget {

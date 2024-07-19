@@ -12,7 +12,6 @@ class CustomTextStyles {
     FontStyle? fontStyle,
     Color? color,
     TextDecoration? decoration,
-
     Color? decorationColor,
   }) {
     return GoogleFonts.roboto(
@@ -31,7 +30,6 @@ class CustomTextStyles {
     FontStyle? fontStyle,
     Color? color,
     TextDecoration? decoration,
-
     Color? decorationColor,
   }) {
     return GoogleFonts.poppins(
@@ -226,7 +224,7 @@ class CustomTextStyles {
     fontSize: 14,
     color: CColors.darkBorderColor,
   );
-  static TextStyle grey415poppins= _textStylePopins(
+  static TextStyle grey415poppins = _textStylePopins(
     fontWeight: FontWeight.w400,
     fontSize: 15,
     color: const Color(0xffA5A5A5),
@@ -464,12 +462,12 @@ class CustomTextStyles {
     fontSize: 27,
     color: CColors.greenColor,
   );
-  static TextStyle green730 =  GoogleFonts.poppins(
+  static TextStyle green730 = GoogleFonts.poppins(
     fontWeight: FontWeight.w700,
     fontSize: 30,
     color: CColors.greenColor,
   );
-  static TextStyle green411 =  GoogleFonts.poppins(
+  static TextStyle green411 = GoogleFonts.poppins(
     fontWeight: FontWeight.w400,
     fontSize: 11,
     color: CColors.greenColor,
@@ -477,7 +475,6 @@ class CustomTextStyles {
   static TextStyle green614 = _textStyle(
     fontWeight: FontWeight.w600,
     fontSize: 14,
-
     color: CColors.greenColor,
   );
   static TextStyle red730 = _textStyle(
@@ -555,7 +552,7 @@ class CustomTextStyles {
     fontSize: 16,
     color: CColors.blackTextColor,
   );
-  static TextStyle black314= _textStyle(
+  static TextStyle black314 = _textStyle(
     fontWeight: FontWeight.w300,
     fontSize: 14,
     color: CColors.blackTextColor,
@@ -605,37 +602,37 @@ class CustomTextStyles {
     fontSize: 24,
     color: CColors.blackTextColor,
   );
-  static TextStyle darkGreen515= _textStyle(
+  static TextStyle darkGreen515 = _textStyle(
     fontWeight: FontWeight.w500,
     fontSize: 15,
     color: const Color(0xff716735),
   );
-  static TextStyle darkGreen512= _textStyle(
+  static TextStyle darkGreen512 = _textStyle(
     fontWeight: FontWeight.w500,
     fontSize: 12,
     color: const Color(0xff716735),
   );
-  static TextStyle green512= _textStyle(
+  static TextStyle green512 = _textStyle(
     fontWeight: FontWeight.w500,
     fontSize: 12,
     color: CColors.greenColor,
   );
-  static TextStyle green512poppins= _textStylePopins(
+  static TextStyle green512poppins = _textStylePopins(
     fontWeight: FontWeight.w500,
     fontSize: 12,
     color: CColors.greenColor,
   );
-  static TextStyle darkGrey515= _textStyle(
+  static TextStyle darkGrey515 = _textStyle(
     fontWeight: FontWeight.w500,
     fontSize: 15,
     color: const Color(0xffA5A5A5),
   );
-  static TextStyle darkGrey511= _textStyle(
+  static TextStyle darkGrey511 = _textStyle(
     fontWeight: FontWeight.w500,
     fontSize: 11,
     color: const Color(0xffA5A5A5),
   );
-  static TextStyle darkGrey510Poppins= _textStylePopins(
+  static TextStyle darkGrey510Poppins = _textStylePopins(
     fontWeight: FontWeight.w500,
     fontSize: 10,
     color: const Color(0xffA5A5A5),
@@ -698,6 +695,11 @@ class CustomTextStyles {
   static TextStyle white515 = _textStyle(
     fontWeight: FontWeight.w500,
     fontSize: 15,
+    color: CColors.whiteColor,
+  );
+  static TextStyle white516 = _textStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
     color: CColors.whiteColor,
   );
   static TextStyle white514 = _textStyle(
@@ -856,7 +858,7 @@ class CustomTextStyles {
     fontSize: 30,
     color: CColors.whiteColor,
   );
-  static TextStyle white822 =_textStyle(
+  static TextStyle white822 = _textStyle(
     fontWeight: FontWeight.w800,
     fontSize: 22,
     color: CColors.whiteColor,

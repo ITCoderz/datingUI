@@ -1,4 +1,3 @@
-
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
 import 'package:dating/utils/gaps/gaps.dart';
@@ -6,6 +5,11 @@ import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../../reusable_components/buttons/custom_elevated_button.dart';
+import '../../../../reusable_components/text_field/simple_text_field_without_height.dart';
+import '../../../../utils/colors/app_colors.dart';
+import '../../../onboarding/views/onboarding_screen.dart';
 
 class FavouriteScreen extends StatelessWidget {
   const FavouriteScreen({super.key});
@@ -31,6 +35,20 @@ class FavouriteScreen extends StatelessWidget {
             children: [
               30.ph,
               //No Favourite
+              CustomTextField(
+                textEditingController: TextEditingController(),
+                height: 50,
+                needPrefix: true,
+                prefixMinWidth: 40,
+                prefixWidget: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: SvgPicture.asset(Assets.iconsSearchIcon),
+                ),
+                hintText: 'Search',
+                borderColor: CColors.primaryColor,
+                borderRadius: 13,
+              ),
+              20.ph,
               Center(
                   child: Text(
                 "No favorites added yet !",
@@ -41,7 +59,8 @@ class FavouriteScreen extends StatelessWidget {
                   child: Text("Explore the app to find like minded people",
                       style: CustomTextStyles.black414)),
               30.ph,
-              SvgPicture.asset(Assets.imagesNoFav)
+              const Spacer(),
+              // SvgPicture.asset(Assets.imagesNoFav),
               /*Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -104,6 +123,15 @@ class FavouriteScreen extends StatelessWidget {
                   },
                 ),
               )*/
+              CustomElevatedButton(
+                onPressedFunction: () {},
+                height: 60,
+                radius: 13,
+                gradientColor: buildLinearGradient(leftToRight: true),
+                buttonText: "Add User",
+                width: context.width,
+              ),
+              50.ph,
             ],
           ),
         ),
