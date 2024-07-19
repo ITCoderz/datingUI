@@ -61,7 +61,7 @@ class CustomBottomAppBar extends StatelessWidget {
           right: 0,
           child: GestureDetector(
             onTap: (){
-              Get.to(()=> const HomeScreen());
+              Get.to(()=>  HomeScreen());
             },
             child: Container(
             height: 70,
@@ -122,7 +122,7 @@ class BottomNavBarComponent extends StatelessWidget {
                     }
                       : () {
                               Get.offAll(
-                                () => const HomeScreen(),
+                                () =>  HomeScreen(),
                                 transition: Constants.appTransition,
                               );
                             },

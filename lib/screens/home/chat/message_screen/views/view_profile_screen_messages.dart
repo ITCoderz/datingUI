@@ -190,7 +190,7 @@ class ViewProfileScreenMessage extends StatelessWidget {
                       20.pw,
                       GestureDetector(
                         onTap: (){
-                          Get.to(()=> const MessageScreen());
+                          Get.to(()=>  MessageScreen());
                         },
                         child: const WhiteContainer(
                           icon: Assets.iconsChatOutlined,

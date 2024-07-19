@@ -13,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../reusable_components/custom_appbar/custom_appbar.dart';
+import '../../../../reusable_components/dialogs/custom_dialog.dart';
 
 class EditCreatePasswordScreen extends StatelessWidget {
   const EditCreatePasswordScreen({super.key});
@@ -41,7 +42,25 @@ class EditCreatePasswordScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: CustomElevatedButton(onPressedFunction: () {
-                  Get.offAll(()=> const ProfileScreen());
+                  CustomDialogs.customDialog(
+                      context: context,
+                      titleImage: Assets.iconsSuccess,
+                      titleText: "Success!",
+                      subtitle:
+                      'Lorem Ipsum is simply dummy text of the\nprinting and industry.',
+                      buttonWidget: CustomElevatedButton(
+                        onPressedFunction: () {
+                          Get.offAll(()=> const ProfileScreen());;
+                        },
+                        buttonText: "Continue",
+                        height: 40,
+                        width: 200,
+                        gradientColor:
+                        buildLinearGradient(),
+                        textStyle:
+                        CustomTextStyles.white618,
+                      ));
+
                 },
                   height: 60,
                   radius: 13,

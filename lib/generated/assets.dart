@@ -9,12 +9,14 @@ class Assets {
   static const String iconsArrowUp2 = 'assets/icons/ArrowUp2.svg';
   static const String iconsAudioCall = 'assets/icons/audio_call.svg';
   static const String iconsBackIcon = 'assets/icons/backIcon.svg';
+  static const String iconsBlock = 'assets/icons/block.svg';
   static const String iconsBottomOpen = 'assets/icons/bottomOpen.svg';
   static const String iconsCallEnd = 'assets/icons/call_end.svg';
   static const String iconsChatBubble = 'assets/icons/chat_bubble.svg';
   static const String iconsChatOutlined = 'assets/icons/Chat_outlined.svg';
   static const String iconsClear = 'assets/icons/clear.svg';
   static const String iconsContainer = 'assets/icons/container.svg';
+  static const String iconsDelete = 'assets/icons/delete.svg';
   static const String iconsEditIcon = 'assets/icons/edit_icon.svg';
   static const String iconsEmptyMessage = 'assets/icons/empty_message.svg';
   static const String iconsFav = 'assets/icons/fav.svg';
@@ -29,6 +31,7 @@ class Assets {
   static const String iconsSpeaker = 'assets/icons/speaker.svg';
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsStickers = 'assets/icons/stickers.svg';
+  static const String iconsSuccess = 'assets/icons/success.svg';
   static const String iconsTablerDots = 'assets/icons/tabler_dots.svg';
   static const String iconsTermsService = 'assets/icons/terms_service.svg';
   static const String iconsTopOpen = 'assets/icons/topOpen.svg';
@@ -36,6 +39,7 @@ class Assets {
   static const String iconsVideo = 'assets/icons/video.svg';
   static const String iconsVoice = 'assets/icons/voice.svg';
   static const String iconsVoiceOutlined = 'assets/icons/voice_outlined.svg';
+  static const String iconsWarning = 'assets/icons/warning.svg';
   static const String imagesCongrats = 'assets/images/congrats.svg';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesNoFav = 'assets/images/noFav.svg';

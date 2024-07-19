@@ -38,9 +38,7 @@ class CustomDropDown extends StatelessWidget {
 
         decoration: InputDecoration(
           isDense: true,
-          label: small
-              ? null
-              : Text(
+          label:  Text(
                   label,
                   style: CustomTextStyles.grey412Color,
                 ),
@@ -112,8 +110,8 @@ class CustomDropDown extends StatelessWidget {
         ),
         iconStyleData:  IconStyleData(
           icon: Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: SvgPicture.asset(Assets.iconsArrowDown2,height: 10,),
+            padding:  EdgeInsets.only(right: 10),
+            child: small? Icon(Icons.keyboard_arrow_down_rounded) :SvgPicture.asset(Assets.iconsArrowDown2,height: 10,),
           ),
         ),
         dropdownStyleData: DropdownStyleData(

@@ -26,7 +26,7 @@ class ChatScreen extends StatelessWidget {
             preferredSize: Size(context.width, 57),
             child: AppbarWidget(
               title: "Messages",
-              backButton: true,
+              backButton: false,
               favButton: false,
               onTap: () {
                 Get.back();
@@ -71,7 +71,7 @@ class ChatScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: (){
-                          Get.to(()=> const MessageScreen());
+                          Get.to(()=>  MessageScreen());
                         },
                         child: Column(
                           children: [
@@ -151,7 +151,7 @@ class ChatScreen extends StatelessWidget {
                   itemBuilder: (context,index){
                     return GestureDetector(
                       onTap: (){
-                        Get.to(()=> const MessageScreen());
+                        Get.to(()=>  MessageScreen());
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 7),

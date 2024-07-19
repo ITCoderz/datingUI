@@ -33,7 +33,6 @@ class PrivacyScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Center(child: Text("Privacy Policy",style: CustomTextStyles.primary618,)),
-
                 ],),
             ),
             20.ph,
@@ -43,17 +42,17 @@ class PrivacyScreen extends StatelessWidget {
                 textAlign: TextAlign.justify,),
             ),
             10.ph,
-            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
+            Padding(padding: const EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
             ,10.ph,
-            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
+            Padding(padding: const EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
             ,10.ph,
-            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
+            Padding(padding: const EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
             ,10.ph,
-            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
+            Padding(padding: const EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
             ,10.ph,
-            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
+            Padding(padding: const EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Lorem ipsum dolor sit amet, consectetur adipiscing elit.",style: CustomTextStyles.black416,),)
             ,10.ph,
-            Padding(padding: EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
+            Padding(padding: const EdgeInsets.only(left: 30,right: 20),child: Text("\u2022 Maecenas sollicitudin tellus id lectus iaculis congue.",style: CustomTextStyles.black416,),)
 
           ],
         ),

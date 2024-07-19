@@ -30,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
             preferredSize: Size(context.width, 57),
             child: AppbarWidget(
               title: "Profile",
-              backButton: true,
+              backButton: false,
               favButton: true,
               onTap: () {
                 Get.back();

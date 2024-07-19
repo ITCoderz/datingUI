@@ -44,6 +44,7 @@ dependencies:
   dotted_border:
   image_picker:
   badges:
+  range_slider_flutter: ^0.0.2
 
 dev_dependencies:
   flutter_test:

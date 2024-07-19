@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                 ],),
                 100.ph,
                 CustomElevatedButton(onPressedFunction: () {
-                  Get.to(()=> const HomeScreen());
+                  Get.to(()=>  HomeScreen());
                 },
                   height: 60,
                   radius: 13,
