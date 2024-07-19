@@ -1,7 +1,6 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/bottom_nav_bar/reusable_bottom_navbar.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
-import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
@@ -17,7 +16,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ProfileController>();
 
 
   return SafeArea(

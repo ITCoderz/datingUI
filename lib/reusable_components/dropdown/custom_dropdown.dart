@@ -110,8 +110,8 @@ class CustomDropDown extends StatelessWidget {
         ),
         iconStyleData:  IconStyleData(
           icon: Padding(
-            padding:  EdgeInsets.only(right: 10),
-            child: small? Icon(Icons.keyboard_arrow_down_rounded) :SvgPicture.asset(Assets.iconsArrowDown2,height: 10,),
+            padding: const EdgeInsets.only(right: 10),
+            child:  small? const Icon(Icons.keyboard_arrow_down_rounded) :SvgPicture.asset(Assets.iconsArrowDown2,height: 10,),
           ),
         ),
         dropdownStyleData: DropdownStyleData(

@@ -25,7 +25,6 @@ class HomeScreen extends StatelessWidget {
   final GlobalKey filterKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeController>();
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -127,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                                     20.pw,
                                     GestureDetector(
                                       onTap: (){
-                                        Get.to(()=> ViewProfileScreen());
+                                        Get.to(()=> const ViewProfileScreen());
                                       },
                                       child: const WhiteContainer(
                                         icon: Assets.iconsOpen,
@@ -512,7 +511,7 @@ class HomeScreen extends StatelessWidget {
                                    borderColor: CColors.textFieldBorderColor,
                                    borderRadius: 13,
                                    hint: 'Location',
-                                   mappingList: ["Location", "City"],
+                                   mappingList: const ["Location", "City"],
                                    value: 'value'),
                              ),
                            ),
@@ -621,7 +620,7 @@ class HomeScreen extends StatelessWidget {
                                        gradient: buildLinearGradient(),
                                        border: Border.all(color: Colors.white, width: 3),
                                        shape: BoxShape.circle),
-                                   child: Text('')
+                                   child: const Text('')
                                ),
                                tooltip: RangeSliderFlutterTooltip(
                                    alwaysShowTooltip: false, disabled: true),

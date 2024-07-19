@@ -1,6 +1,5 @@
 
 import 'package:dating/generated/assets.dart';
-import 'package:dating/screens/home/chat/message_screen/controller/messages_controller.dart';
 import 'package:dating/screens/home/chat/message_screen/views/view_profile_screen_messages.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
@@ -15,7 +14,6 @@ class AudioCallScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller=Get.find<MessagesController>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,

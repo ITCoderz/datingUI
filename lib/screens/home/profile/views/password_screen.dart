@@ -50,7 +50,7 @@ class EditCreatePasswordScreen extends StatelessWidget {
                       'Lorem Ipsum is simply dummy text of the\nprinting and industry.',
                       buttonWidget: CustomElevatedButton(
                         onPressedFunction: () {
-                          Get.offAll(()=> const ProfileScreen());;
+                          Get.offAll(()=> const ProfileScreen());
                         },
                         buttonText: "Continue",
                         height: 40,
