@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../reusable_components/buttons/custom_elevated_button.dart';
+import 'login_screen.dart';
 
 class CongratulationsScreen extends StatelessWidget {
   const CongratulationsScreen({super.key});
@@ -67,11 +68,14 @@ class CongratulationsScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomElevatedButton(onPressedFunction: () {},
+                    child: CustomElevatedButton(onPressedFunction: () {
+                      Get.to(()=> const LoginScreen());
+                    },
                       height: 60,
                       radius: 13,
                       gradientColor: buildLinearGradient(leftToRight: true),
                       buttonText: "Continue",
+
                       width: context.width,),
                   ),
                   50.ph,

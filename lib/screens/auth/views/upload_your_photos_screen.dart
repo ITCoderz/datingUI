@@ -127,7 +127,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                                child: Container(
                                  height: 150,
                                  width: 150,
-                                 color: CColors.textFieldBorderColor,
+                           //      color: CColors.textFieldBorderColor,
                                  child:Obx(()=>  controller.images.isNotEmpty ? controller.images[0]==null? const Center(
                                    child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                  ) : Stack(
@@ -185,7 +185,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                                child: Container(
                                  height: 150,
                                  width: 150,
-                                 color: CColors.textFieldBorderColor,
+                               //  color: CColors.textFieldBorderColor,
                                  child:Obx(()=>  controller.images.length>=2 ? controller.images[1]==null? const Center(
                                    child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                  ) : Stack(
@@ -249,7 +249,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                              //  color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=3 ? controller.images[2]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -307,7 +307,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                             //   color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=4 ? controller.images[3]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -371,7 +371,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                            //    color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=5 ? controller.images[4]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -429,7 +429,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                             //   color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=6 ? controller.images[5]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -493,7 +493,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                             //   color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=7 ? controller.images[6]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -551,7 +551,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                             //   color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=8 ? controller.images[7]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -614,7 +614,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                             //   color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=9 ? controller.images[8]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(
@@ -672,7 +672,7 @@ class UploadYourPhotosScreen extends StatelessWidget {
                               child: Container(
                                 height: 150,
                                 width: 150,
-                                color: CColors.textFieldBorderColor,
+                             //   color: CColors.textFieldBorderColor,
                                 child:Obx(()=>  controller.images.length>=10 ? controller.images[9]==null? const Center(
                                   child: Icon(Icons.add,size: 36,color: CColors.primaryColor,),
                                 ) : Stack(

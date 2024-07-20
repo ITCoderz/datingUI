@@ -14,31 +14,36 @@ import 'package:get/get.dart';
 
 import 'forgot_password.dart';
 
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller=Get.find<AuthController>();
+    final controller = Get.find<AuthController>();
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomAppBar(elevation: 0,
-        child:  Padding(
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Don’t have an account? ', style: CustomTextStyles.black415,),
+              Text(
+                'Don’t have an account? ',
+                style: CustomTextStyles.black415,
+              ),
               GestureDetector(
-
-                  onTap: (){
-                    Get.to(()=> const RegisterScreen());
+                  onTap: () {
+                    Get.to(() => const RegisterScreen());
                   },
-                  child: Text('Register', style: CustomTextStyles.primary515,)),
-            ],),
+                  child: Text(
+                    'Register',
+                    style: CustomTextStyles.primary515,
+                  )),
+            ],
+          ),
         ),
-
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -70,53 +75,66 @@ class LoginScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 50.ph,
-              CustomTextField(textEditingController:controller.emailController,
-                borderColor: CColors.textFieldBorderColor,
-                borderRadius:13,
-                height: 50,
-                textStyle: CustomTextStyles.black414,
-                hintText: 'Email',
-              ),
-                20.ph,
-                Obx(()=> CustomTextField(textEditingController: controller.passwordController,
+                CustomTextField(
+                  textEditingController: controller.emailController,
                   borderColor: CColors.textFieldBorderColor,
-                  borderRadius:13,
+                  borderRadius: 13,
                   height: 50,
-                  suffixMinWidth: 34,
-                  needSuffix: true,
-                  isPassword: true,
-                  isPasswordHide: controller.hidePassword.value,
-                  suffixWidget: GestureDetector(
-                    onTap: (){
-                      controller.togglePasswordVisibility();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: SvgPicture.asset(Assets.iconsHide,width: 24,),
-                    ),
-                  ),
                   textStyle: CustomTextStyles.black414,
-                  hintText: 'Password',
-                ),),
+                  hintText: 'Email',
+                ),
+                20.ph,
+                Obx(
+                  () => CustomTextField(
+                    textEditingController: controller.passwordController,
+                    borderColor: CColors.textFieldBorderColor,
+                    borderRadius: 13,
+                    height: 50,
+                    suffixMinWidth: 34,
+                    needSuffix: true,
+                    isPassword: true,
+                    isPasswordHide: controller.hidePassword.value,
+                    suffixWidget: GestureDetector(
+                      onTap: () {
+                        controller.togglePasswordVisibility();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: SvgPicture.asset(
+                          Assets.iconsHide,
+                          width: 24,
+                        ),
+                      ),
+                    ),
+                    textStyle: CustomTextStyles.black414,
+                    hintText: 'Password',
+                  ),
+                ),
                 10.ph,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                  GestureDetector(
-                      onTap: (){
-                        Get.to(()=> const ForgotPasswordScreen());
-                      },
-                      child: Text("Forgot Password?",style: CustomTextStyles.primary415,))
-                ],),
+                    GestureDetector(
+                        onTap: () {
+                          Get.to(() => const ForgotPasswordScreen());
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: CustomTextStyles.primary415,
+                        ))
+                  ],
+                ),
                 100.ph,
-                CustomElevatedButton(onPressedFunction: () {
-                  Get.to(()=>  HomeScreen());
-                },
+                CustomElevatedButton(
+                  onPressedFunction: () {
+                    Get.to(() => HomeScreen());
+                  },
                   height: 60,
                   radius: 13,
                   gradientColor: buildLinearGradient(leftToRight: true),
                   buttonText: "Login",
-                  width: context.width,),
+                  width: context.width,
+                ),
                 30.ph,
               ],
             ),
@@ -126,4 +144,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-

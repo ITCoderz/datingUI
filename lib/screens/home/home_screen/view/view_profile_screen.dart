@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../reusable_components/buttons/custom_elevated_button.dart';
+import '../../../onboarding/views/onboarding_screen.dart';
+
 class ViewProfileScreen extends StatelessWidget {
   const ViewProfileScreen({super.key});
 
@@ -28,7 +31,7 @@ class ViewProfileScreen extends StatelessWidget {
                 Get.back();
               },
             )),
-        body: Column(
+        body: ListView(
           children: [
             Stack(
               children: [
@@ -146,7 +149,19 @@ class ViewProfileScreen extends StatelessWidget {
                                   child: Image.asset(Assets.imagesPhoto,))),                            10.pw,
                               Expanded(child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(Assets.imagesPhoto,))),                          ],),
+                                  child: Image.asset(Assets.imagesPhoto,))),
+                            ],),
+                            30.ph,
+                            CustomElevatedButton(
+                              onPressedFunction: () {
+                              },
+                              height: 60,
+                              radius: 13,
+                              gradientColor: buildLinearGradient(leftToRight: true),
+                              buttonText: "Block User",
+                              width: context.width,
+                            ),
+                            50.ph,
                           ],
                         ),
                       ),

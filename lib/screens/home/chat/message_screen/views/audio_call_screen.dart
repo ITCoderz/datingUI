@@ -100,7 +100,7 @@ class AudioCallScreen extends StatelessWidget {
             children: [
               20.ph,
               SizedBox(
-                height: context.height*0.7,
+                height: context.height*0.67,
                 child: Stack(
                   alignment:Alignment.center,
                   children: [
