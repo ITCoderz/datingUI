@@ -123,28 +123,29 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             //No Messages
-           /* Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(child: SvgPicture.asset(Assets.iconsEmptyMessage)),
-                  10.ph,
-                  Center(
-                      child: Text(
-                    "No messages yet !",
-                    style: CustomTextStyles.primary520,
-                  )),
-                  5.ph,
-                  Center(
-                      child: Text("Explore the app to find like minded people",
-                          style: CustomTextStyles.black414)),
-                ],
+         /*   Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    10.ph,
+                    Center(
+                        child: Text(
+                      "No messages yet !",
+                      style: CustomTextStyles.primary520,
+                    )),
+                    5.ph,
+                    Center(
+                        child: Text("Explore the app to find like minded people",
+                            style: CustomTextStyles.black414)),
+                  ],
+                ),
               ),
-            )*/
+            ),*/
 
             // MessagesList
-
             Expanded(
               child: ListView.builder(
                   itemCount: 20,

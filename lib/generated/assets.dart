@@ -18,11 +18,11 @@ class Assets {
   static const String iconsContainer = 'assets/icons/container.svg';
   static const String iconsDelete = 'assets/icons/delete.svg';
   static const String iconsEditIcon = 'assets/icons/edit_icon.svg';
-  static const String iconsEmptyMessage = 'assets/icons/empty_message.svg';
   static const String iconsFav = 'assets/icons/fav.svg';
   static const String iconsFilter = 'assets/icons/filter.svg';
   static const String iconsHide = 'assets/icons/Hide.svg';
   static const String iconsLocationPin = 'assets/icons/location_pin.svg';
+  static const String iconsNo = 'assets/icons/no.svg';
   static const String iconsOpen = 'assets/icons/open.svg';
   static const String iconsPrivacy = 'assets/icons/privacy.svg';
   static const String iconsSearch = 'assets/icons/Search.svg';
@@ -40,9 +40,9 @@ class Assets {
   static const String iconsVoice = 'assets/icons/voice.svg';
   static const String iconsVoiceOutlined = 'assets/icons/voice_outlined.svg';
   static const String iconsWarning = 'assets/icons/warning.svg';
+  static const String iconsYes = 'assets/icons/yes.svg';
   static const String imagesCongrats = 'assets/images/congrats.svg';
   static const String imagesLogo = 'assets/images/logo.png';
-  static const String imagesNoFav = 'assets/images/noFav.svg';
   static const String imagesPhoto = 'assets/images/photo.png';
   static const String imagesPhoto1 = 'assets/images/photo1.png';
   static const String imagesPhoto2 = 'assets/images/photo2.png';

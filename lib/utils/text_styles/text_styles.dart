@@ -349,6 +349,17 @@ class CustomTextStyles {
     fontSize: 15,
     color: CColors.primaryColor,
   );
+  static TextStyle primary414 = _textStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: CColors.primaryColor,
+  );
+  static TextStyle primaryLight414 = _textStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: Color(0xffF3B397),
+  );
+
   static TextStyle primary722 = _textStyle(
     fontWeight: FontWeight.w700,
     fontSize: 22,

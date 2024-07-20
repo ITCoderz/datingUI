@@ -1,4 +1,5 @@
 import 'package:dating/generated/assets.dart';
+import 'package:dating/screens/auth/views/set_preference_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
@@ -69,7 +70,7 @@ class CongratulationsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: CustomElevatedButton(onPressedFunction: () {
-                      Get.to(()=> const LoginScreen());
+                      Get.to(()=> const SetPreferenceScreen());
                     },
                       height: 60,
                       radius: 13,

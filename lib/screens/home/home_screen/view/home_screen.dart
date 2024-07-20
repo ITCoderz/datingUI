@@ -311,7 +311,7 @@ class HomeScreen extends StatelessWidget {
     RenderBox renderBox =
         filterKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
-    double x = position.dx +15;
+    double x = position.dx;
     double y = position.dy + renderBox.size.height - 80;
 
     showDialog(
@@ -323,7 +323,8 @@ class HomeScreen extends StatelessWidget {
           return Stack(
             children: [
               Positioned(
-                left: x,
+                left: 15,
+                right: 15,
                 top: y,
                 child: Material(
                   borderRadius: BorderRadius.circular(6),
@@ -560,7 +561,7 @@ class HomeScreen extends StatelessWidget {
                                         horizontal: 10),
                                     child: SliderTheme(
                                       data: SliderTheme.of(context).copyWith(
-                                        trackHeight: 6.0,
+                                        trackHeight: 5.0,
                                         activeTickMarkColor:
                                             CColors.primaryColor,
                                         inactiveTickMarkColor:
@@ -573,7 +574,7 @@ class HomeScreen extends StatelessWidget {
                                             const Color(0xff121212)
                                                 .withOpacity(0.4),
                                         thumbShape: const GradientThumbShape(
-                                          enabledThumbRadius: 12.0,
+                                          enabledThumbRadius: 11.0,
                                         ),
                                         minThumbSeparation: 5,
                                         thumbColor: CColors.primaryColor,
@@ -622,7 +623,7 @@ class HomeScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                          "${controller.filterlowerValue.round()}-${controller.filterupperValue.round()}",
+                                          "${controller.filterLowerValue.round()}-${controller.filterUpperValue.round()}",
                                           style: CustomTextStyles.black412,
                                         ),
                                       ],
@@ -630,11 +631,11 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   Container(
                                     height: 50,
-                                    padding: const EdgeInsets.only(right: 10),
+                                    padding: const EdgeInsets.only(right: 10,left: 10),
                                     child: RangeSliderFlutter(
                                       values: [
-                                        controller.filterlowerValue,
-                                        controller.filterupperValue
+                                        controller.filterLowerValue,
+                                        controller.filterUpperValue
                                       ],
                                       handlerHeight: 24,
                                       handler: RangeSliderFlutterHandler(
@@ -698,9 +699,9 @@ class HomeScreen extends StatelessWidget {
                                       fontSize: 15,
                                       onDragging: (handlerIndex, lowerValue,
                                           upperValue) {
-                                        controller.filterlowerValue =
+                                        controller.filterLowerValue =
                                             lowerValue;
-                                        controller.filterupperValue =
+                                        controller.filterUpperValue =
                                             upperValue;
                                         controller.update();
                                       },

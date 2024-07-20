@@ -68,8 +68,8 @@ class RegisterScreen extends StatelessWidget {
                                   height: 16,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color:
-                                    CColors.lightYellowColor.withOpacity(0.5),
+                                    color: CColors.lightYellowColor
+                                        .withOpacity(0.5),
                                   ),
                                 ),
                                 Container(
@@ -77,8 +77,8 @@ class RegisterScreen extends StatelessWidget {
                                   height: 16,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color:
-                                    CColors.lightYellowColor.withOpacity(0.5),
+                                    color: CColors.lightYellowColor
+                                        .withOpacity(0.5),
                                   ),
                                 ),
                               ],
@@ -236,7 +236,7 @@ class RegisterScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: CustomElevatedButton(
                       onPressedFunction: () {
-                        Get.to(()=> const UploadYourPhotosScreen());
+                        Get.to(() => const UploadYourPhotosScreen());
                       },
                       height: 60,
                       radius: 13,
@@ -247,8 +247,8 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   20.ph,
                   GestureDetector(
-                    onTap: (){
-                      Get.to(()=> const LoginScreen());
+                    onTap: () {
+                      Get.to(() => const LoginScreen());
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
