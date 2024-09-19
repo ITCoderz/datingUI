@@ -22,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final bool needSuffix;
   final bool needPrefix;
+  final validator;
   final bool? isPassword;
   final bool? isPasswordHide;
   final Widget? suffixWidget;
@@ -33,6 +34,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     this.width,
     this.height,
+    this.validator,
     this.hintText = "",
     this.onChangedFunction,
     this.onTap,
@@ -83,6 +85,7 @@ class CustomTextField extends StatelessWidget {
         readOnly: readOnly,
         inputFormatters: inputFormatters,
         maxLength: maxLength,
+       validator: validator,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: CustomTextStyles.black414,

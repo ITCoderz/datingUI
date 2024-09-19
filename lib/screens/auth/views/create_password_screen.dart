@@ -24,43 +24,51 @@ class CreatePasswordScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         height: 120,
         elevation: 0,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: CustomElevatedButton(onPressedFunction: () {
-                Get.to(()=> const CongratulationsScreen());
-              },
-                height: 60,
-                radius: 13,
-                gradientColor: buildLinearGradient(leftToRight: true),
-                buttonText: "Next",
-                width: context.width,),
-            ),
-            10.ph,
-            GestureDetector(
-              onTap: (){
-                Get.to(()=> const LoginScreen());
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account? ',
-                      style: CustomTextStyles.black415,
-                    ),
-                    Text(
-                      'Login',
-                      style: CustomTextStyles.primary515,
-                    ),
-                  ],
+        child: GetBuilder<AuthController>(builder: (controller){
+          return Column(
+            children: [
+           Obx(()=>  controller.loading.value? const Center(child: CircularProgressIndicator(),):   Padding(
+             padding: const EdgeInsets.symmetric(horizontal: 30),
+             child: CustomElevatedButton(onPressedFunction: () {
+               if(controller.passwordController.text!=controller.cpasswordController.text){
+                 Get.snackbar("Error", "Please fill all the fields correctly");
+               }
+               else{
+                 controller.register();
+               }
+               // Get.to(()=> const CongratulationsScreen());
+             },
+               height: 60,
+               radius: 13,
+               gradientColor: buildLinearGradient(leftToRight: true),
+               buttonText: "Next",
+               width: context.width,),
+           ),),
+              10.ph,
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=> const LoginScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account? ',
+                        style: CustomTextStyles.black415,
+                      ),
+                      Text(
+                        'Login',
+                        style: CustomTextStyles.primary515,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        },)
       ),
       body: SafeArea(
         child: SingleChildScrollView(

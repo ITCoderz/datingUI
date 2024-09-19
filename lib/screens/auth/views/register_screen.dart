@@ -28,247 +28,273 @@ class RegisterScreen extends StatelessWidget {
             width: context.width,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  30.ph,
-                  Center(
-                    child: Image.asset(
-                      Assets.imagesLogo,
-                      height: 100,
+              child: Form(
+                key: controller.registerFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    30.ph,
+                    Center(
+                      child: Image.asset(
+                        Assets.imagesLogo,
+                        height: 100,
+                      ),
                     ),
-                  ),
-                  30.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Center(
-                      child: SizedBox(
-                        width: 216,
-                        child: Stack(
-                          alignment: Alignment.center,
+                    30.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Center(
+                        child: SizedBox(
+                          width: 216,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: 216,
+                                height: 2,
+                                color: CColors.lightYellowColor.withOpacity(0.5),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 16,
+                                    height: 16,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: CColors.lightYellowColor,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 16,
+                                    height: 16,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: CColors.lightYellowColor
+                                          .withOpacity(0.5),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 16,
+                                    height: 16,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: CColors.lightYellowColor
+                                          .withOpacity(0.5),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    30.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(
+                        'Basic Info',
+                        style: CustomTextStyles.black624,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    50.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: CustomTextField(
+                        textEditingController: controller.fullNameController,
+                        borderColor: CColors.textFieldBorderColor,
+                        borderRadius: 13,
+                        height: 50,
+                        validator: (value){
+                          return controller.validateName(value);
+                        },
+                        textStyle: CustomTextStyles.black414,
+                        hintText: 'Full Name',
+                      ),
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: CustomTextField(
+                        textEditingController: controller.emailController,
+                        borderColor: CColors.textFieldBorderColor,
+                        borderRadius: 13,
+                        height: 50,
+                        validator: (value){
+                          return controller.validateEmail(value);
+                        },
+                        textStyle: CustomTextStyles.black414,
+                        hintText: 'Email',
+                      ),
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: CustomTextField(
+                        textEditingController: controller.contactController,
+                        borderColor: CColors.textFieldBorderColor,
+                        borderRadius: 13,
+                        height: 50,
+                        validator: (value){
+                          return controller.validateContact(value);
+                        },
+                        keyboardType: TextInputType.number,
+                        textStyle: CustomTextStyles.black414,
+                        hintText: 'Contact',
+                      ),
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child:Obx(()=>  CustomDropDown(
+                          onChanged: (val) {
+                            controller.updateGender(val);
+                          },
+                          hint: 'Gender',
+                          borderRadius: 13,
+                          borderColor: CColors.textFieldBorderColor,
+                          label: '',
+                          mappingList: const ['Male', 'Female', 'Others'],
+                          value: controller.selectedRelation.value),)
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: CustomTextField(
+                        textEditingController: controller.heightController,
+                        borderColor: CColors.textFieldBorderColor,
+                        borderRadius: 13,
+                        keyboardType: TextInputType.number,
+                        height: 50,
+                        validator: (value){
+                          return controller.validateHeight(value);
+                        },
+                        textStyle: CustomTextStyles.black414,
+                        hintText: 'Height',
+                      ),
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Obx(()=> CustomDropDown(
+                          onChanged: (val) {
+                            controller.updateRelation(val);
+                          },
+                          hint: 'Relationship',
+                          borderRadius: 13,
+                          borderColor: CColors.textFieldBorderColor,
+                          label: '',
+                          mappingList: const ['Uncle', 'Father', 'Others'],
+                          value: controller.selectedRelation.value)),
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: CustomTextField(
+                        textEditingController: controller.cityController,
+                        borderColor: CColors.textFieldBorderColor,
+                        borderRadius: 13,
+                        height: 50,
+                        validator: (value){
+                          return controller.validateCity(value);
+                        },
+                        textStyle: CustomTextStyles.black414,
+                        hintText: 'City',
+                      ),
+                    ),
+                    15.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Container(
+                        height: 50,
+                        width: context.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          border: Border.all(color: CColors.textFieldBorderColor),
+                        ),
+                        child: Row(
                           children: [
+                            Expanded(
+                                child: CustomTextField(
+                              textAlign: TextAlign.center,
+                              textEditingController: controller.mmController,
+                              borderColor: Colors.transparent,
+                              keyboardType: TextInputType.number,
+                              hintText: "MM",
+                            )),
                             Container(
-                              width: 216,
-                              height: 2,
-                              color: CColors.lightYellowColor.withOpacity(0.5),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: CColors.lightYellowColor,
-                                  ),
-                                ),
-                                Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: CColors.lightYellowColor
-                                        .withOpacity(0.5),
-                                  ),
-                                ),
-                                Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: CColors.lightYellowColor
-                                        .withOpacity(0.5),
-                                  ),
-                                ),
-                              ],
-                            )
+                                height: 50,
+                                width: 1,
+                                color: CColors.textFieldBorderColor),
+                            Expanded(
+                                child: CustomTextField(
+                              textAlign: TextAlign.center,
+                              textEditingController: controller.ddController,
+                              borderColor: Colors.transparent,
+                              keyboardType: TextInputType.number,
+                              hintText: "DD",
+                            )),
+                            Container(
+                                height: 50,
+                                width: 1,
+                                color: CColors.textFieldBorderColor),
+                            Expanded(
+                                child: CustomTextField(
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              textEditingController: controller.yyyyController,
+                              borderColor: Colors.transparent,
+                              hintText: "YYYY",
+                            )),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                  30.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                      'Basic Info',
-                      style: CustomTextStyles.black624,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  50.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomTextField(
-                      textEditingController: controller.fullNameController,
-                      borderColor: CColors.textFieldBorderColor,
-                      borderRadius: 13,
-                      height: 50,
-                      textStyle: CustomTextStyles.black414,
-                      hintText: 'Full Name',
-                    ),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomTextField(
-                      textEditingController: controller.emailController,
-                      borderColor: CColors.textFieldBorderColor,
-                      borderRadius: 13,
-                      height: 50,
-                      textStyle: CustomTextStyles.black414,
-                      hintText: 'Email',
-                    ),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomTextField(
-                      textEditingController: controller.contactController,
-                      borderColor: CColors.textFieldBorderColor,
-                      borderRadius: 13,
-                      height: 50,
-                      keyboardType: TextInputType.number,
-                      textStyle: CustomTextStyles.black414,
-                      hintText: 'Contact',
-                    ),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomDropDown(
-                        onChanged: (val) {},
-                        hint: 'Gender',
-                        borderRadius: 13,
-                        borderColor: CColors.textFieldBorderColor,
-                        label: '',
-                        mappingList: const ['Male', 'Female', 'Others'],
-                        value: ''),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomTextField(
-                      textEditingController: controller.heightController,
-                      borderColor: CColors.textFieldBorderColor,
-                      borderRadius: 13,
-                      keyboardType: TextInputType.number,
-                      height: 50,
-                      textStyle: CustomTextStyles.black414,
-                      hintText: 'Height',
-                    ),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomDropDown(
-                        onChanged: (val) {},
-                        hint: 'Relationship',
-                        borderRadius: 13,
-                        borderColor: CColors.textFieldBorderColor,
-                        label: '',
-                        mappingList: const ['Uncle', 'Father', 'Others'],
-                        value: ''),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomTextField(
-                      textEditingController: controller.cityController,
-                      borderColor: CColors.textFieldBorderColor,
-                      borderRadius: 13,
-                      height: 50,
-                      textStyle: CustomTextStyles.black414,
-                      hintText: 'City',
-                    ),
-                  ),
-                  15.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Container(
-                      height: 50,
-                      width: context.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13),
-                        border: Border.all(color: CColors.textFieldBorderColor),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: CustomTextField(
-                            textAlign: TextAlign.center,
-                            textEditingController: controller.mmController,
-                            borderColor: Colors.transparent,
-                            keyboardType: TextInputType.number,
-                            hintText: "MM",
-                          )),
-                          Container(
-                              height: 50,
-                              width: 1,
-                              color: CColors.textFieldBorderColor),
-                          Expanded(
-                              child: CustomTextField(
-                            textAlign: TextAlign.center,
-                            textEditingController: controller.ddController,
-                            borderColor: Colors.transparent,
-                            keyboardType: TextInputType.number,
-                            hintText: "DD",
-                          )),
-                          Container(
-                              height: 50,
-                              width: 1,
-                              color: CColors.textFieldBorderColor),
-                          Expanded(
-                              child: CustomTextField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            textEditingController: controller.yyyyController,
-                            borderColor: Colors.transparent,
-                            hintText: "YYYY",
-                          )),
-                        ],
+                    40.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: CustomElevatedButton(
+                        onPressedFunction: () {
+                            if (controller.validateAllFields()) {
+                              Get.to(() => const UploadYourPhotosScreen());
+                            } else {
+                              Get.snackbar("Error", "Please fill all the fields correctly");
+                            }
+                        },
+                        height: 60,
+                        radius: 13,
+                        gradientColor: buildLinearGradient(leftToRight: true),
+                        buttonText: "Next",
+                        width: context.width,
                       ),
                     ),
-                  ),
-                  40.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: CustomElevatedButton(
-                      onPressedFunction: () {
-                        Get.to(() => const UploadYourPhotosScreen());
+                    20.ph,
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const LoginScreen());
                       },
-                      height: 60,
-                      radius: 13,
-                      gradientColor: buildLinearGradient(leftToRight: true),
-                      buttonText: "Next",
-                      width: context.width,
-                    ),
-                  ),
-                  20.ph,
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => const LoginScreen());
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Already have an account? ',
-                            style: CustomTextStyles.black415,
-                          ),
-                          Text(
-                            'Login',
-                            style: CustomTextStyles.primary515,
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Already have an account? ',
+                              style: CustomTextStyles.black415,
+                            ),
+                            Text(
+                              'Login',
+                              style: CustomTextStyles.primary515,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  30.ph,
-                ],
+                    30.ph,
+                  ],
+                ),
               ),
             ),
           ),

@@ -125,16 +125,16 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 100.ph,
-                CustomElevatedButton(
-                  onPressedFunction: () {
-                    Get.to(() => HomeScreen());
-                  },
-                  height: 60,
-                  radius: 13,
-                  gradientColor: buildLinearGradient(leftToRight: true),
-                  buttonText: "Login",
-                  width: context.width,
-                ),
+               Obx(()=> controller.loading.value? const Center(child: CircularProgressIndicator()):  CustomElevatedButton(
+                 onPressedFunction: () {
+                   controller.login();
+                 },
+                 height: 60,
+                 radius: 13,
+                 gradientColor: buildLinearGradient(leftToRight: true),
+                 buttonText: "Login",
+                 width: context.width,
+               ),),
                 30.ph,
               ],
             ),

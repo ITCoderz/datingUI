@@ -70,7 +70,7 @@ class CongratulationsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: CustomElevatedButton(onPressedFunction: () {
-                      Get.to(()=> const SetPreferenceScreen());
+                      Get.offAll(()=> const LoginScreen());
                     },
                       height: 60,
                       radius: 13,

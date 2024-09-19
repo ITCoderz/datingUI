@@ -20,7 +20,7 @@ class SnackBarAlerts {
     required String message,
   }) {
     Get.snackbar(
-      "Attention",
+      "Message",
       message,
       backgroundColor: CColors.primaryColor,
       colorText: Colors.white,

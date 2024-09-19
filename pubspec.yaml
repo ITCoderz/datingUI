@@ -25,6 +25,9 @@ dependencies:
   image_picker:
   badges:
   range_slider_flutter: ^0.0.2
+  http:
+  get_storage:
+
 
 dev_dependencies:
   flutter_test:
