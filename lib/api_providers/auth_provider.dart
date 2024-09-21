@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dating/models/api_models/login_model.dart';
+import 'package:dating/models/api_models/user_profile_model.dart';
+import 'package:dating/screens/auth/controllers/auth_controllers.dart';
 import 'package:dating/utils/local_storage/get_storage_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -83,7 +85,8 @@ class AuthProvider {
         return true;
       } else {
         print("Error: ${response.reasonPhrase}");
-        SnackBarAlerts.warningAlert(message: response.reasonPhrase ?? "Unknown error");
+        SnackBarAlerts.warningAlert(
+            message: response.reasonPhrase ?? "Unknown error");
         return false;
       }
     } catch (e) {
@@ -92,6 +95,32 @@ class AuthProvider {
       return false;
     }
   }
+
+
+  Future<void> fetchUserProfile() async {
+    var token = 'Bearer ' +
+        Get.find<StorageController>().getLoginModel()!.data!.token.toString();
+    var headers = {'Authorization': token};
+
+    try {
+      final response = await http.get(
+          Uri.parse(AppUrl.getProfile), headers: headers);
+
+      if (response.statusCode == 200) {
+        var responseBody = json.decode(response.body);
+        UserProfileData userProfileData = UserProfileData.fromJson(
+            responseBody);
+        Get.find<StorageController>().storUserProfileModel(userProfileData);
+        print(userProfileData);
+      } else {
+        print("Error: ${response.reasonPhrase}");
+      }
+    } catch (e) {
+      print("An error occurred: $e");
+    }
+  }
+
+
 
   Future<bool> loginUser({
     required String email,
@@ -119,12 +148,14 @@ class AuthProvider {
         var responseBody = await response.stream.bytesToString();
         var responseData = jsonDecode(responseBody);
         print(json.encode(responseData));
-        Get.find<StorageController>().storeLoginModel(LoginModel.fromJson(responseData));
+        Get.find<StorageController>()
+            .storeLoginModel(LoginModel.fromJson(responseData));
 
         return true;
       } else {
         print("Error: ${response.reasonPhrase}");
-        SnackBarAlerts.warningAlert(message: response.reasonPhrase ?? "Unknown error");
+        SnackBarAlerts.warningAlert(
+            message: response.reasonPhrase ?? "Unknown error");
         return false;
       }
     } catch (e) {
@@ -133,6 +164,7 @@ class AuthProvider {
       return false;
     }
   }
+
   Future<void> sendOtp(String email) async {
     try {
       var headers = {
@@ -149,42 +181,29 @@ class AuthProvider {
 
       if (response.statusCode == 200) {
         var responseBody = await response.stream.bytesToString();
-        print(responseBody);
+        var decodedResponse = json.decode(responseBody);
+
+        // Check if there's an error message
+        if (decodedResponse.containsKey('error')) {
+          String errorMessage = decodedResponse['error'];
+          print('Error: $errorMessage');
+          SnackBarAlerts.warningAlert(message: errorMessage);
+        } else {
+          // Handle the success case (if no error is present in the response)
+          print('OTP sent successfully');
+          SnackBarAlerts.successAlert(message: "OTP sent successfully");
+        }
       } else {
-        print(response.reasonPhrase);
-        SnackBarAlerts.warningAlert(message: response.reasonPhrase ?? "Unknown error");
+        print('Error: ${response.reasonPhrase}');
+        SnackBarAlerts.warningAlert(
+            message: response.reasonPhrase ?? "Unknown error");
       }
     } catch (e) {
       print("Error: $e");
       SnackBarAlerts.warningAlert(message: "Error occurred: $e");
     }
   }
-  Future<bool> verifyOtp(String otp) async {
-    try {
-      var headers = {
-        'Content-Type': 'application/json',
-      };
-      var url = Uri.parse(AppUrl.verifyOtp);
-      var request = http.Request('POST', url)
-        ..headers.addAll(headers)
-        ..body = json.encode({"otp": otp});
 
-      var response = await request.send();
-
-      if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
-        return true;
-      } else {
-        print(response.reasonPhrase);
-        SnackBarAlerts.warningAlert(message: response.reasonPhrase ?? "Failed to verify OTP");
-        return false;
-      }
-    } catch (e) {
-      print("Error: $e");
-      SnackBarAlerts.warningAlert(message: "Error occurred: $e");
-      return false;
-    }
-  }
   Future<bool> resetPassword({
     required String otp,
     required String password,
@@ -207,7 +226,8 @@ class AuthProvider {
         print(await response.stream.bytesToString());
         return true;
       } else {
-        SnackBarAlerts.warningAlert(message: response.reasonPhrase ?? "Failed to reset password");
+        SnackBarAlerts.warningAlert(
+            message: response.reasonPhrase ?? "Failed to reset password");
         return false;
       }
     } catch (e) {

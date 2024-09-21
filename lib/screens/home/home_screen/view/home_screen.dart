@@ -7,6 +7,7 @@ import 'package:dating/screens/home/home_screen/components/custom_drawer.dart';
 import 'package:dating/screens/home/home_screen/components/slider_thumb_shape.dart';
 import 'package:dating/screens/home/home_screen/controller/home_controller.dart';
 import 'package:dating/screens/home/home_screen/view/view_profile_screen.dart';
+import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
@@ -341,7 +342,7 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     child: SingleChildScrollView(
-                      child: GetBuilder<HomeController>(
+                      child: GetBuilder<ProfileController>(
                         builder: (controller) {
                           return SizedBox(
                             height: context.height * 0.7,

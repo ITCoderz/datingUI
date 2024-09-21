@@ -2,6 +2,7 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/text_field/simple_text_field_without_height.dart';
+import 'package:dating/screens/auth/views/set_preference_screen.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/home/profile/views/profile_screen.dart';
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
@@ -17,6 +18,8 @@ import '../../../../reusable_components/dialogs/custom_dialog.dart';
 
 class EditCreatePasswordScreen extends StatelessWidget {
   const EditCreatePasswordScreen({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,24 +45,28 @@ class EditCreatePasswordScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: CustomElevatedButton(onPressedFunction: () {
-                  CustomDialogs.customDialog(
-                      context: context,
-                      titleImage: Assets.iconsSuccess,
-                      titleText: "Success!",
-                      subtitle:
-                      'Lorem Ipsum is simply dummy text of the\nprinting and industry.',
-                      buttonWidget: CustomElevatedButton(
-                        onPressedFunction: () {
-                          Get.offAll(()=> const ProfileScreen());
-                        },
-                        buttonText: "Continue",
-                        height: 40,
-                        width: 200,
-                        gradientColor:
-                        buildLinearGradient(),
-                        textStyle:
-                        CustomTextStyles.white618,
-                      ));
+
+                controller.validatePasswords();
+
+
+                  // CustomDialogs.customDialog(
+                  //     context: context,
+                  //     titleImage: Assets.iconsSuccess,
+                  //     titleText: "Success!",
+                  //     subtitle:
+                  //     'Lorem Ipsum is simply dummy text of the\nprinting and industry.',
+                  //     buttonWidget: CustomElevatedButton(
+                  //       onPressedFunction: () {
+                  //         Get.offAll(()=> const ProfileScreen());
+                  //       },
+                  //       buttonText: "Continue",
+                  //       height: 40,
+                  //       width: 200,
+                  //       gradientColor:
+                  //       buildLinearGradient(),
+                  //       textStyle:
+                  //       CustomTextStyles.white618,
+                  //     ));
 
                 },
                   height: 60,
@@ -150,7 +157,7 @@ class EditCreatePasswordScreen extends StatelessWidget {
                     20.ph,
                     Obx(()=> Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: CustomTextField(textEditingController: controller.passwordController,
+                      child: CustomTextField(textEditingController: controller.currentPasswordController,
                         borderColor: CColors.textFieldBorderColor,
                         borderRadius:13,
                         height: 50,
@@ -181,10 +188,10 @@ class EditCreatePasswordScreen extends StatelessWidget {
                         suffixMinWidth: 34,
                         needSuffix: true,
                         isPassword: true,
-                        isPasswordHide: controller.hidePassword.value,
+                        isPasswordHide: controller.hidePassword2.value,
                         suffixWidget: GestureDetector(
                           onTap: (){
-                            controller.togglePasswordVisibility();
+                            controller.togglePasswordVisibility2();
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 10),
@@ -199,17 +206,17 @@ class EditCreatePasswordScreen extends StatelessWidget {
 
                     Obx(()=> Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: CustomTextField(textEditingController: controller.cpasswordController,
+                      child: CustomTextField(textEditingController: controller.confirmPasswordController,
                         borderColor: CColors.textFieldBorderColor,
                         borderRadius:13,
                         height: 50,
                         suffixMinWidth: 34,
                         needSuffix: true,
                         isPassword: true,
-                        isPasswordHide: controller.hidePassword2.value,
+                        isPasswordHide: controller.hidePassword3.value,
                         suffixWidget: GestureDetector(
                           onTap: (){
-                            controller.togglePasswordVisibility2();
+                            controller.togglePasswordVisibility3();
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 10),
@@ -220,7 +227,6 @@ class EditCreatePasswordScreen extends StatelessWidget {
                         hintText: 'Confirm Password',
                       ),
                     ),),
-
 
                   ],
                 ),

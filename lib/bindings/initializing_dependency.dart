@@ -7,6 +7,9 @@ import 'package:get/get.dart';
 import '../screens/home/chat/message_screen/controller/messages_controller.dart';
 
 
+
+
+
 class InitializingDependency implements Bindings {
   @override
   void dependencies() {
@@ -26,9 +29,9 @@ class InitializingDependency implements Bindings {
             () => ProfileController(),
         fenix: true
     );
-    Get.lazyPut(
-            () => HomeController(),
-        fenix: true
-    );
+    // Get.lazyPut(
+    //         () => HomeController(),
+    //     fenix: true
+    // );
   }
 }

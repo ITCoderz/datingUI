@@ -8,6 +8,6 @@ class AppUrl {
   static const String otpSend = '$baseUrl/otp/send';
   static const String verifyOtp = '$baseUrl/otp/verify';
   static const String passwordReset = '$baseUrl/password/reset';
-
+  static const String getProfile='$baseUrl/profile';
 
 }

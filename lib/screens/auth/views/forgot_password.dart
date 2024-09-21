@@ -26,7 +26,8 @@ class ForgotPasswordScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: CustomElevatedButton(onPressedFunction: () {
-                Get.back();
+
+                controller.sendOtp();
               },
                 height: 60,
                 radius: 13,

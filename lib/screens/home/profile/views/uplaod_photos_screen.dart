@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dating/generated/assets.dart';
+import 'package:dating/models/api_models/user_profile_model.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/screens/home/profile/views/password_screen.dart';
@@ -16,7 +17,11 @@ import 'package:get/get.dart';
 import '../../../../reusable_components/custom_appbar/custom_appbar.dart';
 
 class EditUploadYourPhotosScreen extends StatelessWidget {
-  const EditUploadYourPhotosScreen({super.key});
+
+  List<Media> mediaList=[];
+  Map userMapData={};
+  EditUploadYourPhotosScreen(this.mediaList,this.userMapData);
+
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +144,9 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   width: 150,
                                   color: CColors.whiteColor,
                                   child: Obx(() => controller.images.isNotEmpty
-                                      ? controller.images[0] == null
+                                      ?controller.mediaList.isNotEmpty?
+                                      Image.network(mediaList[0].originalUrl.toString())
+                                      : controller.images[0] == null
                                           ? const Center(
                                               child: Icon(
                                                 Icons.add,
@@ -226,7 +233,12 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 2
+                                  child: Obx(() =>
+                                  controller.mediaList.length>1?
+                                  Image.network(mediaList[1].originalUrl.toString()):
+
+                                  controller.images.length >= 2
+
                                       ? controller.images[1] == null
                                           ? const Center(
                                               child: Icon(
@@ -321,7 +333,12 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 3
+                                  child: Obx(() =>
+
+                                  controller.mediaList.length>3?
+                                  Image.network(mediaList[2].originalUrl.toString()):
+
+                                  controller.images.length >= 3
                                       ? controller.images[2] == null
                                           ? const Center(
                                               child: Icon(
@@ -409,7 +426,12 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 4
+                                  child: Obx(() =>
+                                  controller.mediaList.length>4?
+                                  Image.network(mediaList[3].originalUrl.toString()):
+
+
+                                  controller.images.length >= 4
                                       ? controller.images[3] == null
                                           ? const Center(
                                               child: Icon(
@@ -504,7 +526,11 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 5
+                                  child: Obx(() =>
+                                  controller.mediaList.length>5?
+                                  Image.network(mediaList[4].originalUrl.toString()):
+
+                                  controller.images.length >= 5
                                       ? controller.images[4] == null
                                           ? const Center(
                                               child: Icon(
@@ -592,7 +618,12 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 6
+                                  child: Obx(() =>
+
+                                  controller.mediaList.length>6?
+                                  Image.network(mediaList[5].originalUrl.toString()):
+
+                                  controller.images.length >= 6
                                       ? controller.images[5] == null
                                           ? const Center(
                                               child: Icon(
@@ -687,7 +718,12 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 7
+                                  child: Obx(() =>
+
+                                  controller.mediaList.length>7?
+                                  Image.network(mediaList[6].originalUrl.toString()):
+
+                                  controller.images.length >= 7
                                       ? controller.images[6] == null
                                           ? const Center(
                                               child: Icon(
@@ -775,8 +811,16 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 8
-                                      ? controller.images[7] == null
+                                  child: Obx(() =>
+
+                                  controller.mediaList.length>8?
+                                  Image.network(mediaList[7].originalUrl.toString()):
+
+
+                                  controller.images.length >= 8
+                                      ?
+
+                                  controller.images[7] == null
                                           ? const Center(
                                               child: Icon(
                                                 Icons.add,
@@ -870,7 +914,13 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >= 9
+                                  child: Obx(() =>
+
+                                  controller.mediaList.length>9?
+                                  Image.network(mediaList[8].originalUrl.toString()):
+
+
+                                  controller.images.length >= 9
                                       ? controller.images[8] == null
                                           ? const Center(
                                               child: Icon(
@@ -958,7 +1008,14 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                   height: 150,
                                   width: 150,
                                   color: CColors.whiteColor,
-                                  child: Obx(() => controller.images.length >=
+                                  child: Obx(() =>
+
+                                  controller.mediaList.length>10?
+                                  Image.network(mediaList[9].originalUrl.toString()):
+
+
+
+                                  controller.images.length >=
                                           10
                                       ? controller.images[9] == null
                                           ? const Center(

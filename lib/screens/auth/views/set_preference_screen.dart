@@ -3,6 +3,7 @@ import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
 import 'package:dating/reusable_components/dropdown/custom_dropdown.dart';
 import 'package:dating/screens/home/home_screen/controller/home_controller.dart';
 import 'package:dating/screens/home/home_screen/view/home_screen.dart';
+import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -17,27 +18,25 @@ import '../../onboarding/views/onboarding_screen.dart';
 
 class SetPreferenceScreen extends StatelessWidget {
   const SetPreferenceScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeController>();
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: Size(context.width, 57),
-            child: AppbarWidget(
-              title: "Preference",
-              backButton: true,
-              favButton: false,
-              onTap: () {
-                Get.back();
-              },
-            )),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 0, right: 0, top: 30),
-          child: GetBuilder<HomeController>(builder: (controller){
-            return SingleChildScrollView(
+      child: GetBuilder<ProfileController>(builder: (controller){
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: PreferredSize(
+              preferredSize: Size(context.width, 57),
+              child: AppbarWidget(
+                title: "Preference",
+                backButton: true,
+                favButton: false,
+                onTap: () {
+                  Get.back();
+                },
+              )),
+          body: Padding(
+            padding: const EdgeInsets.only(left: 0, right: 0, top: 30),
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   Center(child: Text("What do you want?",style: CustomTextStyles.black520,)),
@@ -226,7 +225,7 @@ class SetPreferenceScreen extends StatelessWidget {
                       },
                     ),
                   ),
-              
+
                   15.ph,
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -331,7 +330,9 @@ class SetPreferenceScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: CustomDropDown(
-                        onChanged: (val) {},
+                        onChanged: (val) {
+
+                        },
                         hint: 'Relationship',
                         borderRadius: 13,
                         borderColor: CColors.textFieldBorderColor,
@@ -387,7 +388,7 @@ class SetPreferenceScreen extends StatelessWidget {
                                       Expanded(
                                         child:
                                         GestureDetector(
-                                          
+
                                           onTap:
                                               () {
                                             controller
@@ -396,15 +397,15 @@ class SetPreferenceScreen extends StatelessWidget {
                                                   .yes,
                                             );
                                           },
-                                         child: Row(
-                                           mainAxisAlignment: MainAxisAlignment.center,
-                                           children: [
-                                             SvgPicture.asset(
-                                                 controller.getSelectedSports()==Questionnaire.yes?
-                                                 Assets.iconsYes : Assets.iconsNo),                                               5.pw,
-                                             Text("Yes",style: controller.getSelectedSports()==Questionnaire.yes? CustomTextStyles.primaryLight414 : CustomTextStyles.black414,)
-                                           ],
-                                         ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                  controller.getSelectedSports()==Questionnaire.yes?
+                                                  Assets.iconsYes : Assets.iconsNo),                                               5.pw,
+                                              Text("Yes",style: controller.getSelectedSports()==Questionnaire.yes? CustomTextStyles.primaryLight414 : CustomTextStyles.black414,)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Container(
@@ -415,7 +416,7 @@ class SetPreferenceScreen extends StatelessWidget {
                                       Expanded(
                                           child:
                                           GestureDetector(
-                              
+
                                             onTap:
                                                 () {
                                               controller
@@ -423,16 +424,16 @@ class SetPreferenceScreen extends StatelessWidget {
                                                 Questionnaire.no,
                                               );
                                             },
-                                           child: Row(
-                                             mainAxisAlignment: MainAxisAlignment.center,
-                                             children: [
-                                               SvgPicture.asset(
-                                                   controller.getSelectedSports()==Questionnaire.no?
-                                                   Assets.iconsYes : Assets.iconsNo),
-                                               5.pw,
-                                               Text("No",style: controller.getSelectedSports()==Questionnaire.no? CustomTextStyles.primaryLight414 : CustomTextStyles.black414,)
-                                             ],
-                                           ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                SvgPicture.asset(
+                                                    controller.getSelectedSports()==Questionnaire.no?
+                                                    Assets.iconsYes : Assets.iconsNo),
+                                                5.pw,
+                                                Text("No",style: controller.getSelectedSports()==Questionnaire.no? CustomTextStyles.primaryLight414 : CustomTextStyles.black414,)
+                                              ],
+                                            ),
                                           )),
                                     ],
                                   ),
@@ -807,10 +808,10 @@ class SetPreferenceScreen extends StatelessWidget {
                   ),
                   25.ph,
                   CustomElevatedButton(
-                      onPressedFunction: (){
-                        Get.offAll(()=> HomeScreen());
-                      },
-                      buttonText: 'Continue',
+                    onPressedFunction: (){
+                      Get.offAll(()=> HomeScreen());
+                    },
+                    buttonText: 'Continue',
                     height: 60,
                     radius: 13,
                     gradientColor: buildLinearGradient(),
@@ -819,10 +820,10 @@ class SetPreferenceScreen extends StatelessWidget {
                   35.ph,
                 ],
               ),
-            );
-          },),
-        ),
-      ),
+            )
+          ),
+        );
+      },),
     );
   }
 }
