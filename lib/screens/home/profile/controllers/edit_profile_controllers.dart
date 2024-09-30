@@ -7,33 +7,38 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../api_providers/auth_provider.dart';
 import '../../../../utils/snackbar/snack_bar.dart';
 import '../../../auth/views/set_preference_screen.dart';
+import 'package:http/http.dart' as http;
 
+import '../views/uplaod_photos_screen.dart';
 
 enum Gender { male, female, both }
 
 enum Language { french, english, spanish }
 
 enum Relationship { serious, fun, friends }
+
 enum Questionnaire { yes, no }
+
 class ProfileController extends GetxController {
-
-
-
   var lowerValue = 18.0.obs;
   var upperValue = 60.0.obs;
   var filterLowerValue = 18.0;
   var filterUpperValue = 70.0;
-  var heightLowerValue = 18.0;
-  var heightUpperValue = 70.0;
+  var heightLowerValue = 100.0;
+  var heightUpperValue = 350.0;
   var filterLowerValueMiles = 300.0;
   var filterUpperValueMiles = 700.0;
   var selectedMilesRange = 1000.0;
   var selectedMilesRangeDefault = 2490000.0;
   var favourite = true.obs;
+  User? user;
+
+  String selectedUserLanguage = '';
 
   selectedMilesRangeFunction(value) {
     selectedMilesRange = value;
@@ -42,6 +47,23 @@ class ProfileController extends GetxController {
   }
 
   var selectedGender = Gender.male.obs;
+
+  User? profileUser;
+
+  setSelectedRelation(String value) {
+    selectedRelation = value;
+    update();
+  }
+
+  setUserLanguage(String value) {
+    selectedUserLanguage = value;
+    update();
+  }
+
+  setSelectedRelationSetPref(String value) {
+    selectedRelationSetPref = value;
+    update();
+  }
 
   void setSelectedGender(Gender gender) {
     selectedGender.value = gender;
@@ -135,26 +157,24 @@ class ProfileController extends GetxController {
   }
 
   void uploadData() {
-
-
     print(selectedSports.value);
     Get.find<ProfileController>().userMap['gender'] =
         selectedGender.value.name.toString();
     Get.find<ProfileController>().userMap['relation_ship'] =
         selectedRelationship.value.name.toString();
     Get.find<ProfileController>().userMap['is_sports'] =
-    selectedSports.value == Questionnaire.yes ? 1 : 0;
+        selectedSports.value == Questionnaire.yes ? 1 : 0;
     Get.find<ProfileController>().userMap['is_alcohol'] =
-    selectedAlcohol.value == Questionnaire.yes ? 1 : 0;
+        selectedAlcohol.value == Questionnaire.yes ? 1 : 0;
     Get.find<ProfileController>().userMap['want_child'] =
-    selectedWantChildren.value == Questionnaire.yes ? 1 : 0;
+        selectedWantChildren.value == Questionnaire.yes ? 1 : 0;
     Get.find<ProfileController>().userMap['has_child'] =
-    selectedHasChildren.value == Questionnaire.yes ? 1 : 0;
+        selectedHasChildren.value == Questionnaire.yes ? 1 : 0;
     Get.find<ProfileController>().userMap['is_smoker'] =
-    selectedSmoker.value == Questionnaire.yes ? 1 : 0;
+        selectedSmoker.value == Questionnaire.yes ? 1 : 0;
   }
 
-  Map<String, dynamic> userMap={};
+  Map<String, dynamic> userMap = {};
   TextEditingController emailController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController contactController = TextEditingController();
@@ -169,13 +189,15 @@ class ProfileController extends GetxController {
   TextEditingController aboutController = TextEditingController();
   var selectedGenderProfile = 'Male';
   var selectedRelation = "Uncle";
-  List<Media> mediaList=[];
+  var selectedRelationSetPref = '';
+
+  List<Media> mediaList = [];
 
   RxBool loading = false.obs;
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final hidePassword = true.obs;
   final hidePassword2 = true.obs;
-  final hidePassword3=true.obs;
+  final hidePassword3 = true.obs;
 
   togglePasswordVisibility() {
     hidePassword.value = !hidePassword.value;
@@ -231,22 +253,21 @@ class ProfileController extends GetxController {
 
   Future<void> fetchAndUpdateProfile() async {
     try {
-
-
       loading.value = true;
       await AuthProvider().fetchUserProfile().then((_) {
-
         var userProfile = Get.find<StorageController>().getUserProfileModel();
         if (userProfile!.userObj.isNotEmpty) {
-          User user = userProfile.userObj[0];
-          mapData(user);
-          updateFieldsInput(user);
+          user = userProfile.userObj[0];
+          profileUser = user;
+          mapData(user!);
+          updateFieldsInput(user!);
 
-          if(user.media!=null){
-            mediaList=  user.media;
+          print(user!.media.length.toString() + "*mediaLength");
+
+          if (user!.media != null) {
+            mediaList = user!.media;
             update();
           }
-
         }
         update();
         loading.value = false;
@@ -269,7 +290,7 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  void updateFieldsInput(User user){
+  void updateFieldsInput(User user) {
     fullNameController.text = user.name.toString();
     emailController.text = user.email.toString();
     contactController.text = user.contact.toString();
@@ -281,17 +302,125 @@ class ProfileController extends GetxController {
     selectedGenderProfile = user.gender.toString();
     print(user.gender.toString());
     selectedRelation = user.relationShip.toString();
-    if (selectedRelation.toString() == "null" ||
-        selectedRelation.isEmpty) {
+    print(setSelectedRelation.toString() + "*setSelectedRelation");
+    print(user.relationShip);
+    if (selectedRelation.toString() == "null" || selectedRelation.isEmpty) {
       selectedRelation = 'Uncle';
     }
-    if (selectedGenderProfile.toString() == "null" || selectedGenderProfile.isEmpty) {
+    if (selectedGenderProfile.toString() == "null" ||
+        selectedGenderProfile.isEmpty) {
       selectedGenderProfile = 'Male';
     }
+
+    print(user.age.toString());
+
+    if (user.age.toString() == 'null') {
+      filterLowerValue = 19;
+    } else {
+      filterLowerValue = double.parse(user.age);
+    }
+
+    print(user.height.toString() + "***");
+
+    if (user.height.toString() == 'null') {
+      heightLowerValue = 100;
+    } else if (double.parse(user.height.toString()) < 100) {
+      heightLowerValue = 101;
+    } else if (double.parse(user.height.toString()) > heightUpperValue) {
+      heightLowerValue = 100;
+    } else {
+      print(user.height.toString() + "I am Height");
+      heightLowerValue = double.parse(user.height);
+    }
+    print(user.media.length.toString() + "*Length");
+
+    selectedRelationSetPref = user.gender;
+    selectedUserLanguage = user.language;
+
+    if (user.isSports) {
+      setSelectedSports(
+        Questionnaire.yes,
+      );
+    } else {
+      setSelectedSports(
+        Questionnaire.no,
+      );
+    }
+
+    if (user.isAlcohol) {
+      setSelectedAlcohol(
+        Questionnaire.yes,
+      );
+    } else {
+      setSelectedAlcohol(
+        Questionnaire.no,
+      );
+    }
+
+    if (user.isSmoker) {
+      setSelectedSmoker(
+        Questionnaire.yes,
+      );
+    } else {
+      setSelectedSmoker(
+        Questionnaire.no,
+      );
+    }
+    if (user.hasChild) {
+      setSelectedHasChildren(
+        Questionnaire.yes,
+      );
+    } else {
+      setSelectedHasChildren(
+        Questionnaire.no,
+      );
+    }
+
+    if (user.wantChild) {
+      setSelectedWantChildren(
+        Questionnaire.yes,
+      );
+    } else {
+      setSelectedWantChildren(
+        Questionnaire.no,
+      );
+    }
+
+    // var heightLowerValue = 18.0;
+    // var heightUpperValue = 70.0;
+    //
+    // var filterLowerValueMiles = 300.0;
+    // var filterUpperValueMiles = 700.0;
+    //
+    // var selectedMilesRange = 1000.0;
+    // var selectedMilesRangeDefault = 2490000.0;
+    // var favourite = true.obs;
+
+    profileUser!.name = fullNameController.text;
+
+    profileUser!.email = emailController.text;
+
+    profileUser!.contact = contactController.text;
+
+    profileUser!.height = heightController.text;
+
+    profileUser!.city = cityController.text;
+
+    //  profileUser!.dob=   ddController.text
+    //
+    //   mmController.text =
+    //   yyyyController.text = user.dob.year.toString();
+
+    profileUser!.gender = selectedGenderProfile;
+    print(user.gender.toString());
+    profileUser!.relationShip = selectedRelation;
+
+    print(setSelectedRelation.toString() + "*setSelectedRelation");
+
     update();
   }
-  void mapData(User user){
 
+  void mapData(User user) {
     userMap = {
       "fullName": user.name.toString(),
       "email": user.email.toString(),
@@ -306,62 +435,204 @@ class ProfileController extends GetxController {
     };
 
 // Setting default values if they are null or empty
-    userMap["relationShip"] = (userMap["relationShip"] == "null" || userMap["relationShip"].isEmpty)
-        ? "Uncle"
-        : userMap["relationShip"];
+    userMap["relationShip"] =
+        (userMap["relationShip"] == "null" || userMap["relationShip"].isEmpty)
+            ? "Uncle"
+            : userMap["relationShip"];
 
-    userMap["gender"] = (userMap["gender"] == "null" || userMap["gender"].isEmpty)
-        ? "Male"
-        : userMap["gender"];
-
-  }
-  updateUserProfile(){
-
-    // userMap["password"]=passwordController.text.toString();
-    // userMap['password_confirmation']=confirmPasswordController.text.toString();
-
-
+    userMap["gender"] =
+        (userMap["gender"] == "null" || userMap["gender"].isEmpty)
+            ? "Male"
+            : userMap["gender"];
   }
 
   void validatePasswords() {
     String currentPassword = currentPasswordController.text;
     String newPassword = passwordController.text;
-    String confirmPassword =confirmPasswordController.text;
+    String confirmPassword = confirmPasswordController.text;
 
     if (currentPassword.isEmpty) {
-      SnackBarAlerts.warningAlert(
-          message: "Current password cannot be empty."
-      );
+      SnackBarAlerts.warningAlert(message: "Current password cannot be empty.");
     } else if (newPassword.isEmpty) {
-      SnackBarAlerts.warningAlert(
-          message: "New password cannot be empty."
-      );
+      SnackBarAlerts.warningAlert(message: "New password cannot be empty.");
     } else if (confirmPassword.isEmpty) {
-      SnackBarAlerts.warningAlert(
-          message: "Confirm password cannot be empty."
-      );
+      SnackBarAlerts.warningAlert(message: "Confirm password cannot be empty.");
     } else if (newPassword != confirmPassword) {
       SnackBarAlerts.warningAlert(
-          message: "New password and confirm password do not match."
-      );
-    }  else if (!isPasswordValid(newPassword)) {
+          message: "New password and confirm password do not match.");
+    } else if (!isPasswordValid(newPassword)) {
       SnackBarAlerts.warningAlert(
-          message: "New password is not strong enough."
-      );
+          message: "New password is not strong enough.");
     } else {
-      Get.to(()=> const SetPreferenceScreen());
       SnackBarAlerts.warningAlert(
-          message: "Passwords are valid. Proceed with update."
-      );
+          message: "Passwords are valid. Proceed with update.");
     }
   }
 
+  Future<void> updateUserProfile() async {
+    // Combine date parts into one string
+    String dob =
+        "${yyyyController.text}-${mmController.text}-${ddController.text}";
 
+    // Start loading
+    loading.value = true;
+
+    try {
+      bool? result = await AuthProvider().updateProfileUser(
+        fullName: fullNameController.text,
+        email: emailController.text,
+        contact: contactController.text,
+        gender: selectedGender.value.name,
+        // This can be dynamic based on your form
+        height: heightController.text,
+        relationshipStatus: selectedRelation,
+        // This can be dynamic based on your form
+        city: cityController.text,
+        dob: dob,
+        password: passwordController.text,
+        passwordConfirmation: confirmPasswordController.text,
+        age: filterLowerValue.toString(),
+        imagePaths: images,
+      );
+
+      // Stop loading
+      loading.value = false;
+
+      if (result) {
+        SnackBarAlerts.successAlert(message: "Update successful!");
+
+        // Clear text controllers
+        fullNameController.clear();
+        emailController.clear();
+        contactController.clear();
+        heightController.clear();
+        cityController.clear();
+        mmController.clear();
+        ddController.clear();
+        yyyyController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+        // Clear images and selections
+        images.clear();
+
+        update();
+        //  Get.to(() => const CongratulationsScreen());
+      } else {
+        SnackBarAlerts.warningAlert(
+            message: "Registration failed. Please try again.");
+      }
+    } catch (e) {
+      loading.value = false;
+      SnackBarAlerts.warningAlert(message: "An error occurred: $e");
+    }
+  }
 
 // A helper function to check password strength (you can adjust the rules)
   bool isPasswordValid(String password) {
-    return password.length >= 8; // Example: password must be at least 8 characters long
+    return password.length >=
+        8; // Example: password must be at least 8 characters long
   }
 
-}
+  Future<void> updateProfile() async {
+    loading.value = true;
+    var headers = {
+      'Authorization': 'Bearer ' +
+          Get.find<StorageController>().getLoginModel()!.data!.token.toString()
+    };
 
+    print(headers);
+    var request = http.MultipartRequest('POST',
+        Uri.parse('https://dating.coderzsolution.com/api/profile/update'));
+
+    request.fields.addAll({
+      'full_name': fullNameController.text,
+      'gender': selectedGenderProfile,
+      'height': '100',
+      'relation_ship': selectedRelation,
+      'city': cityController.text,
+      'dob': yyyyController.text +
+          "-" +
+          mmController.text +
+          "-" +
+          ddController.text,
+      'email': emailController.text,
+      'contact': contactController.text,
+      'about': "aboutController.text",
+      'current_password': currentPasswordController.text,
+      'password': passwordController.text,
+      'password_confirmation': confirmPasswordController.text,
+      'age': '25',
+      'address': "dsd"
+    });
+
+    // 'full_name': 'testing',
+    // 'gender': 'male',
+    // 'height': '2.0',
+    // 'relation_ship': 'single',
+    // 'city': 'karachi',
+    // 'dob': '2024-12-12',
+    // 'email': 'abc1@gmail.com',
+    // 'contact': '03034488400',
+    // 'about': 'sdadsadasdasdasdas',
+    // 'current_password': '12345678',
+    // 'password': '12345678',
+    // 'password_confirmation': '12345678',
+    // 'age': '22',
+    // 'address': 'kakak'
+    print(request.fields);
+
+    if (images.isNotEmpty) {
+      try {
+        request.files
+            .add(await http.MultipartFile.fromPath('images[]', images[0]));
+      } catch (e) {
+        print('Error picking image: $e');
+      }
+    }
+
+    request.headers.addAll(headers);
+
+    print(request.fields);
+
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        String responseString = await response.stream.bytesToString();
+        print('Profile updated successfully: $responseString');
+        loading.value = false;
+        SnackBarAlerts.successAlert(message: "Update successful!");
+      } else {
+        loading.value = false;
+        print('Failed to update profile: ${response.reasonPhrase}');
+        SnackBarAlerts.warningAlert(
+            message: "Update failed. Please try again.");
+      }
+    } catch (e) {
+      loading.value = false;
+      print('Request error: $e');
+      SnackBarAlerts.warningAlert(
+          message: "Update failed. Please try again. $e");
+    }
+    loading.value = false;
+  }
+
+  void checkFields() {
+    if (fullNameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        contactController.text.isNotEmpty &&
+        heightController.text.isNotEmpty &&
+        cityController.text.isNotEmpty &&
+        ddController.text.isNotEmpty &&
+        mmController.text.isNotEmpty &&
+        yyyyController.text.isNotEmpty &&
+        selectedGenderProfile.isNotEmpty &&
+        selectedRelation.isNotEmpty) {
+      Get.to(EditUploadYourPhotosScreen());
+    } else {
+      // At least one field is empty; print a message
+      SnackBarAlerts.warningAlert(message: "Please fill in all fields.");
+      print("Please fill in all fields.");
+    }
+  }
+}

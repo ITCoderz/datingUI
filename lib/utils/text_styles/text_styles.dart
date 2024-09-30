@@ -31,7 +31,9 @@ class CustomTextStyles {
     Color? color,
     TextDecoration? decoration,
     Color? decorationColor,
-  }) {
+  })
+
+  {
     return GoogleFonts.poppins(
       fontWeight: fontWeight,
       fontSize: fontSize,

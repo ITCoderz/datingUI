@@ -117,10 +117,12 @@ class AuthController extends GetxController {
 
   // Method to validate all fields
   bool validateAllFields() {
+    print(selectedGender.toString());
     if (validateEmail(emailController.text) != null ||
         validateName(fullNameController.text) != null ||
         validateContact(contactController.text) != null ||
         validateHeight(heightController.text) != null ||
+        selectedGender.toString().isEmpty||
         validateCity(cityController.text) != null) {
       return false;
     }

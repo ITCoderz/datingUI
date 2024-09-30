@@ -19,7 +19,8 @@ class AuthProvider {
     return _instance;
   }
 
-  Future<bool> registerUser({
+
+  Future<bool> updateProfileUser({
     required String fullName,
     required String email,
     required String contact,
@@ -35,8 +36,9 @@ class AuthProvider {
   }) async {
     try {
       // Prepare the multipart request
-      var url = Uri.parse(AppUrl.register);
+      var url = Uri.parse(AppUrl.profile);
       var request = http.MultipartRequest('POST', url);
+
       print("<--------------data--------------");
       print(fullName);
       print(email);
@@ -73,9 +75,97 @@ class AuthProvider {
           path,
         ));
       }
+      print(request.fields);
 
       // Send the request
       var response = await request.send();
+
+      print(response.request);
+
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var responseBody = await http.Response.fromStream(response);
+        var responseData = jsonDecode(responseBody.body);
+        print(json.encode(responseData));
+        return true;
+      } else {
+        print("Error: ${response.reasonPhrase}");
+        SnackBarAlerts.warningAlert(
+            message: response.reasonPhrase ?? "Unknown error");
+        return false;
+      }
+    } catch (e) {
+      print("Error: $e");
+      SnackBarAlerts.warningAlert(message: "Error occurred: $e");
+      return false;
+    }
+  }
+
+
+
+
+
+  Future<bool> registerUser({
+    required String fullName,
+    required String email,
+    required String contact,
+    required String gender,
+    required String height,
+    required String relationshipStatus,
+    required String city,
+    required String dob,
+    required String password,
+    required String passwordConfirmation,
+    required String age,
+    required List<dynamic> imagePaths, // List of image paths
+  }) async {
+    try {
+      // Prepare the multipart request
+      var url = Uri.parse(AppUrl.register);
+      var request = http.MultipartRequest('POST', url);
+
+      print("<--------------data--------------");
+      print(fullName);
+      print(email);
+      print(contact);
+      print(gender);
+      print(height);
+      print(relationshipStatus);
+      print(city);
+      print(dob);
+      print(password);
+      print(passwordConfirmation);
+      print(age);
+      print(imagePaths);
+      print("<--------------data--------------");
+
+      request.fields.addAll({
+        'full_name': fullName,
+        'email': email,
+        'contact': contact,
+        'gender': gender,
+        'height': height,
+        'relation_ship': relationshipStatus,
+        'city': city,
+        'dob': dob,
+        'password': password,
+        'password_confirmation': passwordConfirmation,
+        'age': age
+      });
+
+      // Add image files to the request
+      for (String path in imagePaths) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'images[]',
+          path,
+        ));
+      }
+      print(request.fields);
+
+      // Send the request
+      var response = await request.send();
+
+      print(response.request);
 
       print(response.statusCode);
       if (response.statusCode == 200) {

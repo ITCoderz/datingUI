@@ -16,8 +16,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
   return SafeArea(
       child: Scaffold(
         bottomNavigationBar: const CustomBottomAppBar(
@@ -61,6 +59,7 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
+
                           Get.to(()=> const EditProfileScreen());
                         },
                         child: Container(

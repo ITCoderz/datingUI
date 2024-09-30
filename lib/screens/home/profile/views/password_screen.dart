@@ -40,13 +40,13 @@ class EditCreatePasswordScreen extends StatelessWidget {
         bottomNavigationBar: BottomAppBar(
           height: 80,
           elevation: 0,
-          child: Column(
+          child:Obx(()=>controller.loading.value?Center(child: CircularProgressIndicator()): Column(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: CustomElevatedButton(onPressedFunction: () {
 
-                controller.validatePasswords();
+                  controller.updateProfile();
 
 
                   // CustomDialogs.customDialog(
@@ -77,7 +77,7 @@ class EditCreatePasswordScreen extends StatelessWidget {
               ),
               10.ph,
             ],
-          ),
+          )),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
