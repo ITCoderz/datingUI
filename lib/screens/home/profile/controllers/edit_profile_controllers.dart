@@ -38,6 +38,8 @@ class ProfileController extends GetxController {
   var favourite = true.obs;
   User? user;
 
+  List<int> deletedImages = [];
+
   String selectedUserLanguage = '';
 
   selectedMilesRangeFunction(value) {
@@ -213,12 +215,65 @@ class ProfileController extends GetxController {
 
   RxList images = [].obs;
 
-  selectImage() async {
+  var selectedImage0 = Rx<XFile?>(null);
+  var selectedImage1 = Rx<XFile?>(null);
+  var selectedImage2 = Rx<XFile?>(null);
+  var selectedImage3 = Rx<XFile?>(null);
+  var selectedImage4 = Rx<XFile?>(null);
+  var selectedImage5 = Rx<XFile?>(null);
+  var selectedImage6 = Rx<XFile?>(null);
+  var selectedImage7 = Rx<XFile?>(null);
+
+  void setImagesAsIndex(int index, XFile selectedImage) {
+    // Check the index and assign the selected image to the corresponding variable
+    if (index == 0) {
+      selectedImage0.value = selectedImage;
+    } else if (index == 1) {
+      selectedImage1.value = selectedImage;
+    } else if (index == 2) {
+      selectedImage2.value = selectedImage;
+    } else if (index == 3) {
+      selectedImage3.value = selectedImage;
+    } else if (index == 4) {
+      selectedImage4.value = selectedImage;
+    } else if (index == 5) {
+      selectedImage5.value = selectedImage;
+    } else if (index == 6) {
+      selectedImage6.value = selectedImage;
+    } else if (index == 7) {
+      selectedImage7.value = selectedImage;
+    }
+  }
+
+  void setImagesAsNull(
+    int index,
+  ) {
+    // Check the index and assign the selected image to the corresponding variable
+    if (index == 0) {
+      selectedImage0.value = null;
+    } else if (index == 1) {
+      selectedImage1.value = null;
+    } else if (index == 2) {
+      selectedImage2.value = null;
+    } else if (index == 3) {
+      selectedImage3.value = null;
+    } else if (index == 4) {
+      selectedImage4.value = null;
+    } else if (index == 5) {
+      selectedImage5.value = null;
+    } else if (index == 6) {
+      selectedImage6.value = null;
+    } else if (index == 7) {
+      selectedImage7.value = null;
+    }
+    update();
+  }
+
+  selectImage(int index) async {
     XFile? selectedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (selectedImage != null) {
-      File convertedFile = File(selectedImage.path);
-      images.add(convertedFile.path);
+      setImagesAsIndex(index, selectedImage);
       update();
     } else {
       debugPrint("No image selected!");
@@ -385,38 +440,14 @@ class ProfileController extends GetxController {
         Questionnaire.no,
       );
     }
-
-    // var heightLowerValue = 18.0;
-    // var heightUpperValue = 70.0;
-    //
-    // var filterLowerValueMiles = 300.0;
-    // var filterUpperValueMiles = 700.0;
-    //
-    // var selectedMilesRange = 1000.0;
-    // var selectedMilesRangeDefault = 2490000.0;
-    // var favourite = true.obs;
-
     profileUser!.name = fullNameController.text;
-
     profileUser!.email = emailController.text;
-
     profileUser!.contact = contactController.text;
-
     profileUser!.height = heightController.text;
-
     profileUser!.city = cityController.text;
-
-    //  profileUser!.dob=   ddController.text
-    //
-    //   mmController.text =
-    //   yyyyController.text = user.dob.year.toString();
-
     profileUser!.gender = selectedGenderProfile;
     print(user.gender.toString());
     profileUser!.relationShip = selectedRelation;
-
-    print(setSelectedRelation.toString() + "*setSelectedRelation");
-
     update();
   }
 
@@ -469,6 +500,70 @@ class ProfileController extends GetxController {
     }
   }
 
+  void updateSelectedImages() {
+    // Clear the current list before populating
+    images.clear();
+    deletedImages.clear();
+    update();
+    // Check each selected image and add it to the list if it's not null
+    if (selectedImage0.value != null) {
+      images.add(File(selectedImage0.value!.path));
+      if (user!.media.length > 0) {
+        deletedImages.add(user!.media[0].id);
+      }
+    }
+    if (selectedImage1.value != null) {
+      images.add(File(selectedImage1.value!.path));
+      if (user!.media.length > 1) {
+        deletedImages.add(user!.media[1].id);
+      }
+    }
+
+    if (selectedImage2.value != null) {
+      images.add(File(selectedImage2.value!.path));
+      if (user!.media.length > 2) {
+        deletedImages.add(user!.media[2].id);
+      }
+    }
+
+    if (selectedImage3.value != null) {
+      images.add(File(selectedImage3.value!.path));
+      if (user!.media.length > 3) {
+        deletedImages.add(user!.media[3].id);
+      }
+    }
+
+    if (selectedImage4.value != null) {
+      images.add(File(selectedImage4.value!.path));
+      if (user!.media.length > 4) {
+        deletedImages.add(user!.media[4].id);
+      }
+    }
+
+    if (selectedImage5.value != null) {
+      images.add(File(selectedImage5.value!.path));
+      if (user!.media.length > 5) {
+        deletedImages.add(user!.media[5].id);
+      }
+    }
+
+    if (selectedImage6.value != null) {
+      images.add(File(selectedImage6.value!.path));
+      if (user!.media.length > 6) {
+        deletedImages.add(user!.media[6].id);
+      }
+    }
+
+    if (selectedImage7.value != null) {
+      images.add(File(selectedImage7.value!.path));
+      if (user!.media.length > 7) {
+        deletedImages.add(user!.media[7].id);
+      }
+    }
+    update();
+    print(deletedImages.length);
+  }
+
   Future<void> updateUserProfile() async {
     // Combine date parts into one string
     String dob =
@@ -476,8 +571,10 @@ class ProfileController extends GetxController {
 
     // Start loading
     loading.value = true;
-
     try {
+      updateSelectedImages();
+      print(deletedImages.length.toString());
+
       bool? result = await AuthProvider().updateProfileUser(
         fullName: fullNameController.text,
         email: emailController.text,
@@ -493,6 +590,9 @@ class ProfileController extends GetxController {
         passwordConfirmation: confirmPasswordController.text,
         age: filterLowerValue.toString(),
         imagePaths: images,
+        deletedImages: deletedImages,
+        currentPassword: currentPasswordController.text
+        
       );
 
       // Stop loading
@@ -500,7 +600,8 @@ class ProfileController extends GetxController {
 
       if (result) {
         SnackBarAlerts.successAlert(message: "Update successful!");
-
+        deletedImages.clear();
+        deletedImages=[];
         // Clear text controllers
         fullNameController.clear();
         emailController.clear();
@@ -512,15 +613,14 @@ class ProfileController extends GetxController {
         yyyyController.clear();
         passwordController.clear();
         confirmPasswordController.clear();
-
         // Clear images and selections
         images.clear();
-
+        deletedImages.clear();
         update();
         //  Get.to(() => const CongratulationsScreen());
       } else {
         SnackBarAlerts.warningAlert(
-            message: "Registration failed. Please try again.");
+            message: "Update failed. Please try again.");
       }
     } catch (e) {
       loading.value = false;
@@ -533,89 +633,78 @@ class ProfileController extends GetxController {
     return password.length >=
         8; // Example: password must be at least 8 characters long
   }
-
-  Future<void> updateProfile() async {
-    loading.value = true;
-    var headers = {
-      'Authorization': 'Bearer ' +
-          Get.find<StorageController>().getLoginModel()!.data!.token.toString()
-    };
-
-    print(headers);
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://dating.coderzsolution.com/api/profile/update'));
-
-    request.fields.addAll({
-      'full_name': fullNameController.text,
-      'gender': selectedGenderProfile,
-      'height': '100',
-      'relation_ship': selectedRelation,
-      'city': cityController.text,
-      'dob': yyyyController.text +
-          "-" +
-          mmController.text +
-          "-" +
-          ddController.text,
-      'email': emailController.text,
-      'contact': contactController.text,
-      'about': "aboutController.text",
-      'current_password': currentPasswordController.text,
-      'password': passwordController.text,
-      'password_confirmation': confirmPasswordController.text,
-      'age': '25',
-      'address': "dsd"
-    });
-
-    // 'full_name': 'testing',
-    // 'gender': 'male',
-    // 'height': '2.0',
-    // 'relation_ship': 'single',
-    // 'city': 'karachi',
-    // 'dob': '2024-12-12',
-    // 'email': 'abc1@gmail.com',
-    // 'contact': '03034488400',
-    // 'about': 'sdadsadasdasdasdas',
-    // 'current_password': '12345678',
-    // 'password': '12345678',
-    // 'password_confirmation': '12345678',
-    // 'age': '22',
-    // 'address': 'kakak'
-    print(request.fields);
-
-    if (images.isNotEmpty) {
-      try {
-        request.files
-            .add(await http.MultipartFile.fromPath('images[]', images[0]));
-      } catch (e) {
-        print('Error picking image: $e');
-      }
-    }
-
-    request.headers.addAll(headers);
-
-    print(request.fields);
-
-    try {
-      http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
-        String responseString = await response.stream.bytesToString();
-        print('Profile updated successfully: $responseString');
-        loading.value = false;
-        SnackBarAlerts.successAlert(message: "Update successful!");
-      } else {
-        loading.value = false;
-        print('Failed to update profile: ${response.reasonPhrase}');
-        SnackBarAlerts.warningAlert(
-            message: "Update failed. Please try again.");
-      }
-    } catch (e) {
-      loading.value = false;
-      print('Request error: $e');
-      SnackBarAlerts.warningAlert(
-          message: "Update failed. Please try again. $e");
-    }
-    loading.value = false;
-  }
+  //
+  // Future<void> updateProfile() async {
+  //   loading.value = true;
+  //   var headers = {
+  //     'Authorization': 'Bearer ' +
+  //         Get.find<StorageController>().getLoginModel()!.data!.token.toString()
+  //   };
+  //
+  //   print(headers);
+  //   updateSelectedImages();
+  //   print(deletedImages.length.toString());
+  //   var request = http.MultipartRequest('POST',
+  //       Uri.parse('https://dating.coderzsolution.com/api/profile/update'));
+  //
+  //   request.fields.addAll({
+  //     'full_name': fullNameController.text,
+  //     'gender': selectedGenderProfile,
+  //     'height': '100',
+  //     'relation_ship': selectedRelation,
+  //     'city': cityController.text,
+  //     'dob': yyyyController.text +
+  //         "-" +
+  //         mmController.text +
+  //         "-" +
+  //         ddController.text,
+  //     'email': emailController.text,
+  //     'contact': contactController.text,
+  //     'about': "aboutController.text",
+  //     'current_password': currentPasswordController.text,
+  //     'password': passwordController.text,
+  //     'password_confirmation': confirmPasswordController.text,
+  //     'age': '25',
+  //     'address': "dsd",
+  //
+  //   });
+  //
+  //   print(request.fields);
+  //
+  //   if (images.isNotEmpty) {
+  //     try {
+  //       request.files
+  //           .add(await http.MultipartFile.fromPath('images[]', images[0]));
+  //     } catch (e) {
+  //       print('Error picking image: $e');
+  //     }
+  //   }
+  //
+  //   request.headers.addAll(headers);
+  //
+  //   print(request.fields);
+  //
+  //   try {
+  //     http.StreamedResponse response = await request.send();
+  //     if (response.statusCode == 200) {
+  //       String responseString = await response.stream.bytesToString();
+  //       print('Profile updated successfully: $responseString');
+  //       loading.value = false;
+  //       SnackBarAlerts.successAlert(message: "Update successful!");
+  //     } else {
+  //       loading.value = false;
+  //       print('Failed to update profile: ${response.reasonPhrase}');
+  //       SnackBarAlerts.warningAlert(
+  //           message: "Update failed. Please try again.");
+  //     }
+  //   } catch (e) {
+  //     loading.value = false;
+  //     print('Request error: $e');
+  //     SnackBarAlerts.warningAlert(
+  //         message: "Update failed. Please try again. $e");
+  //   }
+  //   loading.value = false;
+  // }
 
   void checkFields() {
     if (fullNameController.text.isNotEmpty &&
@@ -628,11 +717,64 @@ class ProfileController extends GetxController {
         yyyyController.text.isNotEmpty &&
         selectedGenderProfile.isNotEmpty &&
         selectedRelation.isNotEmpty) {
-      Get.to(EditUploadYourPhotosScreen());
+      if (isValidDate(int.parse(ddController.text.toString()),
+          int.parse(mmController.text), int.parse(yyyyController.text))) {
+        Get.to(EditUploadYourPhotosScreen());
+        print(yyyyController.text);
+      } else {
+        SnackBarAlerts.warningAlert(message: "Please select valid date.");
+      }
     } else {
       // At least one field is empty; print a message
       SnackBarAlerts.warningAlert(message: "Please fill in all fields.");
       print("Please fill in all fields.");
     }
+  }
+
+  bool isValidDate(int day, int month, int year) {
+    // Get the current date
+    DateTime today = DateTime.now();
+
+    // Check if the year is valid (4 digits between 1000 and 9999) and not greater than the current year
+    if (year < 1000 || year > today.year) {
+      return false;
+    }
+
+    // Check if month is valid (between 1 and 12)
+    if (month < 1 || month > 12) {
+      return false;
+    }
+
+    // Check if day is valid (positive and within the correct range for the month)
+    if (day < 1) {
+      return false;
+    }
+
+    // Number of days in each month
+    List<int> daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Adjust for leap year in February
+    if (month == 2 && isLeapYear(year)) {
+      daysInMonth[1] = 29; // Set February to 29 days in a leap year
+    }
+
+    // Ensure day does not exceed the maximum allowed days for the month
+    if (day > daysInMonth[month - 1]) {
+      return false;
+    }
+
+    // Check if the date is greater than today
+    DateTime inputDate = DateTime(year, month, day);
+    if (inputDate.isAfter(today)) {
+      return false;
+    }
+
+    // If all checks pass, the date is valid
+    return true;
+  }
+
+// Helper function to check for leap year
+  bool isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
   }
 }

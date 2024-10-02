@@ -46,7 +46,7 @@ class EditCreatePasswordScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: CustomElevatedButton(onPressedFunction: () {
 
-                  controller.updateProfile();
+                  controller.updateUserProfile();
 
 
                   // CustomDialogs.customDialog(

@@ -32,28 +32,40 @@ class AuthProvider {
     required String password,
     required String passwordConfirmation,
     required String age,
-    required List<dynamic> imagePaths, // List of image paths
+    required List<dynamic> imagePaths, // Ensure this is List<File>
+    required List<int> deletedImages,
+    required String currentPassword
   }) async {
     try {
       // Prepare the multipart request
-      var url = Uri.parse(AppUrl.profile);
+      var url = Uri.parse(AppUrl.updateProfile);
       var request = http.MultipartRequest('POST', url);
 
-      print("<--------------data--------------");
-      print(fullName);
-      print(email);
-      print(contact);
-      print(gender);
-      print(height);
-      print(relationshipStatus);
-      print(city);
-      print(dob);
-      print(password);
-      print(passwordConfirmation);
-      print(age);
-      print(imagePaths);
-      print("<--------------data--------------");
+      print('Deleted Images: ${deletedImages.toString()}');
 
+      // Retrieve and validate the token
+      var token = Get.find<StorageController>().getLoginModel()?.data?.token?.toString() ?? '';
+      print('Token: $token'); // Debug token
+
+      // Set up the request headers directly on the request object
+      request.headers.addAll({
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json', // Set this if needed; otherwise, it can be omitted
+      });
+
+      //   'full_name': 'testing',
+      // 'gender': 'male',
+      // 'height': '2.0',
+      // 'relation_ship': 'single',
+      // 'city': 'karachi',
+      // 'dob': '2024-12-12',
+      // 'email': 'abc1@gmail.com',
+      // 'contact': '2131199',
+      // 'about': 'sdadsadasdasdasdas',
+      // 'current_password': '12345678',
+      // 'password': '12345678',
+      // 'password_confirmation': '12345678'
+      // Add form fields
       request.fields.addAll({
         'full_name': fullName,
         'email': email,
@@ -63,30 +75,34 @@ class AuthProvider {
         'relation_ship': relationshipStatus,
         'city': city,
         'dob': dob,
+        'about':'about',
         'password': password,
         'password_confirmation': passwordConfirmation,
-        'age': age
+        'current_password':currentPassword,
+        if (deletedImages.isNotEmpty) 'delete_image_id': deletedImages.join(','), // Join as a string if needed
       });
 
       // Add image files to the request
-      for (String path in imagePaths) {
+      for (File imagesPath in imagePaths) {
+        String path = imagesPath.path; // Get the string path from the File object
         request.files.add(await http.MultipartFile.fromPath(
           'images[]',
           path,
         ));
       }
-      print(request.fields);
 
       // Send the request
       var response = await request.send();
 
-      print(response.request);
+      print('Request: ${response.request}');
+      print('Status Code: ${response.statusCode}');
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
+        deletedImages.clear();
+        deletedImages=[];
         var responseBody = await http.Response.fromStream(response);
         var responseData = jsonDecode(responseBody.body);
-        print(json.encode(responseData));
+        print('Response Data: ${json.encode(responseData)}');
         return true;
       } else {
         print("Error: ${response.reasonPhrase}");
@@ -100,6 +116,8 @@ class AuthProvider {
       return false;
     }
   }
+
+
 
 
 
@@ -191,6 +209,8 @@ class AuthProvider {
     var token = 'Bearer ' +
         Get.find<StorageController>().getLoginModel()!.data!.token.toString();
     var headers = {'Authorization': token};
+
+
 
     try {
       final response = await http.get(

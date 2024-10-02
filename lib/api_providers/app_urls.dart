@@ -9,6 +9,6 @@ class AppUrl {
   static const String verifyOtp = '$baseUrl/otp/verify';
   static const String passwordReset = '$baseUrl/password/reset';
   static const String getProfile='$baseUrl/profile';
-  static const String profile='$baseUrl/profile';
+  static const String updateProfile='$baseUrl/profile/update';
 
 }
