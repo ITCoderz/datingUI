@@ -19,23 +19,20 @@ class AuthProvider {
     return _instance;
   }
 
-
-  Future<bool> updateProfileUser({
-    required String fullName,
-    required String email,
-    required String contact,
-    required String gender,
-    required String height,
-    required String relationshipStatus,
-    required String city,
-    required String dob,
-    required String password,
-    required String passwordConfirmation,
-    required String age,
-    required List<dynamic> imagePaths, // Ensure this is List<File>
-    required List<int> deletedImages,
-    required String currentPassword
-  }) async {
+  Future<bool> updateProfileUser(
+      {required String fullName,
+      required String email,
+      required String contact,
+      required String gender,
+      required String height,
+      required String relationshipStatus,
+      required String city,
+      required String dob,
+      required String password,
+      required String passwordConfirmation,
+      required List<dynamic> imagePaths, // Ensure this is List<File>
+      required List<int> deletedImages,
+      required String currentPassword}) async {
     try {
       // Prepare the multipart request
       var url = Uri.parse(AppUrl.updateProfile);
@@ -44,28 +41,21 @@ class AuthProvider {
       print('Deleted Images: ${deletedImages.toString()}');
 
       // Retrieve and validate the token
-      var token = Get.find<StorageController>().getLoginModel()?.data?.token?.toString() ?? '';
+      var token = Get.find<StorageController>()
+              .getLoginModel()
+              ?.data
+              ?.token
+              ?.toString() ??
+          '';
       print('Token: $token'); // Debug token
 
       // Set up the request headers directly on the request object
       request.headers.addAll({
         'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json', // Set this if needed; otherwise, it can be omitted
+        'Content-Type': 'application/json',
+        // Set this if needed; otherwise, it can be omitted
       });
 
-      //   'full_name': 'testing',
-      // 'gender': 'male',
-      // 'height': '2.0',
-      // 'relation_ship': 'single',
-      // 'city': 'karachi',
-      // 'dob': '2024-12-12',
-      // 'email': 'abc1@gmail.com',
-      // 'contact': '2131199',
-      // 'about': 'sdadsadasdasdasdas',
-      // 'current_password': '12345678',
-      // 'password': '12345678',
-      // 'password_confirmation': '12345678'
-      // Add form fields
       request.fields.addAll({
         'full_name': fullName,
         'email': email,
@@ -75,16 +65,19 @@ class AuthProvider {
         'relation_ship': relationshipStatus,
         'city': city,
         'dob': dob,
-        'about':'about',
+        'about': 'about',
         'password': password,
         'password_confirmation': passwordConfirmation,
-        'current_password':currentPassword,
-        if (deletedImages.isNotEmpty) 'delete_image_id': deletedImages.join(','), // Join as a string if needed
+        'current_password': currentPassword,
+        if (deletedImages.isNotEmpty)
+          'delete_image_id':
+              deletedImages.join(','), // Join as a string if needed
       });
 
       // Add image files to the request
       for (File imagesPath in imagePaths) {
-        String path = imagesPath.path; // Get the string path from the File object
+        String path =
+            imagesPath.path; // Get the string path from the File object
         request.files.add(await http.MultipartFile.fromPath(
           'images[]',
           path,
@@ -99,7 +92,7 @@ class AuthProvider {
 
       if (response.statusCode == 200) {
         deletedImages.clear();
-        deletedImages=[];
+        deletedImages = [];
         var responseBody = await http.Response.fromStream(response);
         var responseData = jsonDecode(responseBody.body);
         print('Response Data: ${json.encode(responseData)}');
@@ -117,11 +110,82 @@ class AuthProvider {
     }
   }
 
+  Future<void> sendProfilePreference({
+    required String gender,
+    required String height,
+    required String relationShip,
+    required String age,
+    required String address,
+    required String lat,
+    required String lng,
+    required String language,
+    required String isSports,
+    required String isAlcohol,
+    required String wantChild,
+    required String hasChild,
+    required String isSmoker,
+
+  }) async {
+    var token = Get.find<StorageController>()
+        .getLoginModel()
+        ?.data
+        ?.token
+        ?.toString() ??
+        '';
+    var headers = {
+      'Authorization':
+          'Bearer '+token,
+      'Content-Type': 'application/json'
+    };
+
+    // Retrieve and validate the token
+
+    print('Token: $token'); // Debug token
 
 
+    var body = json.encode({
+      "gender": gender,
+      "height":height,
+      "relation_ship": relationShip,
+      "age": age,
+      "address": address,
+      "lat": lat,
+      "lng": lng,
+      "language": language,
+      "is_sports": isSports,
+      "is_alcohol": isAlcohol,
+      "want_child": wantChild,
+      "has_child": hasChild,
+      "is_smoker": isSmoker
+    });
+
+    var request = http.Request('POST', Uri.parse(AppUrl.setPrefrences));
+    request.headers.addAll(headers);
+    request.body = body;
+
+    try {
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+
+        String responseBody = await response.stream.bytesToString();
+        print(responseBody);
 
 
+        SnackBarAlerts.successAlert(
+            message:  "Set Preferences Updated");
 
+      } else {
+        print('Error: ${response.reasonPhrase}');
+        SnackBarAlerts.warningAlert(
+            message: response.reasonPhrase ?? "Error");
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      SnackBarAlerts.warningAlert(
+          message: e.toString() ?? "Updated");
+    }
+  }
 
   Future<bool> registerUser({
     required String fullName,
@@ -204,22 +268,18 @@ class AuthProvider {
     }
   }
 
-
   Future<void> fetchUserProfile() async {
     var token = 'Bearer ' +
         Get.find<StorageController>().getLoginModel()!.data!.token.toString();
     var headers = {'Authorization': token};
-
-
-
     try {
-      final response = await http.get(
-          Uri.parse(AppUrl.getProfile), headers: headers);
+      final response =
+          await http.get(Uri.parse(AppUrl.getProfile), headers: headers);
 
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
-        UserProfileData userProfileData = UserProfileData.fromJson(
-            responseBody);
+        UserProfileData userProfileData =
+            UserProfileData.fromJson(responseBody);
         Get.find<StorageController>().storUserProfileModel(userProfileData);
         print(userProfileData);
       } else {
@@ -229,8 +289,6 @@ class AuthProvider {
       print("An error occurred: $e");
     }
   }
-
-
 
   Future<bool> loginUser({
     required String email,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dating/models/api_models/user_profile_model.dart';
+import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:dating/utils/local_storage/get_storage_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../api_providers/auth_provider.dart';
 import '../../../../utils/snackbar/snack_bar.dart';
-import '../../../auth/views/set_preference_screen.dart';
+import '../../../auth/views/congratulations_screen.dart';
+
 import 'package:http/http.dart' as http;
 
 import '../views/uplaod_photos_screen.dart';
@@ -25,22 +27,16 @@ enum Relationship { serious, fun, friends }
 enum Questionnaire { yes, no }
 
 class ProfileController extends GetxController {
-  var lowerValue = 18.0.obs;
-  var upperValue = 60.0.obs;
-  var filterLowerValue = 18.0;
-  var filterUpperValue = 70.0;
-  var heightLowerValue = 100.0;
-  var heightUpperValue = 350.0;
-  var filterLowerValueMiles = 300.0;
-  var filterUpperValueMiles = 700.0;
-  var selectedMilesRange = 1000.0;
-  var selectedMilesRangeDefault = 2490000.0;
+
   var favourite = true.obs;
   User? user;
-
+  var filterLowerValue = 18.0;
+  var filterUpperValue = 70.0;
   List<int> deletedImages = [];
 
   String selectedUserLanguage = '';
+  var selectedMilesRange = 1000.0;
+  var selectedMilesRangeDefault = 2490000.0;
 
   selectedMilesRangeFunction(value) {
     selectedMilesRange = value;
@@ -145,18 +141,7 @@ class ProfileController extends GetxController {
     return selectedSmoker.value;
   }
 
-  clearAll() {
-    lowerValue.value = 18.0;
-    upperValue.value = 70.0;
 
-    filterLowerValue = 18.0;
-    filterUpperValue = 70.0;
-    filterLowerValueMiles = 300.0;
-    filterUpperValueMiles = 700.0;
-    selectedMilesRange = 500.0;
-    selectedMilesRangeDefault = 2490000.0;
-    update();
-  }
 
   void uploadData() {
     print(selectedSports.value);
@@ -223,6 +208,58 @@ class ProfileController extends GetxController {
   var selectedImage5 = Rx<XFile?>(null);
   var selectedImage6 = Rx<XFile?>(null);
   var selectedImage7 = Rx<XFile?>(null);
+
+  var isDeleted0=false.obs;
+  var isDeleted1=false.obs;
+  var isDeleted2=false.obs;
+  var isDeleted3=false.obs;
+  var isDeleted4=false.obs;
+  var isDeleted5=false.obs;
+  var isDeleted6=false.obs;
+  var isDeleted7=false.obs;
+
+  void setDeleted(bool isDeleted, int index,int deletedId) {
+    deletedImages.add(deletedId);
+    update();
+    switch (index) {
+      case 0:
+        isDeleted0.value = isDeleted;
+        update();
+        break;
+      case 1:
+        isDeleted1.value = isDeleted;
+        update();
+        break;
+      case 2:
+        isDeleted2.value = isDeleted;
+        update();
+        break;
+      case 3:
+        isDeleted3.value = isDeleted;
+        update();
+        break;
+      case 4:
+        isDeleted4.value = isDeleted;
+        update();
+        break;
+      case 5:
+        isDeleted5.value = isDeleted;
+        update();
+        break;
+      case 6:
+        isDeleted6.value = isDeleted;
+        update();
+        break;
+      case 7:
+        isDeleted7.value = isDeleted;
+        update();
+        break;
+      default:
+        print('Index out of range');
+    }
+    update;
+  }
+
 
   void setImagesAsIndex(int index, XFile selectedImage) {
     // Check the index and assign the selected image to the corresponding variable
@@ -367,26 +404,7 @@ class ProfileController extends GetxController {
       selectedGenderProfile = 'Male';
     }
 
-    print(user.age.toString());
 
-    if (user.age.toString() == 'null') {
-      filterLowerValue = 19;
-    } else {
-      filterLowerValue = double.parse(user.age);
-    }
-
-    print(user.height.toString() + "***");
-
-    if (user.height.toString() == 'null') {
-      heightLowerValue = 100;
-    } else if (double.parse(user.height.toString()) < 100) {
-      heightLowerValue = 101;
-    } else if (double.parse(user.height.toString()) > heightUpperValue) {
-      heightLowerValue = 100;
-    } else {
-      print(user.height.toString() + "I am Height");
-      heightLowerValue = double.parse(user.height);
-    }
     print(user.media.length.toString() + "*Length");
 
     selectedRelationSetPref = user.gender;
@@ -501,9 +519,6 @@ class ProfileController extends GetxController {
   }
 
   void updateSelectedImages() {
-    // Clear the current list before populating
-    images.clear();
-    deletedImages.clear();
     update();
     // Check each selected image and add it to the list if it's not null
     if (selectedImage0.value != null) {
@@ -588,7 +603,6 @@ class ProfileController extends GetxController {
         dob: dob,
         password: passwordController.text,
         passwordConfirmation: confirmPasswordController.text,
-        age: filterLowerValue.toString(),
         imagePaths: images,
         deletedImages: deletedImages,
         currentPassword: currentPasswordController.text
@@ -617,7 +631,7 @@ class ProfileController extends GetxController {
         images.clear();
         deletedImages.clear();
         update();
-        //  Get.to(() => const CongratulationsScreen());
+          Get.to(() =>  HomeScreen());
       } else {
         SnackBarAlerts.warningAlert(
             message: "Update failed. Please try again.");
@@ -717,8 +731,7 @@ class ProfileController extends GetxController {
         yyyyController.text.isNotEmpty &&
         selectedGenderProfile.isNotEmpty &&
         selectedRelation.isNotEmpty) {
-      if (isValidDate(int.parse(ddController.text.toString()),
-          int.parse(mmController.text), int.parse(yyyyController.text))) {
+      if (isValidDate(int.parse(ddController.text.toString()), int.parse(mmController.text), int.parse(yyyyController.text))) {
         Get.to(EditUploadYourPhotosScreen());
         print(yyyyController.text);
       } else {

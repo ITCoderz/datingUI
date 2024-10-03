@@ -1,5 +1,5 @@
 import 'package:dating/generated/assets.dart';
-import 'package:dating/screens/auth/views/set_preference_screen.dart';
+
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';

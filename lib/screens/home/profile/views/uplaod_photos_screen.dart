@@ -189,7 +189,13 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                     }
                                     // If no gallery image, check for network image (index 0)
                                     if (controller.user!.media.isNotEmpty) {
-                                      return Stack(
+                                      return controller.isDeleted0.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ): Stack(
                                         children: [
                                           Image.network(
                                             controller
@@ -207,6 +213,42 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                                 ),
                                               );
                                             },
+                                          ),
+
+                                          Positioned(
+                                            right: 8,
+                                            top: 8,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                controller.setDeleted(true, 0,controller
+                                                    .user!.media[0].id);
+                                                // controller.setImagesAsNull(0);
+                                              },
+                                              child: Container(
+                                                height: 30,
+                                                width: 30,
+                                                padding:
+                                                const EdgeInsets.all(3),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(5),
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.2),
+                                                      offset:
+                                                      const Offset(4, 4),
+                                                      blurRadius: 10,
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: const Icon(
+                                                  Icons.delete,
+                                                  color: CColors.primaryColor,
+                                                ),
+                                              ),
+                                            ),
                                           ),
 
                                         ],
@@ -298,22 +340,67 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                     }
                                     // If no gallery image, check for network image (index 1)
                                     if (controller.user!.media.length > 1) {
-                                      return Image.network(
-                                        controller.user!.media[1].originalUrl
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                      return controller.isDeleted1.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ): Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[1].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 1,controller
+                                                  .user!.media[1].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
 
                                     // Fallback widget
@@ -407,23 +494,69 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                       );
                                     }
 
-                                    if (controller.user!.media.length > 3) {
-                                      return Image.network(
-                                        controller.user!.media[3].originalUrl
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                    if (controller.user!.media.length > 2) {
+                                      return controller.isDeleted2.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ):
+                                      Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[2].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 2,controller
+                                                  .user!.media[2].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
                                     return const Center(
                                       child: Icon(
@@ -508,23 +641,69 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                       );
                                     }
 
-                                    if (controller.user!.media.length > 4) {
-                                      return Image.network(
-                                        controller.user!.media[4].originalUrl
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                    if (controller.user!.media.length > 3) {
+                                      return controller.isDeleted3.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ):
+                                      Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[3].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 3,controller
+                                                  .user!.media[3].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
                                     return const Center(
                                       child: Icon(
@@ -618,22 +797,68 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                     }
                                     // If no gallery image, check for network image
                                     if (controller.user!.media.length > 4) {
-                                      return Image.network(
-                                        controller.user!.media[4].originalUrl
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                      return controller.isDeleted4.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ):
+                                      Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[4].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 4,controller
+                                                  .user!.media[4].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
 
                                     // If neither, show a fallback widget
@@ -723,22 +948,68 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
 
                                     // If no gallery image, check for network image
                                     if (controller.user!.media.length > 5) {
-                                      return Image.network(
-                                        controller.user!.media[5].originalUrl
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                      return controller.isDeleted5.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ):
+                                      Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[5].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 5,controller
+                                                  .user!.media[5].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
 
                                     // If neither, show a fallback widget
@@ -835,22 +1106,68 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
 
                                     // If no gallery image, check for network image
                                     if (controller.user!.media.length > 6) {
-                                      return Image.network(
-                                        controller.user!.media[6].originalUrl
-                                            .toString(), // Show network image
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                      return controller.isDeleted6.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ):
+                                      Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[6].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 6,controller
+                                                  .user!.media[6].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
 
                                     // If neither, show a fallback widget
@@ -939,23 +1256,70 @@ class EditUploadYourPhotosScreen extends StatelessWidget {
                                     }
 
                                     // If no gallery image, check for network image
+
                                     if (controller.user!.media.length > 7) {
-                                      return Image.network(
-                                        controller.user!.media[7].originalUrl
-                                            .toString(), // Show network image
-                                        fit: BoxFit.cover,
-                                        height: 155,
-                                        width: 155,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const Center(
-                                            child: Icon(
-                                              Icons.error,
-                                              color: CColors.primaryColor,
+                                      return controller.isDeleted7.value? Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 36,
+                                          color: CColors.primaryColor,
+                                        ),
+                                      ):
+                                      Stack(children: [
+
+                                        Image.network(
+                                          controller.user!.media[7].originalUrl
+                                              .toString(),
+                                          fit: BoxFit.cover,
+                                          height: 155,
+                                          width: 155,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color: CColors.primaryColor,
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              controller.setDeleted(true, 7,controller
+                                                  .user!.media[7].id);
+                                              // controller.setImagesAsNull(0);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              padding:
+                                              const EdgeInsets.all(3),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                    const Offset(4, 4),
+                                                    blurRadius: 10,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: CColors.primaryColor,
+                                              ),
                                             ),
-                                          );
-                                        },
-                                      );
+                                          ),
+                                        ),
+                                      ],);
                                     }
 
                                     // If neither, show a fallback widget

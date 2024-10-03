@@ -52,10 +52,12 @@ class RegisterScreen extends StatelessWidget {
                               Container(
                                 width: 216,
                                 height: 2,
-                                color: CColors.lightYellowColor.withOpacity(0.5),
+                                color:
+                                    CColors.lightYellowColor.withOpacity(0.5),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     width: 16,
@@ -107,7 +109,7 @@ class RegisterScreen extends StatelessWidget {
                         borderColor: CColors.textFieldBorderColor,
                         borderRadius: 13,
                         height: 50,
-                        validator: (value){
+                        validator: (value) {
                           return controller.validateName(value);
                         },
                         textStyle: CustomTextStyles.black414,
@@ -122,7 +124,7 @@ class RegisterScreen extends StatelessWidget {
                         borderColor: CColors.textFieldBorderColor,
                         borderRadius: 13,
                         height: 50,
-                        validator: (value){
+                        validator: (value) {
                           return controller.validateEmail(value);
                         },
                         textStyle: CustomTextStyles.black414,
@@ -137,7 +139,7 @@ class RegisterScreen extends StatelessWidget {
                         borderColor: CColors.textFieldBorderColor,
                         borderRadius: 13,
                         height: 50,
-                        validator: (value){
+                        validator: (value) {
                           return controller.validateContact(value);
                         },
                         keyboardType: TextInputType.number,
@@ -147,18 +149,19 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     15.ph,
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child:Obx(()=>  CustomDropDown(
-                          onChanged: (val) {
-                            controller.updateGender(val);
-                          },
-                          hint: 'Gender',
-                          borderRadius: 13,
-                          borderColor: CColors.textFieldBorderColor,
-                          label: '',
-                          mappingList: const ['Male', 'Female', 'Others'],
-                          value: controller.selectedRelation.value),)
-                    ),
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Obx(
+                          () => CustomDropDown(
+                              onChanged: (val) {
+                                controller.updateGender(val);
+                              },
+                              hint: 'Gender',
+                              borderRadius: 13,
+                              borderColor: CColors.textFieldBorderColor,
+                              label: '',
+                              mappingList: const ['Male', 'Female', 'Others'],
+                              value: controller.selectedRelation.value),
+                        )),
                     15.ph,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -168,7 +171,7 @@ class RegisterScreen extends StatelessWidget {
                         borderRadius: 13,
                         keyboardType: TextInputType.number,
                         height: 50,
-                        validator: (value){
+                        validator: (value) {
                           return controller.validateHeight(value);
                         },
                         textStyle: CustomTextStyles.black414,
@@ -178,7 +181,7 @@ class RegisterScreen extends StatelessWidget {
                     15.ph,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Obx(()=> CustomDropDown(
+                      child: Obx(() => CustomDropDown(
                           onChanged: (val) {
                             controller.updateRelation(val);
                           },
@@ -197,7 +200,7 @@ class RegisterScreen extends StatelessWidget {
                         borderColor: CColors.textFieldBorderColor,
                         borderRadius: 13,
                         height: 50,
-                        validator: (value){
+                        validator: (value) {
                           return controller.validateCity(value);
                         },
                         textStyle: CustomTextStyles.black414,
@@ -212,7 +215,8 @@ class RegisterScreen extends StatelessWidget {
                         width: context.width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13),
-                          border: Border.all(color: CColors.textFieldBorderColor),
+                          border:
+                              Border.all(color: CColors.textFieldBorderColor),
                         ),
                         child: Row(
                           children: [
@@ -257,11 +261,19 @@ class RegisterScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: CustomElevatedButton(
                         onPressedFunction: () {
-                            if (controller.validateAllFields()) {
+                          if (controller.validateAllFields()) {
+                            if (controller.isValidDate(
+                                int.parse(controller.ddController.text),
+                                int.parse(
+                                  controller.mmController.text,
+                                ),
+                                int.parse(controller.yyyyController.text))) {
                               Get.to(() => const UploadYourPhotosScreen());
-                            } else {
-                              Get.snackbar("Error", "Please fill all the fields correctly");
                             }
+                          } else {
+                            Get.snackbar("Error",
+                                "Please fill all the fields correctly");
+                          }
                         },
                         height: 60,
                         radius: 13,

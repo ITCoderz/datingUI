@@ -135,6 +135,7 @@ class AuthController extends GetxController {
       return;
     }
 
+
     // Combine date parts into one string
     String dob = "${yyyyController.text}-${mmController.text}-${ddController
         .text}";
@@ -254,6 +255,63 @@ class AuthController extends GetxController {
       loading.value = false;
       SnackBarAlerts.warningAlert(message: "An error occurred: $e");
     }
+  }
+
+  bool isValidDate(dynamic day, dynamic month, dynamic year) {
+    // Check if inputs are not null
+    if (day == null || month == null || year == null) {
+      return false;
+    }
+
+    // Ensure inputs are integers
+    if (day is! int || month is! int || year is! int) {
+      return false;
+    }
+
+    // Get the current date
+    DateTime today = DateTime.now();
+
+    // Check if the year is valid (4 digits between 1000 and 9999) and not greater than the current year
+    if (year < 1000 || year > today.year) {
+      return false;
+    }
+
+    // Check if month is valid (between 1 and 12)
+    if (month < 1 || month > 12) {
+      return false;
+    }
+
+    // Check if day is valid (positive and within the correct range for the month)
+    if (day < 1) {
+      return false;
+    }
+
+    // Number of days in each month
+    List<int> daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Adjust for leap year in February
+    if (month == 2 && isLeapYear(year)) {
+      daysInMonth[1] = 29; // Set February to 29 days in a leap year
+    }
+
+    // Ensure day does not exceed the maximum allowed days for the month
+    if (day > daysInMonth[month - 1]) {
+      return false;
+    }
+
+    // Check if the date is greater than today
+    DateTime inputDate = DateTime(year, month, day);
+    if (inputDate.isAfter(today)) {
+      return false;
+    }
+
+    // If all checks pass, the date is valid
+    return true;
+  }
+
+// Helper function to check for leap year
+  bool isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
   }
 
 }

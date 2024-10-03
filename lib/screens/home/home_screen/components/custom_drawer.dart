@@ -1,5 +1,6 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
+
 import 'package:dating/screens/auth/views/starting_screen.dart';
 import 'package:dating/screens/home/profile/views/profile_screen.dart';
 import 'package:dating/screens/home/settings/privacy_screen.dart';
@@ -11,6 +12,8 @@ import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../auth/views/prefrences/set_preference_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -71,6 +74,15 @@ class CustomDrawer extends StatelessWidget {
                     ),
 
                     GreyBorderContainer(
+                      title: "Set Preferences",
+                      prefix: Assets.iconsUser,
+                      onTapFunction: () {
+                        Get.back();
+                        Get.to(()=>  SetPreferenceScreen());
+                      },
+                    ),
+
+                    GreyBorderContainer(
                       title: "Terms & Services",
                       prefix: Assets.iconsTermsService,
                       onTapFunction: () {
@@ -98,6 +110,9 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+
+
+
               Padding(
                 padding:  EdgeInsets.only(left: 20,right: 20,top: context.height*0.75),
                 child: CustomElevatedButton(
