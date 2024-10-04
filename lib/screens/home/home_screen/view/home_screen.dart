@@ -1,4 +1,6 @@
+import 'package:dating/api_providers/auth_provider.dart';
 import 'package:dating/generated/assets.dart';
+import 'package:dating/models/api_models/get_all_user_list_model.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
 import 'package:dating/reusable_components/dialogs/custom_dialog.dart';
@@ -92,215 +94,279 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               20.ph,
-              Expanded(
-                child: SizedBox(
-                    height: context.height * 0.65,
-                    width: context.width,
-                    child: FittedBox(
-                      child: Stack(
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 440,
-                                width: context.width,
-                              ),
-                              Container(
-                                height: 90,
-                                width: context.width,
-                                decoration: BoxDecoration(
-                                    gradient: buildLinearGradient(),
-                                    borderRadius: BorderRadius.circular(13)),
-                                padding: const EdgeInsets.only(top: 30),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const WhiteContainer(
-                                        icon: Assets.iconsClear,
-                                        padding: 12,
+
+            Expanded(
+              child: FutureBuilder<List<UserProfileDataObj>>(
+                future: AuthProvider().getAllUsersList(), // Calling the Future method
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No profiles found.'));
+                  }
+
+                  // List of profiles to display
+                  final profiles = snapshot.data!;
+
+                  return ListView.builder(
+                    itemCount: profiles.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final profile = profiles[index];
+                      return    Expanded(
+                        child: SizedBox(
+                            height: context.height * 0.65,
+                            width: context.width,
+                            child: FittedBox(
+                              child: Stack(
+                                children: [
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 440,
+                                        width: context.width,
                                       ),
-                                    ),
-                                    20.pw,
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.to(() => const ViewProfileScreen());
-                                      },
-                                      child: const WhiteContainer(
-                                        icon: Assets.iconsOpen,
-                                        height: 48,
-                                        width: 48,
-                                        borderColor: CColors.primaryColor,
-                                      ),
-                                    ),
-                                    20.pw,
-                                    GestureDetector(
-                                      onTap: () {
-                                        CustomDialogs.customDialog(
-                                            context: context,
-                                            titleImage: Assets.iconsWarning,
-                                            titleText: "Warning",
-                                            subtitle:
-                                                'You have reached the limits\nTry again tomorrow',
-                                            buttonWidget: CustomElevatedButton(
-                                              onPressedFunction: () {
-                                                Get.back();
+                                      Container(
+                                        height: 90,
+                                        width: context.width,
+                                        decoration: BoxDecoration(
+                                            gradient: buildLinearGradient(),
+                                            borderRadius: BorderRadius.circular(13)),
+                                        padding: const EdgeInsets.only(top: 30),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: const WhiteContainer(
+                                                icon: Assets.iconsClear,
+                                                padding: 12,
+                                              ),
+                                            ),
+                                            20.pw,
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(() => const ViewProfileScreen());
                                               },
-                                              buttonText: "Continue",
-                                              height: 40,
-                                              width: 200,
-                                              gradientColor:
-                                                  buildLinearGradient(),
-                                              textStyle:
-                                                  CustomTextStyles.white618,
-                                            ));
-                                      },
-                                      child: const WhiteContainer(
-                                        icon: Assets.iconsStar,
-                                        padding: 8,
+                                              child: const WhiteContainer(
+                                                icon: Assets.iconsOpen,
+                                                height: 48,
+                                                width: 48,
+                                                borderColor: CColors.primaryColor,
+                                              ),
+                                            ),
+                                            20.pw,
+                                            GestureDetector(
+                                              onTap: () {
+                                                CustomDialogs.customDialog(
+                                                    context: context,
+                                                    titleImage: Assets.iconsWarning,
+                                                    titleText: "Warning",
+                                                    subtitle:
+                                                    'You have reached the limits\nTry again tomorrow',
+                                                    buttonWidget: CustomElevatedButton(
+                                                      onPressedFunction: () {
+                                                        Get.back();
+                                                      },
+                                                      buttonText: "Continue",
+                                                      height: 40,
+                                                      width: 200,
+                                                      gradientColor:
+                                                      buildLinearGradient(),
+                                                      textStyle:
+                                                      CustomTextStyles.white618,
+                                                    ));
+                                              },
+                                              child: const WhiteContainer(
+                                                icon: Assets.iconsStar,
+                                                padding: 8,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Stack(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => const ViewProfileScreen());
-                                },
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(13),
-                                    child: Image.asset(
-                                      Assets.imagesPhoto,
-                                      height: 470,
-                                      width: context.width,
-                                      fit: BoxFit.cover,
-                                    )),
-                              ),
-                              Positioned(
-                                bottom: 181,
-                                right: 0,
-                                child: SvgPicture.asset(
-                                  Assets.iconsContainer,
-                                  height: 108,
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 181,
-                                right: 5,
-                                child: SizedBox(
-                                  height: 108,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(Assets.iconsTopOpen),
-                                      10.ph,
-                                      SvgPicture.asset(Assets.iconsBottomOpen),
                                     ],
                                   ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 10,
-                                right: 10,
-                                left: 10,
-                                child: Container(
-                                  height: 60,
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        const Color(0xffED7368).withOpacity(1),
-                                        const Color(0xffF3B55B).withOpacity(1),
-                                      ],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+
+
+                                  Stack(
                                     children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "@username",
-                                            style: CustomTextStyles.white516,
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.to(() => const ViewProfileScreen());
+                                        },
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(13),
+                                            child:profile.media!=null&&profile.media.length>0? Image.network(
+                                              height: 470,
+                                              width: context.width,
+                                              fit: BoxFit.cover,
+                                               profile.media[0].originalUrl,
+                                              // Placeholder to display while the image is loading
+                                              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return Center(child: child); // When the image has loaded successfully
+                                                }
+                                                return Center(
+                                                  child: CircularProgressIndicator(
+                                                    value: loadingProgress.expectedTotalBytes != null
+                                                        ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
+                                              // Error handling for when the image fails to load
+                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                return Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  color: Colors.grey, // Fallback color
+                                                  child: const Icon(
+                                                    Icons.error, // Error icon
+                                                    color: Colors.red,
+                                                    size: 40,
+                                                  ),
+                                                );
+                                              },
+                                            ):
+                                            Image.asset(
+                                              Assets.imagesPhoto,
+                                              height: 470,
+                                              width: context.width,
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
+                                      Positioned(
+                                        bottom: 181,
+                                        right: 0,
+                                        child: SvgPicture.asset(
+                                          Assets.iconsContainer,
+                                          height: 108,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 181,
+                                        right: 5,
+                                        child: SizedBox(
+                                          height: 108,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(Assets.iconsTopOpen),
+                                              10.ph,
+                                              SvgPicture.asset(Assets.iconsBottomOpen),
+                                            ],
                                           ),
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                Assets.iconsLocationPin,
-                                                height: 15,
-                                                colorFilter:
-                                                    const ColorFilter.mode(
-                                                  CColors.whiteColor,
-                                                  BlendMode.srcIn,
-                                                ),
-                                              ),
-                                              5.pw,
-                                              Text(
-                                                "Location....",
-                                                style:
-                                                    CustomTextStyles.white412,
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
+                                      Positioned(
+                                        bottom: 10,
+                                        right: 10,
+                                        left: 10,
+                                        child: Container(
+                                          height: 60,
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(13),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                const Color(0xffED7368).withOpacity(1),
+                                                const Color(0xffF3B55B).withOpacity(1),
+                                              ],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                              height: 15,
-                                              width: 51,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.09),
-                                                color: const Color(0xff86EFB3)
-                                                    .withOpacity(0.3),
-                                              ),
-                                              child: const Center(
-                                                child: Text(
-                                                  "Active",
-                                                  style: TextStyle(
-                                                      fontSize: 09,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xff00FF6C)),
-                                                ),
-                                              )),
-                                          Row(
                                             children: [
-                                              Text(
-                                                "21 year",
-                                                style:
-                                                    CustomTextStyles.white412,
+                                              Column(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "@"+profile.name,
+                                                    style: CustomTextStyles.white516,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        Assets.iconsLocationPin,
+                                                        height: 15,
+                                                        colorFilter:
+                                                        const ColorFilter.mode(
+                                                          CColors.whiteColor,
+                                                          BlendMode.srcIn,
+                                                        ),
+                                                      ),
+                                                      5.pw,
+                                                      Text(
+                                                        profile.city,
+                                                        style:
+                                                        CustomTextStyles.white412,
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Container(
+                                                      height: 15,
+                                                      width: 51,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(4.09),
+                                                        color: const Color(0xff86EFB3)
+                                                            .withOpacity(0.3),
+                                                      ),
+                                                      child: const Center(
+                                                        child: Text(
+                                                          "Active",
+                                                          style: TextStyle(
+                                                              fontSize: 09,
+                                                              fontWeight:
+                                                              FontWeight.w400,
+                                                              color: Color(0xff00FF6C)),
+                                                        ),
+                                                      )),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                       profile.age +" year",
+                                                        style:
+                                                        CustomTextStyles.white412,
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
                                               )
                                             ],
-                                          )
-                                        ],
-                                      )
+                                          ),
+                                        ),
+                                      ),
                                     ],
-                                  ),
-                                ),
+                                  )
+
+
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )),
-              )
+                            )),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+
+
             ],
           ),
         ),

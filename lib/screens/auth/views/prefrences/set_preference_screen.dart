@@ -10,15 +10,19 @@ import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:range_slider_flutter/range_slider_flutter.dart';
 import '../../../../reusable_components/buttons/custom_elevated_button.dart';
 import '../../../../utils/colors/app_colors.dart';
+import '../../../../utils/location_services.dart';
 import '../../../home/home_screen/components/slider_thumb_shape.dart';
 import '../../../onboarding/views/onboarding_screen.dart';
 
 class SetPreferenceScreen extends StatelessWidget {
+  // final LocationService _locationService = LocationService();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -888,9 +892,19 @@ class SetPreferenceScreen extends StatelessWidget {
                           ),
                           25.ph,
                         controller.loadingUpdate.value?CircularProgressIndicator():  CustomElevatedButton(
-                            onPressedFunction: () {
+                            onPressedFunction: ()async {
+                              controller.setPrefrencesApi('','');
+                              //
+                              // try {
+                              //   Position? position = await _locationService.getCurrentLocation();
+                              //   if (position != null) {
+                              //     print('Latitude: ${position.latitude}, Longitude: ${position.longitude}');
+                              //     // Do something with the latitude and longitude
+                              //   }
+                              // } catch (e) {
+                              //   print(e);
+                              // }
 
-                              controller.setPrefrencesApi();
                             },
                             buttonText: 'Continue',
                             height: 60,

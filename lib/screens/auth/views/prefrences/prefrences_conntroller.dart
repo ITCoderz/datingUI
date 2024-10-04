@@ -89,10 +89,13 @@ class PrefrencesConntroller extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
+
     await fetchAndUpdateProfile();
+
   }
 
   Future<void> fetchAndUpdateProfile() async {
+
     try {
       loadingMain.value = true;
       await AuthProvider().fetchUserProfile().then((_) {
@@ -222,7 +225,7 @@ class PrefrencesConntroller extends GetxController {
     update();
   }
 
-  Future<void> setPrefrencesApi() async {
+  Future<void> setPrefrencesApi(String lat,String lng) async {
     loadingUpdate.value=true;
     update();
     print(lowerAgeValue);
@@ -231,9 +234,9 @@ class PrefrencesConntroller extends GetxController {
         height: heightLowerValue.toString(),
         relationShip: selectedRelationSetPref,
         age: lowerAgeValue.toString(),
-        address: '',
-        lat: '',
-        lng: '',
+
+        lat: lat,
+        lng: lng,
         language: selectedGender.value,
         isSports: getSelectedSports()==Questionnaire.no?"0":"1",
         isAlcohol: getSelectedAlcohol()==Questionnaire.no?"0":"1",

@@ -10,6 +10,8 @@ import 'package:path/path.dart'; // Used for file name extraction
 import 'package:dating/api_providers/app_urls.dart';
 import 'package:dating/utils/snackbar/snack_bar.dart';
 
+import '../models/api_models/get_all_user_list_model.dart';
+
 class AuthProvider {
   AuthProvider._();
 
@@ -115,7 +117,6 @@ class AuthProvider {
     required String height,
     required String relationShip,
     required String age,
-    required String address,
     required String lat,
     required String lng,
     required String language,
@@ -124,17 +125,15 @@ class AuthProvider {
     required String wantChild,
     required String hasChild,
     required String isSmoker,
-
   }) async {
     var token = Get.find<StorageController>()
-        .getLoginModel()
-        ?.data
-        ?.token
-        ?.toString() ??
+            .getLoginModel()
+            ?.data
+            ?.token
+            ?.toString() ??
         '';
     var headers = {
-      'Authorization':
-          'Bearer '+token,
+      'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json'
     };
 
@@ -142,13 +141,11 @@ class AuthProvider {
 
     print('Token: $token'); // Debug token
 
-
     var body = json.encode({
       "gender": gender,
-      "height":height,
+      "height": height,
       "relation_ship": relationShip,
       "age": age,
-      "address": address,
       "lat": lat,
       "lng": lng,
       "language": language,
@@ -167,23 +164,17 @@ class AuthProvider {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-
         String responseBody = await response.stream.bytesToString();
         print(responseBody);
 
-
-        SnackBarAlerts.successAlert(
-            message:  "Set Preferences Updated");
-
+        SnackBarAlerts.successAlert(message: "Set Preferences Updated");
       } else {
         print('Error: ${response.reasonPhrase}');
-        SnackBarAlerts.warningAlert(
-            message: response.reasonPhrase ?? "Error");
+        SnackBarAlerts.warningAlert(message: response.reasonPhrase ?? "Error");
       }
     } catch (e) {
       print('An error occurred: $e');
-      SnackBarAlerts.warningAlert(
-          message: e.toString() ?? "Updated");
+      SnackBarAlerts.warningAlert(message: e.toString() ?? "Updated");
     }
   }
 
@@ -266,6 +257,25 @@ class AuthProvider {
       SnackBarAlerts.warningAlert(message: "Error occurred: $e");
       return false;
     }
+  }
+
+  Future<List<UserProfileDataObj>> getAllUsersList() async {
+    var token = 'Bearer ' + Get.find<StorageController>().getLoginModel()!.data!.token.toString();
+    var headers = {'Authorization': token};
+    try {
+      final response =
+      await http.get(Uri.parse(AppUrl.getUserList), headers: headers);
+      if (response.statusCode == 200) {
+        var responseBody = json.decode(response.body);
+        GetAllUserListModel userProfileData = GetAllUserListModel.fromJson(responseBody);
+        return userProfileData.data;
+      } else {
+        print("Error: ${response.reasonPhrase}");
+      }
+    } catch (e) {
+      print("An error occurred: $e");
+    }
+    return [];
   }
 
   Future<void> fetchUserProfile() async {
