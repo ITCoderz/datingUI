@@ -1,6 +1,7 @@
 import 'package:dating/api_providers/auth_provider.dart';
 import 'package:dating/generated/assets.dart';
 import 'package:dating/models/api_models/get_all_user_list_model.dart';
+import 'package:dating/models/api_models/user_profile_model.dart';
 import 'package:dating/reusable_components/buttons/custom_elevated_button.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
 import 'package:dating/reusable_components/dialogs/custom_dialog.dart';
@@ -13,6 +14,7 @@ import 'package:dating/screens/home/profile/controllers/edit_profile_controllers
 import 'package:dating/screens/onboarding/views/onboarding_screen.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
+import 'package:dating/utils/snackbar/snack_bar.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              30.ph,
+              20.ph,
               GestureDetector(
                 key: filterKey,
                 onTap: () {
@@ -93,280 +95,122 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              20.ph,
+              10.ph,
+              Obx(()=>Get.find<HomeController>().isSearchClicked.value
+                  ? Center(
+                  child: InkWell(
+                      onTap: () {
+                        Get.find<HomeController>().updateSearchFlag();
+                      },
+                      child: Text('Clear Search')))
+                  : SizedBox.shrink()),
+              0 == 0
+                  ? Expanded(
+                      child: Obx(() {
+                        if (Get.find<HomeController>().isLoading.value) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (Get.find<HomeController>()
+                            .isSearchClicked
+                            .value) {
+                          // When search is clicked, show search results
+                          if (Get.find<HomeController>()
+                              .dataFromSearched
+                              .isEmpty) {
+                            return const Center(
+                                child: Text('No profiles found.'));
+                          }
 
-            Expanded(
-              child: FutureBuilder<List<UserProfileDataObj>>(
-                future: AuthProvider().getAllUsersList(), // Calling the Future method
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No profiles found.'));
-                  }
+                          // List of profiles to display
+                          return ListView.builder(
+                            itemCount: Get.find<HomeController>()
+                                .dataFromSearched
+                                .length,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              final profile = Get.find<HomeController>()
+                                  .dataFromSearched[index];
+                              return _listItems(profile, index,
+                                  context); // Use your _listItems widget here
+                            },
+                          );
+                        } else {
+                          // Show original widget (before search is clicked)
+                          return FutureBuilder<List<UserProfileDataObj>>(
+                            future:
+                                Get.find<HomeController>().getAllUsersList(),
+                            // Fetch initial list
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                    child: Text('Error: ${snapshot.error}'));
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data!.isEmpty) {
+                                return const Center(
+                                    child: Text('No profiles found.'));
+                              }
 
-                  // List of profiles to display
-                  final profiles = snapshot.data!;
+                              // List of profiles to display
+                              final profiles = snapshot.data!;
+                              Get.find<HomeController>().initializeProfiles(
+                                  profiles); // Initialize post indexes
 
-                  return ListView.builder(
-                    itemCount: profiles.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final profile = profiles[index];
-                      return    Expanded(
-                        child: SizedBox(
-                            height: context.height * 0.65,
-                            width: context.width,
-                            child: FittedBox(
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 440,
-                                        width: context.width,
-                                      ),
-                                      Container(
-                                        height: 90,
-                                        width: context.width,
-                                        decoration: BoxDecoration(
-                                            gradient: buildLinearGradient(),
-                                            borderRadius: BorderRadius.circular(13)),
-                                        padding: const EdgeInsets.only(top: 30),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {},
-                                              child: const WhiteContainer(
-                                                icon: Assets.iconsClear,
-                                                padding: 12,
-                                              ),
-                                            ),
-                                            20.pw,
-                                            GestureDetector(
-                                              onTap: () {
-                                                Get.to(() => const ViewProfileScreen());
-                                              },
-                                              child: const WhiteContainer(
-                                                icon: Assets.iconsOpen,
-                                                height: 48,
-                                                width: 48,
-                                                borderColor: CColors.primaryColor,
-                                              ),
-                                            ),
-                                            20.pw,
-                                            GestureDetector(
-                                              onTap: () {
-                                                CustomDialogs.customDialog(
-                                                    context: context,
-                                                    titleImage: Assets.iconsWarning,
-                                                    titleText: "Warning",
-                                                    subtitle:
-                                                    'You have reached the limits\nTry again tomorrow',
-                                                    buttonWidget: CustomElevatedButton(
-                                                      onPressedFunction: () {
-                                                        Get.back();
-                                                      },
-                                                      buttonText: "Continue",
-                                                      height: 40,
-                                                      width: 200,
-                                                      gradientColor:
-                                                      buildLinearGradient(),
-                                                      textStyle:
-                                                      CustomTextStyles.white618,
-                                                    ));
-                                              },
-                                              child: const WhiteContainer(
-                                                icon: Assets.iconsStar,
-                                                padding: 8,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              return ListView.builder(
+                                itemCount: profiles.length,
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  final profile = profiles[index];
+                                  return _listItems(profile, index,
+                                      context); // Use your _listItems widget here
+                                },
+                              );
+                            },
+                          );
+                        }
+                      }),
+                    )
+                  : Expanded(
+                      child: FutureBuilder<List<UserProfileDataObj>>(
+                        future: Get.find<HomeController>().getAllUsersList(),
+                        // Calling the Future method
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return const Center(
+                                child: Text('No profiles found.'));
+                          }
 
+                          // List of profiles to display
+                          final profiles = snapshot.data!;
 
-                                  Stack(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.to(() => const ViewProfileScreen());
-                                        },
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(13),
-                                            child:profile.media!=null&&profile.media.length>0? Image.network(
-                                              height: 470,
-                                              width: context.width,
-                                              fit: BoxFit.cover,
-                                               profile.media[0].originalUrl,
-                                              // Placeholder to display while the image is loading
-                                              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return Center(child: child); // When the image has loaded successfully
-                                                }
-                                                return Center(
-                                                  child: CircularProgressIndicator(
-                                                    value: loadingProgress.expectedTotalBytes != null
-                                                        ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                                        : null,
-                                                  ),
-                                                );
-                                              },
-                                              // Error handling for when the image fails to load
-                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                return Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  color: Colors.grey, // Fallback color
-                                                  child: const Icon(
-                                                    Icons.error, // Error icon
-                                                    color: Colors.red,
-                                                    size: 40,
-                                                  ),
-                                                );
-                                              },
-                                            ):
-                                            Image.asset(
-                                              Assets.imagesPhoto,
-                                              height: 470,
-                                              width: context.width,
-                                              fit: BoxFit.cover,
-                                            )),
-                                      ),
-                                      Positioned(
-                                        bottom: 181,
-                                        right: 0,
-                                        child: SvgPicture.asset(
-                                          Assets.iconsContainer,
-                                          height: 108,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 181,
-                                        right: 5,
-                                        child: SizedBox(
-                                          height: 108,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(Assets.iconsTopOpen),
-                                              10.ph,
-                                              SvgPicture.asset(Assets.iconsBottomOpen),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 10,
-                                        right: 10,
-                                        left: 10,
-                                        child: Container(
-                                          height: 60,
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(13),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                const Color(0xffED7368).withOpacity(1),
-                                                const Color(0xffF3B55B).withOpacity(1),
-                                              ],
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "@"+profile.name,
-                                                    style: CustomTextStyles.white516,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        Assets.iconsLocationPin,
-                                                        height: 15,
-                                                        colorFilter:
-                                                        const ColorFilter.mode(
-                                                          CColors.whiteColor,
-                                                          BlendMode.srcIn,
-                                                        ),
-                                                      ),
-                                                      5.pw,
-                                                      Text(
-                                                        profile.city,
-                                                        style:
-                                                        CustomTextStyles.white412,
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                              Column(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Container(
-                                                      height: 15,
-                                                      width: 51,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius.circular(4.09),
-                                                        color: const Color(0xff86EFB3)
-                                                            .withOpacity(0.3),
-                                                      ),
-                                                      child: const Center(
-                                                        child: Text(
-                                                          "Active",
-                                                          style: TextStyle(
-                                                              fontSize: 09,
-                                                              fontWeight:
-                                                              FontWeight.w400,
-                                                              color: Color(0xff00FF6C)),
-                                                        ),
-                                                      )),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                       profile.age +" year",
-                                                        style:
-                                                        CustomTextStyles.white412,
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
+                          Get.find<HomeController>().initializeProfiles(
+                              profiles); // Initialize each post with index 0
 
-
-                                ],
-                              ),
-                            )),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-
-
+                          return ListView.builder(
+                            itemCount: profiles.length,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              final profile = profiles[index];
+                              return _listItems(profile, index, context);
+                            },
+                          );
+                        },
+                      ),
+                    ),
             ],
           ),
         ),
@@ -374,9 +218,304 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _listItems(
+      UserProfileDataObj profile, int postIndex, BuildContext context) {
+    return SizedBox(
+        height: context.height * 0.65,
+        width: context.width,
+        child: FittedBox(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: 440,
+                    width: context.width,
+                  ),
+                  Container(
+                    height: 90,
+                    width: context.width,
+                    decoration: BoxDecoration(
+                      gradient: buildLinearGradient(),
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: const WhiteContainer(
+                            icon: Assets.iconsClear,
+                            padding: 12,
+                          ),
+                        ),
+                        20.pw,
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => ViewProfileScreen(profile));
+                          },
+                          child: const WhiteContainer(
+                            icon: Assets.iconsOpen,
+                            height: 48,
+                            width: 48,
+                            borderColor: CColors.primaryColor,
+                          ),
+                        ),
+                        20.pw,
+                        GestureDetector(
+                          onTap: () {
+                            CustomDialogs.customDialog(
+                              context: context,
+                              titleImage: Assets.iconsWarning,
+                              titleText: "Warning",
+                              subtitle:
+                                  'You have reached the limits\nTry again tomorrow',
+                              buttonWidget: CustomElevatedButton(
+                                onPressedFunction: () {
+                                  Get.back();
+                                },
+                                buttonText: "Continue",
+                                height: 40,
+                                width: 200,
+                                gradientColor: buildLinearGradient(),
+                                textStyle: CustomTextStyles.white618,
+                              ),
+                            );
+                          },
+                          child: const WhiteContainer(
+                            icon: Assets.iconsStar,
+                            padding: 8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => ViewProfileScreen(profile));
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(13),
+                      child: profile.media.isNotEmpty
+                          ? Center(
+                              child: Obx(() {
+                                // Get the current index reactively
+                                int currentIndex = Get.find<HomeController>()
+                                        .selectedImageIndexMap[profile.id] ??
+                                    0;
+                                return Image.network(
+                                  profile.media[currentIndex].originalUrl,
+                                  height: 470,
+                                  width: context.width,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return Center(child: child);
+                                    }
+                                    return Align(
+                                      alignment: Alignment.center,
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                (loadingProgress
+                                                        .expectedTotalBytes ??
+                                                    1)
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (BuildContext context,
+                                      Object error, StackTrace? stackTrace) {
+                                    return Container(
+                                      width: 100,
+                                      height: 100,
+                                      color: Colors.grey,
+                                      child: const Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                        size: 40,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                            )
+                          : Image.asset(
+                              Assets.imagesPhoto,
+                              height: 470,
+                              width: context.width,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 181,
+                    right: 0,
+                    child: SvgPicture.asset(
+                      Assets.iconsContainer,
+                      height: 108,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 181,
+                    right: 5,
+                    child: SizedBox(
+                      height: 108,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // Access the selected image index for the specific profile
+                              int currentIndex = Get.find<HomeController>()
+                                  .selectedImageIndexMap[profile.id]!;
+
+                              // If the current index is greater than 0, decrement the index
+                              if (currentIndex > 0) {
+                                Get.find<HomeController>()
+                                    .updateSelectedImageIndex(
+                                        profile.id, currentIndex - 1);
+                                print(
+                                    "Previous Image Index: ${currentIndex - 1}");
+                              } else {
+                                SnackBarAlerts.warningAlert(
+                                    message: 'Already at the first image');
+                                print(
+                                    "Already at the first image index: $currentIndex");
+                              }
+                            },
+                            child: SvgPicture.asset(Assets.iconsTopOpen),
+                          ),
+                          SizedBox(height: 10), // Using SizedBox for clarity
+                          GestureDetector(
+                            onTap: () {
+                              // Access the selected image index for the specific profile
+                              int currentIndex = Get.find<HomeController>()
+                                  .selectedImageIndexMap[profile.id]!;
+
+                              // Check if currentIndex is less than the total number of images minus one
+                              if (currentIndex < profile.media.length - 1) {
+                                Get.find<HomeController>()
+                                    .updateSelectedImageIndex(
+                                        profile.id, currentIndex + 1);
+                                print("Next Image Index: ${currentIndex + 1}");
+                              } else {
+                                SnackBarAlerts.warningAlert(
+                                    message: 'Already at the last image');
+                                print(
+                                    "Already at the last image index: $currentIndex");
+                              }
+                            },
+                            child: SvgPicture.asset(Assets.iconsBottomOpen),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    left: 10,
+                    child: Container(
+                      height: 60,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13),
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color(0xffED7368).withOpacity(1),
+                            const Color(0xffF3B55B).withOpacity(1),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "@" + profile.name,
+                                style: CustomTextStyles.white516,
+                              ),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    Assets.iconsLocationPin,
+                                    height: 15,
+                                    colorFilter: const ColorFilter.mode(
+                                      CColors.whiteColor,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  5.pw,
+                                  Text(
+                                    profile.city,
+                                    style: CustomTextStyles.white412,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 15,
+                                width: 51,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.09),
+                                  color:
+                                      const Color(0xff86EFB3).withOpacity(0.3),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    "Active",
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff00FF6C),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    profile.age + " year",
+                                    style: CustomTextStyles.white412,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
+  }
+
   void showFilterDialog(BuildContext context) {
     RenderBox renderBox =
-        filterKey.currentContext!.findRenderObject() as RenderBox;
+    filterKey.currentContext!.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
     double x = position.dx;
     double y = position.dy + renderBox.size.height - 80;
@@ -398,7 +537,7 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     width: 327,
                     decoration: BoxDecoration(
-                     // color: const Color(0xffF3B65B).withOpacity(0.20),
+                      // color: const Color(0xffF3B65B).withOpacity(0.20),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
@@ -487,7 +626,7 @@ class HomeScreen extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                   child: CustomElevatedButton(
-                                                buttonText: 'Girls',
+                                                buttonText: 'Female',
                                                 height: 30,
                                                 needShadow: false,
                                                 onPressedFunction: () {
@@ -519,7 +658,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                               Expanded(
                                                   child: CustomElevatedButton(
-                                                buttonText: 'Boys',
+                                                buttonText: 'Male',
                                                 height: 30,
                                                 needShadow: false,
                                                 onPressedFunction: () {
@@ -550,7 +689,7 @@ class HomeScreen extends StatelessWidget {
                                                       .textFieldBorderColor),
                                               Expanded(
                                                   child: CustomElevatedButton(
-                                                buttonText: 'Both',
+                                                buttonText: 'Other',
                                                 height: 30,
                                                 needShadow: false,
                                                 onPressedFunction: () {
@@ -698,7 +837,8 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   Container(
                                     height: 50,
-                                    padding: const EdgeInsets.only(right: 10,left: 10),
+                                    padding: const EdgeInsets.only(
+                                        right: 10, left: 10),
                                     child: RangeSliderFlutter(
                                       values: [
                                         controller.filterLowerValue,
@@ -940,28 +1080,28 @@ class HomeScreen extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                   child: CustomElevatedButton(
-                                                buttonText: 'Serious',
+                                                buttonText: 'Single',
                                                 height: 30,
                                                 needShadow: false,
                                                 onPressedFunction: () {
                                                   controller
                                                       .setSelectedRelationship(
-                                                    Relationship.serious,
+                                                    Relationship.single,
                                                   );
                                                 },
                                                 textStyle: controller
                                                             .getSelectedRelationship() ==
-                                                        Relationship.serious
+                                                        Relationship.single
                                                     ? CustomTextStyles.white412
                                                     : CustomTextStyles.black412,
                                                 backgroundColor: controller
                                                             .getSelectedRelationship() ==
-                                                        Relationship.serious
+                                                        Relationship.single
                                                     ? null
                                                     : Colors.transparent,
                                                 gradientColor: controller
                                                             .getSelectedRelationship() ==
-                                                        Relationship.serious
+                                                        Relationship.single
                                                     ? buildLinearGradient()
                                                     : null,
                                                 radius: 0,
@@ -974,27 +1114,27 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                               Expanded(
                                                   child: CustomElevatedButton(
-                                                buttonText: 'Fun',
+                                                buttonText: 'Married',
                                                 height: 30,
                                                 needShadow: false,
                                                 onPressedFunction: () {
                                                   controller
                                                       .setSelectedRelationship(
-                                                          Relationship.fun);
+                                                          Relationship.married);
                                                 },
                                                 textStyle: controller
                                                             .getSelectedRelationship() ==
-                                                        Relationship.fun
+                                                        Relationship.married
                                                     ? CustomTextStyles.white412
                                                     : CustomTextStyles.black412,
                                                 backgroundColor: controller
                                                             .getSelectedRelationship() ==
-                                                        Relationship.fun
+                                                        Relationship.married
                                                     ? null
                                                     : Colors.transparent,
                                                 gradientColor: controller
                                                             .getSelectedRelationship() ==
-                                                        Relationship.fun
+                                                        Relationship.married
                                                     ? buildLinearGradient()
                                                     : null,
                                                 radius: 0,
@@ -1004,34 +1144,7 @@ class HomeScreen extends StatelessWidget {
                                                   width: 1,
                                                   color: CColors
                                                       .textFieldBorderColor),
-                                              Expanded(
-                                                  child: CustomElevatedButton(
-                                                buttonText: 'Friends',
-                                                height: 30,
-                                                needShadow: false,
-                                                onPressedFunction: () {
-                                                  controller
-                                                      .setSelectedRelationship(
-                                                    Relationship.friends,
-                                                  );
-                                                },
-                                                textStyle: controller
-                                                            .getSelectedRelationship() ==
-                                                        Relationship.friends
-                                                    ? CustomTextStyles.white412
-                                                    : CustomTextStyles.black412,
-                                                backgroundColor: controller
-                                                            .getSelectedRelationship() ==
-                                                        Relationship.friends
-                                                    ? null
-                                                    : Colors.transparent,
-                                                gradientColor: controller
-                                                            .getSelectedRelationship() ==
-                                                        Relationship.friends
-                                                    ? buildLinearGradient()
-                                                    : null,
-                                                radius: 0,
-                                              )),
+
                                             ],
                                           ),
                                         ),
@@ -1649,6 +1762,7 @@ class HomeScreen extends StatelessWidget {
                                   20.ph,
                                   CustomElevatedButton(
                                     onPressedFunction: () {
+                                      Get.find<HomeController>().runSearchAPI();
                                       Get.back();
                                     },
                                     gradientColor: buildLinearGradient(),

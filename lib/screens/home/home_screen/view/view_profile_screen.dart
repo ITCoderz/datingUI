@@ -1,8 +1,9 @@
-
 import 'package:dating/generated/assets.dart';
+import 'package:dating/models/api_models/get_all_user_list_model.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
 import 'package:dating/screens/home/chat/message_screen/views/message_screen.dart';
 import 'package:dating/screens/home/home_screen/view/home_screen.dart';
+import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/utils/colors/app_colors.dart';
 import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
@@ -14,7 +15,9 @@ import '../../../../reusable_components/buttons/custom_elevated_button.dart';
 import '../../../onboarding/views/onboarding_screen.dart';
 
 class ViewProfileScreen extends StatelessWidget {
-  const ViewProfileScreen({super.key});
+  UserProfileDataObj userObj;
+
+  ViewProfileScreen(this.userObj);
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +41,56 @@ class ViewProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: context.height - 95,
                   width: context.width,
-                ),
-                Image.asset(
-                  Assets.imagesPhoto,
-                  height: context.height * 0.5,
-                  width: context.width,
-                  fit: BoxFit.fill,
-                ),
+                ),ClipRRect(
+                    borderRadius: BorderRadius.circular(13),
+                    child:userObj.media.length>0?
+                    Center(
+                      child: Image.network(
+                        height: 470,
+                        width: context.width,
+                        fit: BoxFit.cover,
+                        userObj.media[0].originalUrl,
+                        // Placeholder to display while the image is loading
+                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return Center(child: child); // When the image has loaded successfully
+                          }
+                          return Align(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                  : null,
+                            ),
+                          );
+                        },
+                        // Error handling for when the image fails to load
+                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                          return Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.grey, // Fallback color
+                            child: const Icon(
+                              Icons.error, // Error icon
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                          );
+                        },
+                      ),
+                    ):
+                    Image.asset(
+                      Assets.imagesPhoto,
+                      height: 470,
+                      width: context.width,
+                      fit: BoxFit.cover,
+                    )),
                 Positioned(
                   top: context.height * 0.42,
                   left: 0,
                   right: 0,
                   child: Container(
-                    height: context.height*0.45,
+                    height: context.height * 0.45,
                     decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -67,7 +107,7 @@ class ViewProfileScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Name here....',
+                                  userObj.name,
                                   style: CustomTextStyles.primary520,
                                 ),
                                 Container(
@@ -101,12 +141,12 @@ class ViewProfileScreen extends StatelessWidget {
                                 ),
                                 10.pw,
                                 Text(
-                                  'City A,B,C',
+                                  userObj.city,
                                   style: CustomTextStyles.black412,
                                 ),
                                 const Spacer(),
                                 Text(
-                                  "21 year",
+                                  userObj.age + " year",
                                   style: CustomTextStyles.black514,
                                 )
                               ],
@@ -122,7 +162,7 @@ class ViewProfileScreen extends StatelessWidget {
                             ),
                             5.ph,
                             Text(
-                              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                              userObj.about.toString(),
                               style: CustomTextStyles.black314,
                             ),
                             10.ph,
@@ -130,37 +170,72 @@ class ViewProfileScreen extends StatelessWidget {
                               'Photos',
                               style: CustomTextStyles.primary520,
                             ),
-                            5.ph,
-                            Row(children: [
-                              Expanded(child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(Assets.imagesPhoto,))),
-                              10.pw,
-                              Expanded(child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(Assets.imagesPhoto,))),                          ],),
-                            10.ph,
-                            Row(children: [
-                              Expanded(child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(Assets.imagesPhoto,))),                            10.pw,
-                              Expanded(child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(Assets.imagesPhoto,))),                            10.pw,
-                              Expanded(child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(Assets.imagesPhoto,))),
-                            ],),
-                            30.ph,
-                            CustomElevatedButton(
-                              onPressedFunction: () {
-                              },
-                              height: 60,
-                              radius: 13,
-                              gradientColor: buildLinearGradient(leftToRight: true),
-                              buttonText: "Block User",
-                              width: context.width,
-                            ),
+
+                            Column(
+                              children: [
+                                5.ph,
+                                // GridView with two items per row
+                                userObj.media.length>0 ?     SizedBox(
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2, // Two items per row
+                                      crossAxisSpacing: 10, // Spacing between items horizontally
+                                      mainAxisSpacing: 10, // Spacing between items vertically
+                                      childAspectRatio: 1, // Adjust for image aspect ratio
+                                    ),
+                                    itemCount: userObj.media.length, // Total number of images (adjust based on your needs)
+                                    itemBuilder: (context, index) {
+                                      return ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
+                                          fit: BoxFit.cover,
+                                          userObj.media[index].originalUrl,
+                                          // Placeholder to display while the image is loading
+                                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return Center(child: child); // When the image has loaded successfully
+                                            }
+                                            return Align(
+                                              alignment: Alignment.center,
+                                              child: CircularProgressIndicator(
+                                                value: loadingProgress.expectedTotalBytes != null
+                                                    ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                                    : null,
+                                              ),
+                                            );
+                                          },
+                                          // Error handling for when the image fails to load
+                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                            return Container(
+                                              width: 100,
+                                              height: 100,
+                                              color: Colors.grey, // Fallback color
+                                              child: const Icon(
+                                                Icons.error, // Error icon
+                                                color: Colors.red,
+                                                size: 40,
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      );
+                                    },
+                                  ),
+                                ):Text('No Images Uploaded yet'),
+                                30.ph,
+                                CustomElevatedButton(
+                                  onPressedFunction: () {},
+                                  height: 60,
+                                  radius: 13,
+                                  gradientColor: buildLinearGradient(leftToRight: true),
+                                  buttonText: "Block User",
+                                  width: context.width,
+                                ),
+                              ],
+                            )
+,
                             50.ph,
                           ],
                         ),
@@ -184,8 +259,8 @@ class ViewProfileScreen extends StatelessWidget {
                       ),
                       20.pw,
                       GestureDetector(
-                        onTap: (){
-                          Get.to(()=>  MessageScreen());
+                        onTap: () {
+                          Get.to(() => MessageScreen());
                         },
                         child: const WhiteContainer(
                           icon: Assets.iconsChatBubble,

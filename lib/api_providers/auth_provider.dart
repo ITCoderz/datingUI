@@ -21,6 +21,8 @@ class AuthProvider {
     return _instance;
   }
 
+  GetAllUserListModel? userProfileData = null;
+
   Future<bool> updateProfileUser(
       {required String fullName,
       required String email,
@@ -190,28 +192,16 @@ class AuthProvider {
     required String password,
     required String passwordConfirmation,
     required String age,
+    required String userImagePath,
     required List<dynamic> imagePaths, // List of image paths
   }) async {
+    print('$userImagePath *userImage'); // Debugging output
     try {
       // Prepare the multipart request
       var url = Uri.parse(AppUrl.register);
       var request = http.MultipartRequest('POST', url);
 
-      print("<--------------data--------------");
-      print(fullName);
-      print(email);
-      print(contact);
-      print(gender);
-      print(height);
-      print(relationshipStatus);
-      print(city);
-      print(dob);
-      print(password);
-      print(passwordConfirmation);
-      print(age);
-      print(imagePaths);
-      print("<--------------data--------------");
-
+      // Add fields to the request
       request.fields.addAll({
         'full_name': fullName,
         'email': email,
@@ -223,8 +213,9 @@ class AuthProvider {
         'dob': dob,
         'password': password,
         'password_confirmation': passwordConfirmation,
-        'age': age
+        'age': age,
       });
+
 
       // Add image files to the request
       for (String path in imagePaths) {
@@ -233,42 +224,54 @@ class AuthProvider {
           path,
         ));
       }
-      print(request.fields);
+
+      // Add the user's main profile image
+      request.files.add(await http.MultipartFile.fromPath(
+        'user_image',
+        userImagePath,
+      ));
+
+      // Debugging output for fields and files
+      print('Fields: ${request.fields}');
+      print('Files: ${request.files.length}');
 
       // Send the request
       var response = await request.send();
+      print('Request: ${response.request}');
+      print('Status Code: ${response.statusCode}');
 
-      print(response.request);
-
-      print(response.statusCode);
+      // Handle the response
       if (response.statusCode == 200) {
         var responseBody = await http.Response.fromStream(response);
         var responseData = jsonDecode(responseBody.body);
-        print(json.encode(responseData));
+        print('Response Data: ${json.encode(responseData)}');
         return true;
       } else {
-        print("Error: ${response.reasonPhrase}");
+        print('Error: ${response.reasonPhrase}');
         SnackBarAlerts.warningAlert(
             message: response.reasonPhrase ?? "Unknown error");
         return false;
       }
     } catch (e) {
-      print("Error: $e");
+      print('Error: $e');
       SnackBarAlerts.warningAlert(message: "Error occurred: $e");
       return false;
     }
   }
 
+
   Future<List<UserProfileDataObj>> getAllUsersList() async {
-    var token = 'Bearer ' + Get.find<StorageController>().getLoginModel()!.data!.token.toString();
+    var token = 'Bearer ' +
+        Get.find<StorageController>().getLoginModel()!.data!.token.toString();
     var headers = {'Authorization': token};
     try {
       final response =
-      await http.get(Uri.parse(AppUrl.getUserList), headers: headers);
+          await http.get(Uri.parse(AppUrl.getUserList), headers: headers);
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.body);
-        GetAllUserListModel userProfileData = GetAllUserListModel.fromJson(responseBody);
-        return userProfileData.data;
+        print(responseBody);
+        userProfileData = GetAllUserListModel.fromJson(responseBody);
+        return userProfileData!.data;
       } else {
         print("Error: ${response.reasonPhrase}");
       }
@@ -276,6 +279,49 @@ class AuthProvider {
       print("An error occurred: $e");
     }
     return [];
+  }
+
+  Future<List<UserProfileDataObj>> getFilterUsers({
+    required int selectedGenderIndex,
+    required String selectedLang,
+    required bool isSmoked,
+    required bool isSports,
+    required bool isAlcohol,
+    required bool wantChild,
+    required bool hasChild,
+    required String selectedRelationship,
+    required String age,
+  }) async {
+    Uri uri = Uri.parse(AppUrl.getUserList).replace(
+      queryParameters: {
+        'interested_in': selectedGenderIndex.toString(),
+        'language': selectedLang,
+        'is_sports': isSports ? '1' : '0',
+        'is_alcohol': isAlcohol ? '1' : '0',
+        'want_child': wantChild ? '1' : '0',
+        'has_child': hasChild ? '1' : '0',
+        'is_smoker': isSmoked ? '1' : '0',
+        'relation_ship': selectedRelationship.toString(),
+        'age': age,
+      },
+    );
+    print(uri);
+    var token = 'Bearer ' +
+        Get.find<StorageController>().getLoginModel()!.data!.token.toString();
+    var headers = {'Authorization': token};
+    // Fetch data from the API
+    var response = await http.get(uri, headers: headers);
+
+    if (response.statusCode == 200) {
+
+      GetAllUserListModel users =
+          GetAllUserListModel.fromJson(json.decode(response.body));
+      print(users.data);
+      return users.data; // Update userProfiles
+    } else {
+      print('Error fetching users: ${response.reasonPhrase}');
+      return [];
+    }
   }
 
   Future<void> fetchUserProfile() async {

@@ -101,7 +101,28 @@ class RegisterScreen extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    50.ph,
+                    20.ph,
+                  Center(
+                    child: Obx(() {
+                      return InkWell(
+                        onTap: (){
+                     controller.pickImageFromGallery();
+                        },
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.grey.withOpacity(0.5),
+                          backgroundImage: controller.userProfileImage.value != null
+                              ? FileImage(controller.userProfileImage.value!)
+                              : null,
+                          child: controller.userProfileImage.value == null
+                              ? Icon(Icons.camera_alt, size: 22, color: Colors.grey)
+                              : null,
+                        ),
+                      );
+                    }),
+                  ),
+
+                    20.ph,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: CustomTextField(
@@ -189,7 +210,7 @@ class RegisterScreen extends StatelessWidget {
                           borderRadius: 13,
                           borderColor: CColors.textFieldBorderColor,
                           label: '',
-                          mappingList: const ['Uncle', 'Father', 'Others'],
+                          mappingList: const ['Single', 'Married'],
                           value: controller.selectedRelation.value)),
                     ),
                     15.ph,

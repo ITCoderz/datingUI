@@ -327,9 +327,8 @@ class SetPreferenceScreen extends StatelessWidget {
                                 borderColor: CColors.textFieldBorderColor,
                                 label: '',
                                 mappingList: const [
-                                  'Uncle',
-                                  'Father',
-                                  'Others'
+                                  'Single',
+                                  'Married',
                                 ],
                                 value: ''),
                           ),

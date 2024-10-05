@@ -27,6 +27,17 @@ class AuthController extends GetxController {
   final hidePassword = true.obs;
   final hidePassword2 = true.obs;
 
+  Rx<File?> userProfileImage = Rx<File?>(null);
+
+  Future<void> pickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      userProfileImage.value = File(pickedFile.path);
+      update();
+    }
+  }
   togglePasswordVisibility() {
     hidePassword.value = !hidePassword.value;
   }
@@ -144,51 +155,58 @@ class AuthController extends GetxController {
     loading.value = true;
 
     try {
-      bool? result = await AuthProvider().registerUser(
-        fullName: fullNameController.text,
-        email: emailController.text,
-        contact: contactController.text,
-        gender: selectedGender.value,
-        // This can be dynamic based on your form
-        height: heightController.text,
-        relationshipStatus: selectedRelation.value,
-        // This can be dynamic based on your form
-        city: cityController.text,
-        dob: dob,
-        password: passwordController.text,
-        passwordConfirmation: cpasswordController.text,
-        age: "25",
-        imagePaths: images,
-      );
+      if(userProfileImage.value!=null){
+        bool? result = await AuthProvider().registerUser(
+          fullName: fullNameController.text,
+          email: emailController.text,
+          contact: contactController.text,
+          gender: selectedGender.value,
+          // This can be dynamic based on your form
+          height: heightController.text,
+          relationshipStatus: selectedRelation.value,
+          // This can be dynamic based on your form
+          city: cityController.text,
+          dob: dob,
+          password: passwordController.text,
+          passwordConfirmation: cpasswordController.text,
+          age: "25",
+          userImagePath:userProfileImage.value!.path ,
+          imagePaths: images,
+        );
+        if (result) {
+          SnackBarAlerts.successAlert(message: "Registration successful!");
+
+          // Clear text controllers
+          fullNameController.clear();
+          emailController.clear();
+          contactController.clear();
+          heightController.clear();
+          cityController.clear();
+          mmController.clear();
+          ddController.clear();
+          yyyyController.clear();
+          passwordController.clear();
+          cpasswordController.clear();
+          // Clear images and selections
+          images.clear();
+          selectedGender.value = '';
+          selectedRelation.value = '';
+          update();
+          Get.to(() => const CongratulationsScreen());
+        } else {
+          SnackBarAlerts.warningAlert(
+              message: "Registration failed. Please try again.");
+        }
+      }
+      else{
+        SnackBarAlerts.warningAlert(message: "Please Select Profile Image");
+      }
+
 
       // Stop loading
       loading.value = false;
 
-      if (result) {
-        SnackBarAlerts.successAlert(message: "Registration successful!");
 
-        // Clear text controllers
-        fullNameController.clear();
-        emailController.clear();
-        contactController.clear();
-        heightController.clear();
-        cityController.clear();
-        mmController.clear();
-        ddController.clear();
-        yyyyController.clear();
-        passwordController.clear();
-        cpasswordController.clear();
-
-        // Clear images and selections
-        images.clear();
-        selectedGender.value = '';
-        selectedRelation.value = '';
-        update();
-        Get.to(() => const CongratulationsScreen());
-      } else {
-        SnackBarAlerts.warningAlert(
-            message: "Registration failed. Please try again.");
-      }
     } catch (e) {
       loading.value = false;
       SnackBarAlerts.warningAlert(message: "An error occurred: $e");

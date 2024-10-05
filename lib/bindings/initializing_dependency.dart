@@ -28,9 +28,10 @@ class InitializingDependency implements Bindings {
     );
     Get.lazyPut(() => ProfileController(), fenix: true);
     Get.lazyPut(() => PrefrencesConntroller(), fenix: true);
-    // Get.lazyPut(
-    //         () => HomeController(),
-    //     fenix: true
-    // );
+
+    Get.lazyPut(
+            () => HomeController(),
+        fenix: true
+    );
   }
 }

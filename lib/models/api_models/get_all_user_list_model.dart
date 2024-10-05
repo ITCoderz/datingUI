@@ -1,12 +1,12 @@
 // To parse this JSON data, do
 //
-//     final userProfileData = userProfileDataFromJson(jsonString);
+//     final getAllUserListModel = getAllUserListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-GetAllUserListModel userProfileDataFromJson(String str) => GetAllUserListModel.fromJson(json.decode(str));
+GetAllUserListModel getAllUserListModelFromJson(String str) => GetAllUserListModel.fromJson(json.decode(str));
 
-String userProfileDataToJson(GetAllUserListModel data) => json.encode(data.toJson());
+String getAllUserListModelToJson(GetAllUserListModel data) => json.encode(data.toJson());
 
 class GetAllUserListModel {
   bool success;
@@ -37,7 +37,7 @@ class UserProfileDataObj {
   String name;
   String email;
   String contact;
-  uGender gender;
+  String gender;
   String height;
   String age;
   String relationShip;
@@ -49,7 +49,6 @@ class UserProfileDataObj {
   int verified;
   DateTime createdAt;
   DateTime updatedAt;
-  String? address;
   String? language;
   String? isSports;
   String? isAlcohol;
@@ -58,6 +57,7 @@ class UserProfileDataObj {
   String? isSmoker;
   String? lat;
   String? lng;
+  String? userImage;
   List<Media> media;
 
   UserProfileDataObj({
@@ -77,7 +77,6 @@ class UserProfileDataObj {
     required this.verified,
     required this.createdAt,
     required this.updatedAt,
-    required this.address,
     required this.language,
     required this.isSports,
     required this.isAlcohol,
@@ -86,6 +85,7 @@ class UserProfileDataObj {
     required this.isSmoker,
     required this.lat,
     required this.lng,
+    required this.userImage,
     required this.media,
   });
 
@@ -94,7 +94,7 @@ class UserProfileDataObj {
     name: json["name"],
     email: json["email"],
     contact: json["contact"],
-    gender: genderValues.map[json["gender"]]!,
+    gender: json["gender"],
     height: json["height"],
     age: json["age"],
     relationShip: json["relation_ship"],
@@ -106,7 +106,6 @@ class UserProfileDataObj {
     verified: json["verified"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    address: json["address"],
     language: json["language"],
     isSports: json["is_sports"],
     isAlcohol: json["is_alcohol"],
@@ -115,6 +114,7 @@ class UserProfileDataObj {
     isSmoker: json["is_smoker"],
     lat: json["lat"],
     lng: json["lng"],
+    userImage: json["user_image"],
     media: List<Media>.from(json["media"].map((x) => Media.fromJson(x))),
   );
 
@@ -123,7 +123,7 @@ class UserProfileDataObj {
     "name": name,
     "email": email,
     "contact": contact,
-    "gender": genderValues.reverse[gender],
+    "gender": gender,
     "height": height,
     "age": age,
     "relation_ship": relationShip,
@@ -135,7 +135,6 @@ class UserProfileDataObj {
     "verified": verified,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "address": address,
     "language": language,
     "is_sports": isSports,
     "is_alcohol": isAlcohol,
@@ -144,33 +143,22 @@ class UserProfileDataObj {
     "is_smoker": isSmoker,
     "lat": lat,
     "lng": lng,
+    "user_image": userImage,
     "media": List<dynamic>.from(media.map((x) => x.toJson())),
   };
 }
 
-enum uGender {
-  GENDER_MALE,
-  MALE,
-  OTHERS
-}
-
-final genderValues = EnumValues({
-  "Male": uGender.GENDER_MALE,
-  "male": uGender.MALE,
-  "Others": uGender.OTHERS
-});
-
 class Media {
   int id;
-  String modelType;
+  ModelType modelType;
   int modelId;
   String uuid;
-  String collectionName;
+  CollectionName collectionName;
   String name;
   String fileName;
-  String mimeType;
-  String disk;
-  String conversionsDisk;
+  MimeType mimeType;
+  Disk disk;
+  Disk conversionsDisk;
   int size;
   List<dynamic> manipulations;
   List<dynamic> customProperties;
@@ -207,15 +195,15 @@ class Media {
 
   factory Media.fromJson(Map<String, dynamic> json) => Media(
     id: json["id"],
-    modelType: json["model_type"],
+    modelType: modelTypeValues.map[json["model_type"]]!,
     modelId: json["model_id"],
     uuid: json["uuid"],
-    collectionName: json["collection_name"],
+    collectionName: collectionNameValues.map[json["collection_name"]]!,
     name: json["name"],
     fileName: json["file_name"],
-    mimeType: json["mime_type"],
-    disk: json["disk"],
-    conversionsDisk: json["conversions_disk"],
+    mimeType: mimeTypeValues.map[json["mime_type"]]!,
+    disk: diskValues.map[json["disk"]]!,
+    conversionsDisk: diskValues.map[json["conversions_disk"]]!,
     size: json["size"],
     manipulations: List<dynamic>.from(json["manipulations"].map((x) => x)),
     customProperties: List<dynamic>.from(json["custom_properties"].map((x) => x)),
@@ -230,15 +218,15 @@ class Media {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "model_type": modelType,
+    "model_type": modelTypeValues.reverse[modelType],
     "model_id": modelId,
     "uuid": uuid,
-    "collection_name": collectionName,
+    "collection_name": collectionNameValues.reverse[collectionName],
     "name": name,
     "file_name": fileName,
-    "mime_type": mimeType,
-    "disk": disk,
-    "conversions_disk": conversionsDisk,
+    "mime_type": mimeTypeValues.reverse[mimeType],
+    "disk": diskValues.reverse[disk],
+    "conversions_disk": diskValues.reverse[conversionsDisk],
     "size": size,
     "manipulations": List<dynamic>.from(manipulations.map((x) => x)),
     "custom_properties": List<dynamic>.from(customProperties.map((x) => x)),
@@ -251,6 +239,40 @@ class Media {
     "preview_url": previewUrl,
   };
 }
+
+enum CollectionName {
+  IMAGES
+}
+
+final collectionNameValues = EnumValues({
+  "images": CollectionName.IMAGES
+});
+
+enum Disk {
+  PUBLIC
+}
+
+final diskValues = EnumValues({
+  "public": Disk.PUBLIC
+});
+
+enum MimeType {
+  IMAGE_JPEG,
+  IMAGE_PNG
+}
+
+final mimeTypeValues = EnumValues({
+  "image/jpeg": MimeType.IMAGE_JPEG,
+  "image/png": MimeType.IMAGE_PNG
+});
+
+enum ModelType {
+  APP_MODELS_USER
+}
+
+final modelTypeValues = EnumValues({
+  "App\\Models\\User": ModelType.APP_MODELS_USER
+});
 
 class EnumValues<T> {
   Map<String, T> map;

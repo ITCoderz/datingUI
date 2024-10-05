@@ -22,7 +22,7 @@ enum Gender { male, female, both }
 
 enum Language { french, english, spanish }
 
-enum Relationship { serious, fun, friends }
+enum Relationship { single, married }
 
 enum Questionnaire { yes, no }
 
@@ -81,7 +81,7 @@ class ProfileController extends GetxController {
     return selectedLanguage.value;
   }
 
-  var selectedRelationship = Relationship.serious.obs;
+  var selectedRelationship = Relationship.single.obs;
 
   void setSelectedRelationship(Relationship relationship) {
     selectedRelationship.value = relationship;
