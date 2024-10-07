@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dating/api_providers/auth_provider.dart';
 import 'package:dating/models/api_models/get_all_user_list_model.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
+import 'package:dating/screens/home/profile/views/edit_profile_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,6 +84,7 @@ class HomeController extends GetxController {
       }
       update();
       dataFromSearched.value = await AuthProvider().getFilterUsers(
+        distance: Get.find<ProfileController>().selectedMilesRange.toString(),
           selectedGenderIndex: selectedGenderIndex,
           selectedLang: selectedLang,
           isSmoked: Get.find<ProfileController>().getSelectedSmoker() ==

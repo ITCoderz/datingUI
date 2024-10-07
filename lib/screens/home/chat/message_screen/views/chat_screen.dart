@@ -35,7 +35,7 @@ class ChatScreen extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            30.ph,
+            20.ph,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: CustomTextField(

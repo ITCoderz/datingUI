@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 
 import '../../../../reusable_components/buttons/custom_elevated_button.dart';
 import '../../../onboarding/views/onboarding_screen.dart';
+import 'favrt_conntroller.dart';
 
 class ViewProfileScreen extends StatelessWidget {
   UserProfileDataObj userObj;
@@ -41,50 +42,61 @@ class ViewProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: context.height - 95,
                   width: context.width,
-                ),ClipRRect(
+                ),
+                ClipRRect(
                     borderRadius: BorderRadius.circular(13),
-                    child:userObj.media.length>0?
-                    Center(
-                      child: Image.network(
-                        height: 470,
-                        width: context.width,
-                        fit: BoxFit.cover,
-                        userObj.media[0].originalUrl,
-                        // Placeholder to display while the image is loading
-                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return Center(child: child); // When the image has loaded successfully
-                          }
-                          return Align(
-                            alignment: Alignment.center,
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                  : null,
+                    child: userObj.media.length > 0
+                        ? Center(
+                            child: Image.network(
+                              height: 470,
+                              width: context.width,
+                              fit: BoxFit.cover,
+                              userObj.media[0].originalUrl,
+                              // Placeholder to display while the image is loading
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return Center(
+                                      child:
+                                          child); // When the image has loaded successfully
+                                }
+                                return Align(
+                                  alignment: Alignment.center,
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            (loadingProgress
+                                                    .expectedTotalBytes ??
+                                                1)
+                                        : null,
+                                  ),
+                                );
+                              },
+                              // Error handling for when the image fails to load
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Container(
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.grey, // Fallback color
+                                  child: const Icon(
+                                    Icons.error, // Error icon
+                                    color: Colors.red,
+                                    size: 40,
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                        // Error handling for when the image fails to load
-                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                          return Container(
-                            width: 100,
-                            height: 100,
-                            color: Colors.grey, // Fallback color
-                            child: const Icon(
-                              Icons.error, // Error icon
-                              color: Colors.red,
-                              size: 40,
-                            ),
-                          );
-                        },
-                      ),
-                    ):
-                    Image.asset(
-                      Assets.imagesPhoto,
-                      height: 470,
-                      width: context.width,
-                      fit: BoxFit.cover,
-                    )),
+                          )
+                        : Image.asset(
+                            Assets.imagesPhoto,
+                            height: 470,
+                            width: context.width,
+                            fit: BoxFit.cover,
+                          )),
                 Positioned(
                   top: context.height * 0.42,
                   left: 0,
@@ -170,72 +182,102 @@ class ViewProfileScreen extends StatelessWidget {
                               'Photos',
                               style: CustomTextStyles.primary520,
                             ),
-
                             Column(
                               children: [
                                 5.ph,
                                 // GridView with two items per row
-                                userObj.media.length>0 ?     SizedBox(
-                                  child: GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
-                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, // Two items per row
-                                      crossAxisSpacing: 10, // Spacing between items horizontally
-                                      mainAxisSpacing: 10, // Spacing between items vertically
-                                      childAspectRatio: 1, // Adjust for image aspect ratio
-                                    ),
-                                    itemCount: userObj.media.length, // Total number of images (adjust based on your needs)
-                                    itemBuilder: (context, index) {
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                          fit: BoxFit.cover,
-                                          userObj.media[index].originalUrl,
-                                          // Placeholder to display while the image is loading
-                                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return Center(child: child); // When the image has loaded successfully
-                                            }
-                                            return Align(
-                                              alignment: Alignment.center,
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress.expectedTotalBytes != null
-                                                    ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                                    : null,
-                                              ),
-                                            );
+                                userObj.media.length > 0
+                                    ? SizedBox(
+                                        child: GridView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          // Disable scrolling inside GridView
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            // Two items per row
+                                            crossAxisSpacing: 10,
+                                            // Spacing between items horizontally
+                                            mainAxisSpacing: 10,
+                                            // Spacing between items vertically
+                                            childAspectRatio:
+                                                1, // Adjust for image aspect ratio
+                                          ),
+                                          itemCount: userObj.media.length,
+                                          // Total number of images (adjust based on your needs)
+                                          itemBuilder: (context, index) {
+                                            return ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  fit: BoxFit.cover,
+                                                  userObj
+                                                      .media[index].originalUrl,
+                                                  // Placeholder to display while the image is loading
+                                                  loadingBuilder:
+                                                      (BuildContext context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                    if (loadingProgress ==
+                                                        null) {
+                                                      return Center(
+                                                          child:
+                                                              child); // When the image has loaded successfully
+                                                    }
+                                                    return Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        value: loadingProgress
+                                                                    .expectedTotalBytes !=
+                                                                null
+                                                            ? loadingProgress
+                                                                    .cumulativeBytesLoaded /
+                                                                (loadingProgress
+                                                                        .expectedTotalBytes ??
+                                                                    1)
+                                                            : null,
+                                                      ),
+                                                    );
+                                                  },
+                                                  // Error handling for when the image fails to load
+                                                  errorBuilder: (BuildContext
+                                                          context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                    return Container(
+                                                      width: 100,
+                                                      height: 100,
+                                                      color: Colors.grey,
+                                                      // Fallback color
+                                                      child: const Icon(
+                                                        Icons
+                                                            .error, // Error icon
+                                                        color: Colors.red,
+                                                        size: 40,
+                                                      ),
+                                                    );
+                                                  },
+                                                ));
                                           },
-                                          // Error handling for when the image fails to load
-                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                            return Container(
-                                              width: 100,
-                                              height: 100,
-                                              color: Colors.grey, // Fallback color
-                                              child: const Icon(
-                                                Icons.error, // Error icon
-                                                color: Colors.red,
-                                                size: 40,
-                                              ),
-                                            );
-                                          },
-                                        )
-                                      );
-                                    },
-                                  ),
-                                ):Text('No Images Uploaded yet'),
+                                        ),
+                                      )
+                                    : Text('No Images Uploaded yet'),
                                 30.ph,
                                 CustomElevatedButton(
                                   onPressedFunction: () {},
                                   height: 60,
                                   radius: 13,
-                                  gradientColor: buildLinearGradient(leftToRight: true),
+                                  gradientColor:
+                                      buildLinearGradient(leftToRight: true),
                                   buttonText: "Block User",
                                   width: context.width,
                                 ),
                               ],
-                            )
-,
+                            ),
                             50.ph,
                           ],
                         ),
@@ -272,12 +314,17 @@ class ViewProfileScreen extends StatelessWidget {
                         ),
                       ),
                       20.pw,
-                      const WhiteContainer(
-                        icon: Assets.iconsStar,
-                        shadow: true,
-                        padding: 15,
-                        height: 58,
-                        width: 58,
+                      InkWell(
+                        onTap: () {
+                          Get.find<FavouriteController>().storeFavrt(userObj.id.toString());
+                        },
+                        child: const WhiteContainer(
+                          icon: Assets.iconsStar,
+                          shadow: true,
+                          padding: 15,
+                          height: 58,
+                          width: 58,
+                        ),
                       ),
                     ],
                   ),

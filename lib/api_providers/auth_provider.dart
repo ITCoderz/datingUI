@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dating/models/api_models/get_all_favrt.dart';
 import 'package:dating/models/api_models/login_model.dart';
 import 'package:dating/models/api_models/user_profile_model.dart';
 import 'package:dating/screens/auth/controllers/auth_controllers.dart';
@@ -200,7 +201,6 @@ class AuthProvider {
       // Prepare the multipart request
       var url = Uri.parse(AppUrl.register);
       var request = http.MultipartRequest('POST', url);
-
       // Add fields to the request
       request.fields.addAll({
         'full_name': fullName,
@@ -215,7 +215,6 @@ class AuthProvider {
         'password_confirmation': passwordConfirmation,
         'age': age,
       });
-
 
       // Add image files to the request
       for (String path in imagePaths) {
@@ -260,6 +259,81 @@ class AuthProvider {
   }
 
 
+  Future<void> addToFavorites(String userId) async {
+    // Log the user ID for debugging
+    print('User ID: $userId');
+
+    // Show success alert with user ID
+    SnackBarAlerts.successAlert(message: userId);
+
+    // Retrieve token from StorageController
+    var token = 'Bearer ' + Get.find<StorageController>().getLoginModel()!.data!.token.toString();
+    var headers = {
+      'Authorization': token,
+      'Content-Type': 'application/json' // Ensure content type is set
+    };
+
+    // Create the request
+    var request = http.Request('POST', Uri.parse(AppUrl.storeFavourite));
+
+    // Check if userId is valid
+    if (userId.isEmpty) {
+
+      return; // Exit if userId is empty
+    }
+
+    // Set the request body
+    request.body = json.encode({"user_id": userId}); // Ensure user_id is correctly passed
+
+    // Log the request body for debugging
+    print('Request Body: ${request.body}');
+
+    // Add headers to the request
+    request.headers.addAll(headers);
+
+    try {
+      // Send the request and await response
+      http.StreamedResponse response = await request.send();
+
+      // Handle the response
+      if (response.statusCode == 200) {
+        String responseBody = await response.stream.bytesToString();
+        print('Response Body: $responseBody'); // Log successful response
+        SnackBarAlerts.successAlert(message: 'Favourite Has Been Added Succesfully!'); // Show success alert
+      } else {
+        // Handle errors
+        SnackBarAlerts.warningAlert(message: response.reasonPhrase.toString());
+        print('Error: ${response.statusCode} - ${response.reasonPhrase}'); // Log the error
+      }
+    } catch (e) {
+      SnackBarAlerts.warningAlert(message: e.toString());
+      print('Request failed: $e'); // Log exceptions
+    }
+  }
+
+
+
+  Future<FavouriteModel?> fetchFavouriteData() async {
+    var token = 'Bearer ' +
+        Get.find<StorageController>().getLoginModel()!.data!.token.toString();
+    var headers = {'Authorization': token};
+    var request = http.Request(
+      'GET',
+      Uri.parse(AppUrl.favourite),
+    );
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      return favouriteModelFromJson(responseString);
+    } else {
+      print('Error: ${response.reasonPhrase}');
+      return null;
+    }
+  }
+
   Future<List<UserProfileDataObj>> getAllUsersList() async {
     var token = 'Bearer ' +
         Get.find<StorageController>().getLoginModel()!.data!.token.toString();
@@ -291,6 +365,7 @@ class AuthProvider {
     required bool hasChild,
     required String selectedRelationship,
     required String age,
+    required distance,
   }) async {
     Uri uri = Uri.parse(AppUrl.getUserList).replace(
       queryParameters: {
@@ -303,6 +378,7 @@ class AuthProvider {
         'is_smoker': isSmoked ? '1' : '0',
         'relation_ship': selectedRelationship.toString(),
         'age': age,
+        'distance': distance
       },
     );
     print(uri);
@@ -313,7 +389,6 @@ class AuthProvider {
     var response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {
-
       GetAllUserListModel users =
           GetAllUserListModel.fromJson(json.decode(response.body));
       print(users.data);

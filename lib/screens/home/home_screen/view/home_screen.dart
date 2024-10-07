@@ -297,6 +297,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
+
                       Get.to(() => ViewProfileScreen(profile));
                     },
                     child: ClipRRect(
@@ -719,27 +720,27 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  10.ph,
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: CustomDropDown(
-                                          onChanged: (value) {},
-                                          small: true,
-                                          label: '',
-                                          borderColor:
-                                              CColors.textFieldBorderColor,
-                                          borderRadius: 13,
-                                          hint: 'Location',
-                                          mappingList: const [
-                                            "Location",
-                                            "City"
-                                          ],
-                                          value: 'value'),
-                                    ),
-                                  ),
+                                  // 10.ph,
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 10),
+                                  //   child: SizedBox(
+                                  //     height: 40,
+                                  //     child: CustomDropDown(
+                                  //         onChanged: (value) {},
+                                  //         small: true,
+                                  //         label: '',
+                                  //         borderColor:
+                                  //             CColors.textFieldBorderColor,
+                                  //         borderRadius: 13,
+                                  //         hint: 'Location',
+                                  //         mappingList: const [
+                                  //           "Location",
+                                  //           "City"
+                                  //         ],
+                                  //         value: 'value'),
+                                  //   ),
+                                  // ),
                                   20.ph,
                                   Padding(
                                     padding: const EdgeInsets.symmetric(

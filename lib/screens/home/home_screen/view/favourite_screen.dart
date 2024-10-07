@@ -1,6 +1,7 @@
 import 'package:dating/generated/assets.dart';
 import 'package:dating/reusable_components/custom_appbar/custom_appbar.dart';
 import 'package:dating/screens/home/home_screen/controller/home_controller.dart';
+import 'package:dating/screens/home/home_screen/view/favrt_conntroller.dart';
 import 'package:dating/screens/home/home_screen/view/home_screen.dart';
 import 'package:dating/screens/home/profile/controllers/edit_profile_controllers.dart';
 import 'package:dating/utils/gaps/gaps.dart';
@@ -20,6 +21,7 @@ class FavouriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileController>();
+    final favrtController =Get.find<FavouriteController>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -156,91 +158,101 @@ class FavouriteScreen extends StatelessWidget {
                       ],
                     ),
                     20.ph,
-                    Expanded(
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          crossAxisCount: 2, // Adjust as needed
-                          childAspectRatio: 1 /
-                              1.5, // Adjust the aspect ratio to fit the height
+      Expanded(
+        child: FutureBuilder<void>(
+          future: favrtController.fetchItems(), // Use the fetch method from controller
+          builder: (context, snapshot) {
+            if (favrtController.isLoading.value) {
+              // Show a loading indicator while data is loading
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.5,
+                ),
+                itemCount: favrtController.items.length, // Use the fetched items length
+                itemBuilder: (context, index) {
+                  final userItem = favrtController.items[index]; // Get the specific item
+                  return Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(13),
+                        child: Image.asset(
+                          Assets.imagesPhoto,
+                          height: 470,
+                          width: context.width,
+                          fit: BoxFit.cover,
                         ),
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return Stack(
-                            children: [
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(13),
-                                  child: Image.asset(
-                                    Assets.imagesPhoto,
-                                    height: 470,
-                                    width: context.width,
-                                    fit: BoxFit.cover,
-                                  )),
-                              Positioned(
-                                bottom: 10,
-                                right: 10,
-                                left: 10,
-                                child: Container(
-                                  height: 30,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      gradient: LinearGradient(
-                                          colors: [
-                                            const Color(0xffFFFFFF)
-                                                .withOpacity(0.50),
-                                            const Color(0xffFFFFFF)
-                                                .withOpacity(0.155),
-                                          ],
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Name here",
-                                        style: CustomTextStyles.white513,
-                                      ),
-                                      const Spacer(),
-                                      Container(
-                                        height: 30,
-                                        width: 1,
-                                        color: Colors.black,
-                                      ),
-                                      5.pw,
-                                      Text(
-                                        "21",
-                                        style: CustomTextStyles.white412,
-                                      ),
-                                      5.pw,
-                                      Obx(() => controller.favourite.value
-                                          ? const Icon(
-                                              Icons.favorite,
-                                              color: Colors.white,
-                                              size: 20,
-                                            )
-                                          : const SizedBox.shrink())
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                right: 10,
-                                top: 10,
-                                child: SvgPicture.asset(
-                                  Assets.iconsClear,
-                                  height: 15,
-                                  color: Colors.white,
-                                ),
-                              )
-                            ],
-                          );
-                        },
                       ),
-                    ),
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        left: 10,
+                        child: Container(
+                          height: 30,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color(0xffFFFFFF).withOpacity(0.50),
+                                const Color(0xffFFFFFF).withOpacity(0.155),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                userItem.user.name, // Use the actual property
+                                style: CustomTextStyles.white513,
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 30,
+                                width: 1,
+                                color: Colors.black,
+                              ),
+                              5.pw,
+                              Text(
+                                userItem.user.age, // Use the actual property for age or similar
+                                style: CustomTextStyles.white412,
+                              ),
+                              5.pw,
+                              Obx(() => controller.favourite.value
+                                  ? const Icon(
+                                Icons.favorite,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                                  : const SizedBox.shrink()),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 10,
+                        top: 10,
+                        child: SvgPicture.asset(
+                          Assets.iconsClear,
+                          height: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              return Center(child: Text("Error loading data"));
+            }
+          },
+        ))
                   ],
                 ),
               )

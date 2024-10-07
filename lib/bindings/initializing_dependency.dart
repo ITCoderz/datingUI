@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../screens/auth/views/prefrences/prefrences_conntroller.dart';
 import '../screens/home/chat/message_screen/controller/messages_controller.dart';
+import '../screens/home/home_screen/view/favrt_conntroller.dart';
 
 
 
@@ -29,9 +30,7 @@ class InitializingDependency implements Bindings {
     Get.lazyPut(() => ProfileController(), fenix: true);
     Get.lazyPut(() => PrefrencesConntroller(), fenix: true);
 
-    Get.lazyPut(
-            () => HomeController(),
-        fenix: true
-    );
+    Get.lazyPut(() => HomeController(), fenix: true);
+    Get.lazyPut(() => FavouriteController(), fenix: true);
   }
 }
