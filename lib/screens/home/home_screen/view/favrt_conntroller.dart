@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class FavouriteController extends GetxController {
   var isLoading = true.obs; // To manage loading state
-  var items = <FavouriteModelObj>[].obs; // Replace with your data type
+  var items = <FavrtUser>[].obs; // Replace with your data type
 
   @override
   void onInit() {
@@ -22,9 +22,10 @@ class FavouriteController extends GetxController {
     isLoading.value = false; // Set loading state to false
   }
 
-  Future<List<FavouriteModelObj>> getData() async {
+  Future<List<FavrtUser>> getData() async {
     var data = await AuthProvider().fetchFavouriteData();
-
+    print(data!.data.length);
+    print(data!.data);
     update();
     return data!.data;
   }

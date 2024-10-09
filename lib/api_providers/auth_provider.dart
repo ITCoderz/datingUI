@@ -321,17 +321,20 @@ class AuthProvider {
       'GET',
       Uri.parse(AppUrl.favourite),
     );
+    print(AppUrl.favourite);
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-      return favouriteModelFromJson(responseString);
+
+      return FavouriteModel.fromJson(jsonDecode(responseString));
     } else {
       print('Error: ${response.reasonPhrase}');
       return null;
     }
+
   }
 
   Future<List<UserProfileDataObj>> getAllUsersList() async {

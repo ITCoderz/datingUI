@@ -1,46 +1,31 @@
-// To parse this JSON data, do
-//
-//     final favouriteModel = favouriteModelFromJson(jsonString);
-
-import 'dart:convert';
-
-FavouriteModel favouriteModelFromJson(String str) => FavouriteModel.fromJson(json.decode(str));
-
-String favouriteModelToJson(FavouriteModel data) => json.encode(data.toJson());
 
 class FavouriteModel {
-  bool success;
-  List<FavouriteModelObj> data;
-  String message;
-
   FavouriteModel({
     required this.success,
     required this.data,
     required this.message,
   });
+  late final bool success;
+  late final List<FavrtUser> data;
+  late final String message;
 
-  factory FavouriteModel.fromJson(Map<String, dynamic> json) => FavouriteModel(
-    success: json["success"],
-    data: List<FavouriteModelObj>.from(json["data"].map((x) => FavouriteModelObj.fromJson(x))),
-    message: json["message"],
-  );
+  FavouriteModel.fromJson(Map<String, dynamic> json){
+    success = json['success'];
+    data = List.from(json['data']).map((e)=>FavrtUser.fromJson(e)).toList();
+    message = json['message'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "success": success,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "message": message,
-  };
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['success'] = success;
+    _data['data'] = data.map((e)=>e.toJson()).toList();
+    _data['message'] = message;
+    return _data;
+  }
 }
 
-class FavouriteModelObj {
-  int id;
-  AddedBy addedBy;
-  int userId;
-  DateTime createdAt;
-  DateTime updatedAt;
-  AddedBy user;
-
-  FavouriteModelObj({
+class FavrtUser {
+  FavrtUser({
     required this.id,
     required this.addedBy,
     required this.userId,
@@ -48,54 +33,35 @@ class FavouriteModelObj {
     required this.updatedAt,
     required this.user,
   });
+  late final int id;
+  late final AddedBy addedBy;
+  late final int userId;
+  late final String createdAt;
+  late final String updatedAt;
+  late final User user;
 
-  factory FavouriteModelObj.fromJson(Map<String, dynamic> json) => FavouriteModelObj(
-    id: json["id"],
-    addedBy: AddedBy.fromJson(json["added_by"]),
-    userId: json["user_id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    user: AddedBy.fromJson(json["user"]),
-  );
+  FavrtUser.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    addedBy = AddedBy.fromJson(json['added_by']);
+    userId = json['user_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    user = User.fromJson(json['user']);
+  }
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "added_by": addedBy.toJson(),
-    "user_id": userId,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "user": user.toJson(),
-  };
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['added_by'] = addedBy.toJson();
+    _data['user_id'] = userId;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    _data['user'] = user.toJson();
+    return _data;
+  }
 }
 
 class AddedBy {
-  int id;
-  dynamic name;
-  dynamic email;
-  dynamic contact;
-  dynamic gender;
-  dynamic height;
-  dynamic age;
-  dynamic relationShip;
-  String city;
-  DateTime dob;
-  String token;
-  dynamic about;
-  dynamic fcmToken;
-  int verified;
-  DateTime createdAt;
-  DateTime updatedAt;
-  dynamic language;
-  dynamic isSports;
-  dynamic isAlcohol;
-  dynamic wantChild;
-  dynamic hasChild;
-  dynamic isSmoker;
-  dynamic lat;
-  dynamic lng;
-  dynamic userImage;
-  List<Media> media;
-
   AddedBy({
     required this.id,
     required this.name,
@@ -108,8 +74,8 @@ class AddedBy {
     required this.city,
     required this.dob,
     required this.token,
-    required this.about,
-    required this.fcmToken,
+    this.about,
+    this.fcmToken,
     required this.verified,
     required this.createdAt,
     required this.updatedAt,
@@ -119,93 +85,100 @@ class AddedBy {
     required this.wantChild,
     required this.hasChild,
     required this.isSmoker,
-    required this.lat,
-    required this.lng,
-    required this.userImage,
+    this.lat,
+    this.lng,
+    this.userImage,
     required this.media,
   });
+  late final int id;
+  late final String name;
+  late final String email;
+  late final String contact;
+  late final String gender;
+  late final String height;
+  late final String age;
+  late final String relationShip;
+  late final String city;
+  late final String dob;
+  late final String token;
+  late final String? about;
+  late final Null fcmToken;
+  late final int verified;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String language;
+  late final String isSports;
+  late final String isAlcohol;
+  late final String wantChild;
+  late final String hasChild;
+  late final String isSmoker;
+  late final Null lat;
+  late final Null lng;
+  late final String? userImage;
+  late final List<Media> media;
 
-  factory AddedBy.fromJson(Map<String, dynamic> json) => AddedBy(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    contact: json["contact"],
-    gender: json["gender"],
-    height: json["height"],
-    age: json["age"],
-    relationShip: json["relation_ship"],
-    city: json["city"],
-    dob: DateTime.parse(json["dob"]),
-    token: json["token"],
-    about: json["about"],
-    fcmToken: json["fcm_token"],
-    verified: json["verified"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    language: json["language"],
-    isSports: json["is_sports"],
-    isAlcohol: json["is_alcohol"],
-    wantChild: json["want_child"],
-    hasChild: json["has_child"],
-    isSmoker: json["is_smoker"],
-    lat: json["lat"],
-    lng: json["lng"],
-    userImage: json["user_image"],
-    media: List<Media>.from(json["media"].map((x) => Media.fromJson(x))),
-  );
+  AddedBy.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    contact = json['contact'];
+    gender = json['gender'];
+    height = json['height'];
+    age = json['age'];
+    relationShip = json['relation_ship'];
+    city = json['city'];
+    dob = json['dob'];
+    token = json['token'];
+    about = null;
+    fcmToken = null;
+    verified = json['verified'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    language = json['language'];
+    isSports = json['is_sports'];
+    isAlcohol = json['is_alcohol'];
+    wantChild = json['want_child'];
+    hasChild = json['has_child'];
+    isSmoker = json['is_smoker'];
+    lat = null;
+    lng = null;
+    userImage = null;
+    media = List.from(json['media']).map((e)=>Media.fromJson(e)).toList();
+  }
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "contact": contact,
-    "gender": gender,
-    "height": height,
-    "age": age,
-    "relation_ship": relationShip,
-    "city": city,
-    "dob": "${dob.year.toString().padLeft(4, '0')}-${dob.month.toString().padLeft(2, '0')}-${dob.day.toString().padLeft(2, '0')}",
-    "token": token,
-    "about": about,
-    "fcm_token": fcmToken,
-    "verified": verified,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "language": language,
-    "is_sports": isSports,
-    "is_alcohol": isAlcohol,
-    "want_child": wantChild,
-    "has_child": hasChild,
-    "is_smoker": isSmoker,
-    "lat": lat,
-    "lng": lng,
-    "user_image": userImage,
-    "media": List<dynamic>.from(media.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['email'] = email;
+    _data['contact'] = contact;
+    _data['gender'] = gender;
+    _data['height'] = height;
+    _data['age'] = age;
+    _data['relation_ship'] = relationShip;
+    _data['city'] = city;
+    _data['dob'] = dob;
+    _data['token'] = token;
+    _data['about'] = about;
+    _data['fcm_token'] = fcmToken;
+    _data['verified'] = verified;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    _data['language'] = language;
+    _data['is_sports'] = isSports;
+    _data['is_alcohol'] = isAlcohol;
+    _data['want_child'] = wantChild;
+    _data['has_child'] = hasChild;
+    _data['is_smoker'] = isSmoker;
+    _data['lat'] = lat;
+    _data['lng'] = lng;
+    _data['user_image'] = userImage;
+    _data['media'] = media.map((e)=>e.toJson()).toList();
+    return _data;
+  }
 }
 
 class Media {
-  int id;
-  ModelType modelType;
-  int modelId;
-  String uuid;
-  CollectionName collectionName;
-  String name;
-  String fileName;
-  dynamic mimeType;
-  Disk disk;
-  Disk conversionsDisk;
-  int size;
-  List<dynamic> manipulations;
-  List<dynamic> customProperties;
-  List<dynamic> generatedConversions;
-  List<dynamic> responsiveImages;
-  int orderColumn;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String originalUrl;
-  String previewUrl;
-
   Media({
     required this.id,
     required this.modelType,
@@ -228,94 +201,189 @@ class Media {
     required this.originalUrl,
     required this.previewUrl,
   });
+  late final int id;
+  late final String modelType;
+  late final int modelId;
+  late final String uuid;
+  late final String collectionName;
+  late final String name;
+  late final String fileName;
+  late final String mimeType;
+  late final String disk;
+  late final String conversionsDisk;
+  late final int size;
+  late final List<dynamic> manipulations;
+  late final List<dynamic> customProperties;
+  late final List<dynamic> generatedConversions;
+  late final List<dynamic> responsiveImages;
+  late final int orderColumn;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String originalUrl;
+  late final String previewUrl;
 
-  factory Media.fromJson(Map<String, dynamic> json) => Media(
-    id: json["id"],
-    modelType: modelTypeValues.map[json["model_type"]]!,
-    modelId: json["model_id"],
-    uuid: json["uuid"],
-    collectionName: collectionNameValues.map[json["collection_name"]]!,
-    name: json["name"],
-    fileName: json["file_name"],
-    mimeType: mimeTypeValues.map[json["mime_type"]],
-    disk: diskValues.map[json["disk"]]!,
-    conversionsDisk: diskValues.map[json["conversions_disk"]]!,
-    size: json["size"],
-    manipulations: List<dynamic>.from(json["manipulations"].map((x) => x)),
-    customProperties: List<dynamic>.from(json["custom_properties"].map((x) => x)),
-    generatedConversions: List<dynamic>.from(json["generated_conversions"].map((x) => x)),
-    responsiveImages: List<dynamic>.from(json["responsive_images"].map((x) => x)),
-    orderColumn: json["order_column"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    originalUrl: json["original_url"],
-    previewUrl: json["preview_url"],
-  );
+  Media.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    modelType = json['model_type'];
+    modelId = json['model_id'];
+    uuid = json['uuid'];
+    collectionName = json['collection_name'];
+    name = json['name'];
+    fileName = json['file_name'];
+    mimeType = json['mime_type'];
+    disk = json['disk'];
+    conversionsDisk = json['conversions_disk'];
+    size = json['size'];
+    manipulations = List.castFrom<dynamic, dynamic>(json['manipulations']);
+    customProperties = List.castFrom<dynamic, dynamic>(json['custom_properties']);
+    generatedConversions = List.castFrom<dynamic, dynamic>(json['generated_conversions']);
+    responsiveImages = List.castFrom<dynamic, dynamic>(json['responsive_images']);
+    orderColumn = json['order_column'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    originalUrl = json['original_url'];
+    previewUrl = json['preview_url'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "model_type": modelTypeValues.reverse[modelType],
-    "model_id": modelId,
-    "uuid": uuid,
-    "collection_name": collectionNameValues.reverse[collectionName],
-    "name": name,
-    "file_name": fileName,
-    "mime_type": mimeTypeValues.reverse[mimeType],
-    "disk": diskValues.reverse[disk],
-    "conversions_disk": diskValues.reverse[conversionsDisk],
-    "size": size,
-    "manipulations": List<dynamic>.from(manipulations.map((x) => x)),
-    "custom_properties": List<dynamic>.from(customProperties.map((x) => x)),
-    "generated_conversions": List<dynamic>.from(generatedConversions.map((x) => x)),
-    "responsive_images": List<dynamic>.from(responsiveImages.map((x) => x)),
-    "order_column": orderColumn,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "original_url": originalUrl,
-    "preview_url": previewUrl,
-  };
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['model_type'] = modelType;
+    _data['model_id'] = modelId;
+    _data['uuid'] = uuid;
+    _data['collection_name'] = collectionName;
+    _data['name'] = name;
+    _data['file_name'] = fileName;
+    _data['mime_type'] = mimeType;
+    _data['disk'] = disk;
+    _data['conversions_disk'] = conversionsDisk;
+    _data['size'] = size;
+    _data['manipulations'] = manipulations;
+    _data['custom_properties'] = customProperties;
+    _data['generated_conversions'] = generatedConversions;
+    _data['responsive_images'] = responsiveImages;
+    _data['order_column'] = orderColumn;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    _data['original_url'] = originalUrl;
+    _data['preview_url'] = previewUrl;
+    return _data;
+  }
 }
 
-enum CollectionName {
-  IMAGES
-}
+class User {
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.contact,
+    required this.gender,
+    required this.height,
+    required this.age,
+    required this.relationShip,
+    required this.city,
+    required this.dob,
+    required this.token,
+    this.about,
+    this.fcmToken,
+    required this.verified,
+    required this.createdAt,
+    required this.updatedAt,
+    this.language,
+    this.isSports,
+    this.isAlcohol,
+    this.wantChild,
+    this.hasChild,
+    this.isSmoker,
+    this.lat,
+    this.lng,
+    this.userImage,
+    required this.media,
+  });
+  late final int id;
+  late final String name;
+  late final String email;
+  late final String contact;
+  late final String gender;
+  late final String height;
+  late final String age;
+  late final String relationShip;
+  late final String city;
+  late final String dob;
+  late final String token;
+  late final String? about;
+  late final Null fcmToken;
+  late final int verified;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String? language;
+  late final String? isSports;
+  late final String? isAlcohol;
+  late final String? wantChild;
+  late final String? hasChild;
+  late final String? isSmoker;
+  late final Null lat;
+  late final Null lng;
+  late final String? userImage;
+  late final List<Media> media;
 
-final collectionNameValues = EnumValues({
-  "images": CollectionName.IMAGES
-});
+  User.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    contact = json['contact'];
+    gender = json['gender'];
+    height = json['height'];
+    age = json['age'];
+    relationShip = json['relation_ship'];
+    city = json['city'];
+    dob = json['dob'];
+    token = json['token'];
+    about = null;
+    fcmToken = null;
+    verified = json['verified'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    language = null;
+    isSports = null;
+    isAlcohol = null;
+    wantChild = null;
+    hasChild = null;
+    isSmoker = null;
+    lat = null;
+    lng = null;
+    userImage = null;
+    media = List.from(json['media']).map((e)=>Media.fromJson(e)).toList();
+  }
 
-enum Disk {
-  PUBLIC
-}
-
-final diskValues = EnumValues({
-  "public": Disk.PUBLIC
-});
-
-enum MimeType {
-  IMAGE_JPEG
-}
-
-final mimeTypeValues = EnumValues({
-  "image/jpeg": MimeType.IMAGE_JPEG
-});
-
-enum ModelType {
-  APP_MODELS_USER
-}
-
-final modelTypeValues = EnumValues({
-  "App\\Models\\User": ModelType.APP_MODELS_USER
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['email'] = email;
+    _data['contact'] = contact;
+    _data['gender'] = gender;
+    _data['height'] = height;
+    _data['age'] = age;
+    _data['relation_ship'] = relationShip;
+    _data['city'] = city;
+    _data['dob'] = dob;
+    _data['token'] = token;
+    _data['about'] = about;
+    _data['fcm_token'] = fcmToken;
+    _data['verified'] = verified;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    _data['language'] = language;
+    _data['is_sports'] = isSports;
+    _data['is_alcohol'] = isAlcohol;
+    _data['want_child'] = wantChild;
+    _data['has_child'] = hasChild;
+    _data['is_smoker'] = isSmoker;
+    _data['lat'] = lat;
+    _data['lng'] = lng;
+    _data['user_image'] = userImage;
+    _data['media'] = media.map((e)=>e.toJson()).toList();
+    return _data;
   }
 }

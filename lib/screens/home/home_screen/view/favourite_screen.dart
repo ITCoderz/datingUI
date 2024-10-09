@@ -171,7 +171,7 @@ class FavouriteScreen extends StatelessWidget {
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                   crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.5,
+                  childAspectRatio: 1 / 1,
                 ),
                 itemCount: favrtController.items.length, // Use the fetched items length
                 itemBuilder: (context, index) {
@@ -179,10 +179,64 @@ class FavouriteScreen extends StatelessWidget {
                   return Stack(
                     children: [
                       ClipRRect(
+                          borderRadius: BorderRadius.circular(13),
+                          child: userItem.user.userImage!=null
+                              ? Center(
+                            child: Image.network(
+                              height: 230,
+                              width: context.width,
+                              fit: BoxFit.cover,
+                              userItem.user.userImage.toString(),
+                              // Placeholder to display while the image is loading
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return Center(
+                                      child:
+                                      child); // When the image has loaded successfully
+                                }
+                                return Align(
+                                  alignment: Alignment.center,
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                        ? loadingProgress
+                                        .cumulativeBytesLoaded /
+                                        (loadingProgress
+                                            .expectedTotalBytes ??
+                                            1)
+                                        : null,
+                                  ),
+                                );
+                              },
+                              // Error handling for when the image fails to load
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Container(
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.grey, // Fallback color
+                                  child: const Icon(
+                                    Icons.error, // Error icon
+                                    color: Colors.red,
+                                    size: 40,
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                              : Image.asset(
+                            Assets.imagesPhoto,
+                            height: 222,
+                            width: context.width,
+                            fit: BoxFit.cover,
+                          )),
+                      ClipRRect(
                         borderRadius: BorderRadius.circular(13),
                         child: Image.asset(
                           Assets.imagesPhoto,
-                          height: 470,
+                          height: 222,
                           width: context.width,
                           fit: BoxFit.cover,
                         ),
