@@ -23,6 +23,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:range_slider_flutter/range_slider_flutter.dart';
 
 import '../../../../reusable_components/bottom_nav_bar/reusable_bottom_navbar.dart';
+import 'favrt_conntroller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -265,23 +266,25 @@ class HomeScreen extends StatelessWidget {
                         20.pw,
                         GestureDetector(
                           onTap: () {
-                            CustomDialogs.customDialog(
-                              context: context,
-                              titleImage: Assets.iconsWarning,
-                              titleText: "Warning",
-                              subtitle:
-                                  'You have reached the limits\nTry again tomorrow',
-                              buttonWidget: CustomElevatedButton(
-                                onPressedFunction: () {
-                                  Get.back();
-                                },
-                                buttonText: "Continue",
-                                height: 40,
-                                width: 200,
-                                gradientColor: buildLinearGradient(),
-                                textStyle: CustomTextStyles.white618,
-                              ),
-                            );
+
+                            Get.find<FavouriteController>().storeFavrt(profile.id.toString());
+                            // CustomDialogs.customDialog(
+                            //   context: context,
+                            //   titleImage: Assets.iconsWarning,
+                            //   titleText: "Warning",
+                            //   subtitle:
+                            //       'You have reached the limits\nTry again tomorrow',
+                            //   buttonWidget: CustomElevatedButton(
+                            //     onPressedFunction: () {
+                            //       Get.back();
+                            //     },
+                            //     buttonText: "Continue",
+                            //     height: 40,
+                            //     width: 200,
+                            //     gradientColor: buildLinearGradient(),
+                            //     textStyle: CustomTextStyles.white618,
+                            //   ),
+                            // );
                           },
                           child: const WhiteContainer(
                             icon: Assets.iconsStar,

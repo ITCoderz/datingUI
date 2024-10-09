@@ -38,6 +38,11 @@ class ProfileController extends GetxController {
   var selectedMilesRange = 1000.0;
   var selectedMilesRangeDefault = 2490000.0;
 
+  void updateFavrt(bool value){
+    favourite.value= value;
+    update();
+  }
+
   selectedMilesRangeFunction(value) {
     selectedMilesRange = value;
     selectedMilesRangeDefault = value;

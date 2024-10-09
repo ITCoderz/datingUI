@@ -21,7 +21,7 @@ class FavouriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileController>();
-    final favrtController =Get.find<FavouriteController>();
+    final favrtController = Get.find<FavouriteController>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -94,7 +94,7 @@ class FavouriteScreen extends StatelessWidget {
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                controller.favourite.value = true;
+                                controller.updateFavrt(true);
                               },
                               child: Container(
                                 height: 40,
@@ -120,7 +120,7 @@ class FavouriteScreen extends StatelessWidget {
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                controller.favourite.value = false;
+                                controller.updateFavrt(false);
                               },
                               child: Container(
                                 height: 40,
@@ -158,155 +158,374 @@ class FavouriteScreen extends StatelessWidget {
                       ],
                     ),
                     20.ph,
-      Expanded(
-        child: FutureBuilder<void>(
-          future: favrtController.fetchItems(), // Use the fetch method from controller
-          builder: (context, snapshot) {
-            if (favrtController.isLoading.value) {
-              // Show a loading indicator while data is loading
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  crossAxisCount: 2,
-                  childAspectRatio: 1 / 1,
-                ),
-                itemCount: favrtController.items.length, // Use the fetched items length
-                itemBuilder: (context, index) {
-                  final userItem = favrtController.items[index]; // Get the specific item
-                  return Stack(
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(13),
-                          child: userItem.user.userImage!=null
-                              ? Center(
-                            child: Image.network(
-                              height: 230,
-                              width: context.width,
-                              fit: BoxFit.cover,
-                              userItem.user.userImage.toString(),
-                              // Placeholder to display while the image is loading
-                              loadingBuilder: (BuildContext context,
-                                  Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return Center(
-                                      child:
-                                      child); // When the image has loaded successfully
-                                }
-                                return Align(
-                                  alignment: Alignment.center,
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                        ? loadingProgress
-                                        .cumulativeBytesLoaded /
-                                        (loadingProgress
-                                            .expectedTotalBytes ??
-                                            1)
-                                        : null,
-                                  ),
-                                );
-                              },
-                              // Error handling for when the image fails to load
-                              errorBuilder: (BuildContext context, Object error,
-                                  StackTrace? stackTrace) {
-                                return Container(
-                                  width: 100,
-                                  height: 100,
-                                  color: Colors.grey, // Fallback color
-                                  child: const Icon(
-                                    Icons.error, // Error icon
-                                    color: Colors.red,
-                                    size: 40,
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                              : Image.asset(
-                            Assets.imagesPhoto,
-                            height: 222,
-                            width: context.width,
-                            fit: BoxFit.cover,
-                          )),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(13),
-                        child: Image.asset(
-                          Assets.imagesPhoto,
-                          height: 222,
-                          width: context.width,
-                          fit: BoxFit.cover,
-                        ),
+                    Expanded(
+                      child: FutureBuilder<void>(
+                        future: favrtController.fetchItems(),
+                        // Use the fetch method from controller
+                        builder: (context, snapshot) {
+                          if (favrtController.isLoading.value) {
+                            // Show a loading indicator while data is loading
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            return Obx(() => controller.favourite.value
+                                ? GridView.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 12,
+                                      mainAxisSpacing: 12,
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1 / 1,
+                                    ),
+                                    itemCount: favrtController.favouritListItems
+                                        .length, // Use the fetched items length
+                                    itemBuilder: (context, index) {
+                                      final userItem =
+                                          favrtController.favouritListItems[
+                                              index]; // Get the specific item
+                                      return Stack(
+                                        children: [
+                                          ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                              child: userItem.user!.userImage !=
+                                                      null
+                                                  ? Center(
+                                                      child: Image.network(
+                                                        height: 230,
+                                                        width: context.width,
+                                                        fit: BoxFit.cover,
+                                                        userItem.user!.userImage
+                                                            .toString(),
+                                                        // Placeholder to display while the image is loading
+                                                        loadingBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Widget child,
+                                                                ImageChunkEvent?
+                                                                    loadingProgress) {
+                                                          if (loadingProgress ==
+                                                              null) {
+                                                            return Center(
+                                                                child:
+                                                                    child); // When the image has loaded successfully
+                                                          }
+                                                          return Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              value: loadingProgress
+                                                                          .expectedTotalBytes !=
+                                                                      null
+                                                                  ? loadingProgress
+                                                                          .cumulativeBytesLoaded /
+                                                                      (loadingProgress
+                                                                              .expectedTotalBytes ??
+                                                                          1)
+                                                                  : null,
+                                                            ),
+                                                          );
+                                                        },
+                                                        // Error handling for when the image fails to load
+                                                        errorBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Object error,
+                                                                StackTrace?
+                                                                    stackTrace) {
+                                                          return Container(
+                                                            width: 100,
+                                                            height: 100,
+                                                            color: Colors.grey,
+                                                            // Fallback color
+                                                            child: const Icon(
+                                                              Icons
+                                                                  .error, // Error icon
+                                                              color: Colors.red,
+                                                              size: 40,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    )
+                                                  : Image.asset(
+                                                      Assets.imagesPhoto,
+                                                      height: 222,
+                                                      width: context.width,
+                                                      fit: BoxFit.cover,
+                                                    )),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(13),
+                                            child: Image.asset(
+                                              Assets.imagesPhoto,
+                                              height: 222,
+                                              width: context.width,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 10,
+                                            right: 10,
+                                            left: 10,
+                                            child: Container(
+                                              height: 30,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    const Color(0xffFFFFFF)
+                                                        .withOpacity(0.50),
+                                                    const Color(0xffFFFFFF)
+                                                        .withOpacity(0.155),
+                                                  ],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                ),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    userItem.user!.name
+                                                        .toString(),
+                                                    // Use the actual property
+                                                    style: CustomTextStyles
+                                                        .white513,
+                                                  ),
+                                                  const Spacer(),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 1,
+                                                    color: Colors.black,
+                                                  ),
+                                                  5.pw,
+                                                  Text(
+                                                    userItem.user!.age
+                                                        .toString(),
+                                                    // Use the actual property for age or similar
+                                                    style: CustomTextStyles
+                                                        .white412,
+                                                  ),
+                                                  5.pw,
+                                                  Obx(() => controller
+                                                          .favourite.value
+                                                      ? const Icon(
+                                                          Icons.favorite,
+                                                          color: Colors.white,
+                                                          size: 20,
+                                                        )
+                                                      : const SizedBox
+                                                          .shrink()),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            right: 10,
+                                            top: 10,
+                                            child:InkWell(
+                                              onTap: (){
+
+                                                favrtController.deleteFavrt(userItem.userId.toString());
+                                                favrtController.favouritListItems.removeAt(index);
+                                              },
+                                              child: SvgPicture.asset(
+                                                Assets.iconsClear,
+                                                height: 15,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
+                                : GridView.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 12,
+                                      mainAxisSpacing: 12,
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1 / 1,
+                                    ),
+                                    itemCount: favrtController.pickedByListItems
+                                        .length, // Use the fetched items length
+                                    itemBuilder: (context, index) {
+                                      final userItem =
+                                          favrtController.pickedByListItems[
+                                              index]; // Get the specific item
+                                      return Stack(
+                                        children: [
+                                          ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                              child: userItem.user!.userImage !=
+                                                      null
+                                                  ? Center(
+                                                      child: Image.network(
+                                                        height: 230,
+                                                        width: context.width,
+                                                        fit: BoxFit.cover,
+                                                        userItem.user!.userImage
+                                                            .toString(),
+                                                        // Placeholder to display while the image is loading
+                                                        loadingBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Widget child,
+                                                                ImageChunkEvent?
+                                                                    loadingProgress) {
+                                                          if (loadingProgress ==
+                                                              null) {
+                                                            return Center(
+                                                                child:
+                                                                    child); // When the image has loaded successfully
+                                                          }
+                                                          return Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              value: loadingProgress
+                                                                          .expectedTotalBytes !=
+                                                                      null
+                                                                  ? loadingProgress
+                                                                          .cumulativeBytesLoaded /
+                                                                      (loadingProgress
+                                                                              .expectedTotalBytes ??
+                                                                          1)
+                                                                  : null,
+                                                            ),
+                                                          );
+                                                        },
+                                                        // Error handling for when the image fails to load
+                                                        errorBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Object error,
+                                                                StackTrace?
+                                                                    stackTrace) {
+                                                          return Container(
+                                                            width: 100,
+                                                            height: 100,
+                                                            color: Colors.grey,
+                                                            // Fallback color
+                                                            child: const Icon(
+                                                              Icons
+                                                                  .error, // Error icon
+                                                              color: Colors.red,
+                                                              size: 40,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    )
+                                                  : Image.asset(
+                                                      Assets.imagesPhoto,
+                                                      height: 222,
+                                                      width: context.width,
+                                                      fit: BoxFit.cover,
+                                                    )),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(13),
+                                            child: Image.asset(
+                                              Assets.imagesPhoto,
+                                              height: 222,
+                                              width: context.width,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 10,
+                                            right: 10,
+                                            left: 10,
+                                            child: Container(
+                                              height: 30,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    const Color(0xffFFFFFF)
+                                                        .withOpacity(0.50),
+                                                    const Color(0xffFFFFFF)
+                                                        .withOpacity(0.155),
+                                                  ],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                ),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    userItem.user!.name
+                                                        .toString(),
+                                                    // Use the actual property
+                                                    style: CustomTextStyles
+                                                        .white513,
+                                                  ),
+                                                  const Spacer(),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 1,
+                                                    color: Colors.black,
+                                                  ),
+                                                  5.pw,
+                                                  Text(
+                                                    userItem.user!.age
+                                                        .toString(),
+                                                    // Use the actual property for age or similar
+                                                    style: CustomTextStyles
+                                                        .white412,
+                                                  ),
+                                                  5.pw,
+                                                  Obx(() => controller
+                                                          .favourite.value
+                                                      ? const Icon(
+                                                        Icons.favorite,
+                                                        color: Colors.white,
+                                                        size: 20,
+                                                      )
+                                                      : const SizedBox
+                                                          .shrink()),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          controller.favourite.value
+                                              ? Positioned(
+                                                  right: 10,
+                                                  top: 10,
+                                                  child: SvgPicture.asset(
+                                                    Assets.iconsClear,
+                                                    height: 15,
+                                                    color: Colors.white,
+                                                  ),
+                                                )
+                                              : SizedBox.shrink(),
+                                        ],
+                                      );
+                                    },
+                                  ));
+                          } else {
+                            return Center(child: Text("Error loading data"));
+                          }
+                        },
                       ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        left: 10,
-                        child: Container(
-                          height: 30,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            gradient: LinearGradient(
-                              colors: [
-                                const Color(0xffFFFFFF).withOpacity(0.50),
-                                const Color(0xffFFFFFF).withOpacity(0.155),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                userItem.user.name, // Use the actual property
-                                style: CustomTextStyles.white513,
-                              ),
-                              const Spacer(),
-                              Container(
-                                height: 30,
-                                width: 1,
-                                color: Colors.black,
-                              ),
-                              5.pw,
-                              Text(
-                                userItem.user.age, // Use the actual property for age or similar
-                                style: CustomTextStyles.white412,
-                              ),
-                              5.pw,
-                              Obx(() => controller.favourite.value
-                                  ? const Icon(
-                                Icons.favorite,
-                                color: Colors.white,
-                                size: 20,
-                              )
-                                  : const SizedBox.shrink()),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 10,
-                        top: 10,
-                        child: SvgPicture.asset(
-                          Assets.iconsClear,
-                          height: 15,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            } else {
-              return Center(child: Text("Error loading data"));
-            }
-          },
-        ))
+                    )
                   ],
                 ),
               )

@@ -15,7 +15,11 @@ class AppUrl {
   ///https://dating.coderzsolution.com/api/users
   static const String getUserList = '$baseUrl/users';
   static const String favourite='$baseUrl/favourite';
+  static const String deleteFavourite='$baseUrl/favourite/delete/';
   static const String storeFavourite='$baseUrl/favourite/store';
+
+
+
 
 
 }

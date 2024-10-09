@@ -10,7 +10,7 @@ import 'package:dating/utils/gaps/gaps.dart';
 import 'package:dating/utils/text_styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:range_slider_flutter/range_slider_flutter.dart';
@@ -892,7 +892,8 @@ class SetPreferenceScreen extends StatelessWidget {
                           25.ph,
                         controller.loadingUpdate.value?CircularProgressIndicator():  CustomElevatedButton(
                             onPressedFunction: ()async {
-                              controller.setPrefrencesApi('','');
+                              _getCurrentLocation();
+
                               //
                               // try {
                               //   Position? position = await _locationService.getCurrentLocation();
@@ -919,6 +920,46 @@ class SetPreferenceScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled, so request the user to enable it.
+      return Future.error('Location services are disabled.');
+    }
+
+    // Check for location permissions.
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, handle appropriately.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are permanently denied.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // Get the current position.
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    if(position!=null){
+      Get.find<PrefrencesConntroller>().setPrefrencesApi("",'');
+      print('Current Position: ${position.latitude}, ${position.longitude}');
+    }
+
   }
 
 

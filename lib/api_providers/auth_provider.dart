@@ -258,13 +258,39 @@ class AuthProvider {
     }
   }
 
+  Future<void> deleteFavorites(String userId) async{
+
+    var token = Get.find<StorageController>()
+        .getLoginModel()
+        ?.data
+        ?.token
+        ?.toString() ??
+        '';
+    var headers = {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    };
+
+    var request = http.Request('POST', Uri.parse(AppUrl.deleteFavourite+userId));
+    print(AppUrl.deleteFavourite+userId);
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      SnackBarAlerts.successAlert(message: "User Sucessfully Deleted");
+      print(await response.stream.bytesToString());
+
+    } else {
+      SnackBarAlerts.warningAlert(message: response.reasonPhrase.toString());
+    print(response.reasonPhrase);
+    }
+
+  }
 
   Future<void> addToFavorites(String userId) async {
     // Log the user ID for debugging
     print('User ID: $userId');
 
-    // Show success alert with user ID
-    SnackBarAlerts.successAlert(message: userId);
 
     // Retrieve token from StorageController
     var token = 'Bearer ' + Get.find<StorageController>().getLoginModel()!.data!.token.toString();
@@ -323,12 +349,9 @@ class AuthProvider {
     );
     print(AppUrl.favourite);
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-
       return FavouriteModel.fromJson(jsonDecode(responseString));
     } else {
       print('Error: ${response.reasonPhrase}');

@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 class FavouriteController extends GetxController {
   var isLoading = true.obs; // To manage loading state
-  var items = <FavrtUser>[].obs; // Replace with your data type
+  var favouritListItems = <Favourite>[].obs; // Replace with your data type
+  var  pickedByListItems=<Favourite>[].obs;
 
   @override
   void onInit() {
@@ -17,20 +18,25 @@ class FavouriteController extends GetxController {
     isLoading.value = true; // Set loading state to true
     // Simulate a network request or fetch your data here
     await Future.delayed(Duration(seconds: 2)); // Simulate a delay
-    items.value =
-        await getData(); // Replace with your actual data fetching logic
+    favouritListItems.value = await getData(); // Replace with your actual data fetching logic
     isLoading.value = false; // Set loading state to false
   }
 
-  Future<List<FavrtUser>> getData() async {
+  Future<List<Favourite>> getData() async {
     var data = await AuthProvider().fetchFavouriteData();
-    print(data!.data.length);
-    print(data!.data);
+    print(data!.data!.favourite);
+    pickedByListItems.value=data.data!.pickedBy;
+
+    print(data.data);
     update();
-    return data!.data;
+    return data.data!.favourite;
   }
 
   storeFavrt(String userId) async {
     await AuthProvider().addToFavorites(userId);
+  }
+
+  deleteFavrt(String userId) async {
+    await AuthProvider().deleteFavorites(userId);
   }
 }
